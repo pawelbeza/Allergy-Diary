@@ -3,6 +3,7 @@ package com.example.allergydiary;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
@@ -27,35 +28,19 @@ public class DataList extends AppCompatActivity {
         DatabaseHelper db = new DatabaseHelper(this);
         listView = findViewById(R.id.listView1);
         mCursor = db.getDataBaseContents();
-        mCursor.moveToNext();
-        customAdapter = new MyCursorAdapter(
-                DataList.this,
-                mCursor,
-                0);
-        listView.setAdapter(customAdapter);
-//        if(data.getCount() == 0){
-//            Toast.makeText(DataList.this, "There is no data here", Toast.LENGTH_LONG).show();
-//        }
-//        else{
-//            while(data.moveToNext())
-//            {
-//                MyCursorAdapter listAdapter = new MyCursorAdapter(this, data, 0);
-//                lview1.setAdapter(listAdapter);
-//            }
-//        }
+
+        new Handler().post(new Runnable() {
+
+            @Override
+            public void run() {
+                customAdapter = new MyCursorAdapter(
+                        DataList.this,
+                        mCursor,
+                        0);
+
+                listView.setAdapter(customAdapter);
+            }
+
+        });
     }
-
-//    new Handler().post(new Runnable() {
-//
-//        @Override
-//        public void run() {
-//            customAdapter = new MyCursorAdapter(
-//                    MainActivity.this,
-//                    mCursor,
-//                    0);
-//
-//            listView.setAdapter(customAdapter);
-//        }
-
-  //  });
 }
