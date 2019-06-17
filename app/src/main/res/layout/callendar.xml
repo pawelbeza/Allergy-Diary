@@ -6,6 +6,7 @@
     android:paddingRight="0dp" >
 
     <LinearLayout
+        android:id="@+id/layout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -14,8 +15,7 @@
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="TextView" />
+            android:layout_height="40dp" />
 
         <Button
             android:id="@+id/btnToCalendar"
@@ -23,4 +23,31 @@
             android:layout_height="80dp"
             android:background="@drawable/ic_calendar" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="20dp"
+            android:text="@string/feeling"/>
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="10" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnToDataBase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 </RelativeLayout>
