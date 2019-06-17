@@ -35,8 +35,7 @@ public class DataList extends AppCompatActivity {
             public void run() {
                 customAdapter = new MyCursorAdapter(
                         DataList.this,
-                        mCursor,
-                        0);
+                        mCursor);
 
                 listView.setAdapter(customAdapter);
             }
