@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Callendar"></activity>
+        <activity android:name=".Calendar"></activity>
         <activity android:name=".DataList"></activity>
     </application>
 

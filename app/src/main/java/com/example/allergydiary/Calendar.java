@@ -13,10 +13,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Calendar;
-
-public class Callendar extends AppCompatActivity {
-    private static final String TAG = "Callendar";
+public class Calendar extends AppCompatActivity {
+    private static final String TAG = "Calendar";
     TextView date;
     DatabaseHelper db;
     Button btn1;
@@ -39,16 +37,16 @@ public class Callendar extends AppCompatActivity {
         btnToDataBase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Callendar.this, DataList.class);
+                Intent intent = new Intent(Calendar.this, DataList.class);
                 startActivity(intent);
             }
         });
     }
     private void getCurrentDate(){
-        Calendar cal = Calendar.getInstance();
-        myear = cal.get(Calendar.YEAR);
-        mmonth = cal.get(Calendar.MONTH);
-        mdayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        myear = cal.get(java.util.Calendar.YEAR);
+        mmonth = cal.get(java.util.Calendar.MONTH);
+        mdayOfMonth = cal.get(java.util.Calendar.DAY_OF_MONTH);
     }
 
     private void Calendar() {
@@ -58,7 +56,7 @@ public class Callendar extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(Callendar.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Calendar.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -108,6 +106,6 @@ public class Callendar extends AppCompatActivity {
     }
 
     private void toastMessage(String message){
-        Toast.makeText(Callendar.this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(Calendar.this, message, Toast.LENGTH_LONG).show();
     }
 }
