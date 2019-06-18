@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "allergic_symptoms.db";
-    public static final String TABLE_NAME = "allergiic_symptoms";
+    public static final String TABLE_NAME = "allergic_symptoms";
     public static final String COL1 = "_id";
     public static final String COL2 = "DATE";
     public static final String COL3 = "FEELING";
@@ -39,7 +39,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getDataBaseContents(){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        return data;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 }

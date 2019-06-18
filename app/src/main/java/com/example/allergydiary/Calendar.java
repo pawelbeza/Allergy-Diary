@@ -15,23 +15,22 @@ import android.widget.Toast;
 
 public class Calendar extends AppCompatActivity {
     private static final String TAG = "Calendar";
-    TextView date;
-    DatabaseHelper db;
-    Button btn1;
-    int myear;
-    int mmonth;
-    int mdayOfMonth;
+    private TextView date;
+    private DatabaseHelper db;
+    private int myear;
+    private int mmonth;
+    private int mdayOfMonth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.callendar);
+        setContentView(R.layout.calendar_layout);
 
         db = new DatabaseHelper(this);
         date = findViewById(R.id.textView1);
 
         getCurrentDate();
-        Calendar();
+        datePicker();
         seekBar();
         Button btnToDataBase = findViewById(R.id.btnToDataBase);
         btnToDataBase.setOnClickListener(new View.OnClickListener() {
@@ -45,12 +44,12 @@ public class Calendar extends AppCompatActivity {
     private void getCurrentDate(){
         java.util.Calendar cal = java.util.Calendar.getInstance();
         myear = cal.get(java.util.Calendar.YEAR);
-        mmonth = cal.get(java.util.Calendar.MONTH);
+        mmonth = cal.get(java.util.Calendar.MONTH) + 1;
         mdayOfMonth = cal.get(java.util.Calendar.DAY_OF_MONTH);
     }
 
-    private void Calendar() {
-        btn1 = findViewById(R.id.btnToCalendar);
+    private void datePicker() {
+        Button btn1 = findViewById(R.id.btnToCalendar);
         date = findViewById(R.id.textView1);
 
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +60,7 @@ public class Calendar extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 myear = year;
-                                mmonth = month;
+                                mmonth = month + 1;
                                 mdayOfMonth = dayOfMonth;
                                 Log.d(TAG, "Calendar: " + mdayOfMonth + "/" + mmonth + "/" + myear);
 
@@ -101,7 +100,7 @@ public class Calendar extends AppCompatActivity {
             toastMessage("Insertion successful");
         }
         else{
-            Log.d(TAG, "Insertion failure");
+            toastMessage("Insertion failure");
         }
     }
 
