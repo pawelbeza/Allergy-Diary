@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">AllergyDiary</string>
-    <string name="feeling">How do you feel today?"</string>>
-    <string name="callendar">Callendar"</string>>
+    <string name="calendar">Calendar"</string>
     <string name="date">%1$d/%2$d/%3$d</string>
-
-
+    <string name="feeling">General feeling</string>
+    <string name="details">Detailed information</string>
+    <string name="eyeSymptoms">Eye symptoms</string>
+    <string name="noseSymptoms">Nose symptoms</string>
+    <string name="cough">Cough</string>
+    <string name="breath">Breathing problems</string>
+    <string name="medicine">Medicine taken</string>
+    <string name="database">Database</string>
 </resources>
