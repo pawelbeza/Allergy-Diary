@@ -7,8 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-public class DataList extends AppCompatActivity {
-    private static final String TAG = "DataList";
+public class DataListActivity extends AppCompatActivity {
+    private static final String TAG = "DataListActivity";
     private MyCursorAdapter customAdapter;
     private Cursor mCursor;
     private ListView listView;
@@ -27,7 +27,7 @@ public class DataList extends AppCompatActivity {
             @Override
             public void run() {
                 customAdapter = new MyCursorAdapter(
-                        DataList.this,
+                        DataListActivity.this,
                         mCursor);
 
                 listView.setAdapter(customAdapter);

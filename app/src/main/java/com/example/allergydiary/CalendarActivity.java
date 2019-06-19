@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class Calendar extends AppCompatActivity {
-    private static final String TAG = "Calendar";
+public class CalendarActivity extends AppCompatActivity {
+    private static final String TAG = "CalendarActivity";
     private TextView date;
     private DatabaseHelper db;
     private int myear;
@@ -47,7 +47,7 @@ public class Calendar extends AppCompatActivity {
         btnToDataBase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Calendar.this, DataList.class);
+                Intent intent = new Intent(CalendarActivity.this, DataListActivity.class);
                 startActivity(intent);
             }
         });
@@ -77,14 +77,14 @@ public class Calendar extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(Calendar.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(CalendarActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 myear = year;
                                 mmonth = month + 1;
                                 mdayOfMonth = dayOfMonth;
-                                Log.d(TAG, "Calendar: " + mdayOfMonth + "/" + mmonth + "/" + myear);
+                                Log.d(TAG, "CalendarActivity: " + mdayOfMonth + "/" + mmonth + "/" + myear);
 
                                 date.setText(getString(R.string.date, dayOfMonth, month, year));
                             }
@@ -107,6 +107,6 @@ public class Calendar extends AppCompatActivity {
     }
 
     private void toastMessage(String message){
-        Toast.makeText(Calendar.this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(CalendarActivity.this, message, Toast.LENGTH_LONG).show();
     }
 }
