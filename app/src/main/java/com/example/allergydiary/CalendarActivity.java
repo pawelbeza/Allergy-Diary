@@ -18,13 +18,13 @@ import java.util.ArrayList;
 
 public class CalendarActivity extends AppCompatActivity {
     private static final String TAG = "CalendarActivity";
+    ArrayList<SeekBar> seekBars = new ArrayList<>();
+    Switch simpleSwitch;
     private TextView date;
     private DatabaseHelper db;
     private int myear;
     private int mmonth;
     private int mdayOfMonth;
-    ArrayList<SeekBar> seekBars = new ArrayList<>();
-    Switch simpleSwitch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class CalendarActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    private void getCurrentDate(){
+    private void getCurrentDate() {
         java.util.Calendar cal = java.util.Calendar.getInstance();
         myear = cal.get(java.util.Calendar.YEAR);
         mmonth = cal.get(java.util.Calendar.MONTH) + 1;
@@ -96,17 +96,16 @@ public class CalendarActivity extends AppCompatActivity {
         date.setText(getString(R.string.date, mdayOfMonth, mmonth, myear));
     }
 
-    private void addData(int[] seekBarValues){
-        boolean insertData = db.addData(date.getText().toString() , seekBarValues);
-        if(insertData){
+    private void addData(int[] seekBarValues) {
+        boolean insertData = db.addData(date.getText().toString(), seekBarValues);
+        if (insertData) {
             toastMessage("Insertion successful");
-        }
-        else{
+        } else {
             toastMessage("Insertion failure");
         }
     }
 
-    private void toastMessage(String message){
+    private void toastMessage(String message) {
         Toast.makeText(CalendarActivity.this, message, Toast.LENGTH_LONG).show();
     }
 }

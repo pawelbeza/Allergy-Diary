@@ -8,11 +8,16 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MyCursorAdapter extends CursorAdapter {
+    private static final String TAG = "MyCursorAdapter";
     private LayoutInflater cursorInflater;
+    private ArrayList<TextView> arrayList;
 
     public MyCursorAdapter(Context context, Cursor c) {
         this(context, c, 0);
+        arrayList = new ArrayList<TextView>();
     }
 
     public MyCursorAdapter(Context context, Cursor c, int flags) {
@@ -23,14 +28,19 @@ public class MyCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView tview1 = view.findViewById(R.id.tview1);
-        TextView tview2 = view.findViewById(R.id.tview2);
 
-        String date = cursor.getString(cursor.getColumnIndex("DATE"));
-        String feeling = cursor.getString(cursor.getColumnIndex("FEELING"));
+//        arrayList.add((TextView) view.findViewById(R.id.tv1));
+//        arrayList.get(0).setText(cursor.getString(cursor.getColumnIndex("DATE")));
 
-        tview1.setText(date);
-        tview2.setText(feeling);
+        int[] arr = {R.id.tv1, R.id.tv2, R.id.tv3, R.id.tv4, R.id.tv5, R.id.tv6, R.id.tv7};
+        for (int i = 0; i < arr.length; i++) {
+            TextView tv = view.findViewById(arr[i]);
+            tv.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLS[i])));
+        }
+
+//        for(int i = 0; i < DatabaseHelper.COLS.length(); i++) {
+//            arrayList.get(i) = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLS[i]));
+//        }
     }
 
     @Override
