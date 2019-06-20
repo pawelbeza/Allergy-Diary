@@ -8,13 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "allergic_symptoms.db";
-    public static final String TABLE_NAME = "allergic_symptoms";
-    public static final String[] COLS = {"DATE", "FEELING", "NOSE", "EYE", "COUGH", "BREATH", "MEDICINE"};
-    public static final String COL1 = "_id";
+    private static final String DATABASE_NAME = "allergic_symptoms.db";
+    private static final String TABLE_NAME = "allergic_symptoms";
+    static final String[] COLS = {"DATE", "FEELING", "NOSE", "EYE", "COUGH", "BREATH", "MEDICINE"};
     private static final String TAG = "DatabaseHelper";
 
-    public DatabaseHelper(Context context) {
+    DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -32,10 +31,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP IF TABLE EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    public boolean addData(String date, int[] seekBarValues) {
+    boolean addData(String date, int[] seekBarValues) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -47,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public Cursor getDataBaseContents() {
+    Cursor getDataBaseContents() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }

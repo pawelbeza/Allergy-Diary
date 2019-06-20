@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 public class DataListActivity extends AppCompatActivity {
-    private static final String TAG = "DataListActivity";
     private MyCursorAdapter customAdapter;
     private Cursor mCursor;
     private ListView listView;
