@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">AllergyDiary</string>
-    <string name="calendar">Calendar"</string>
+    <string name="calendar">Calendar</string>
+    <string name="graphs">Graphs</string>
+    <string name="notifications">Notifications</string>
+    <string name="forecast">Allergy forecast</string>
+    <string name="settings">Settings</string>
+    <string name="info">About app</string>
+    <string name="greetings">Welcome back</string>
     <string name="date">%1$d/%2$d/%3$d</string>
     <string name="feeling">General feeling</string>
     <string name="details">Detailed information</string>
