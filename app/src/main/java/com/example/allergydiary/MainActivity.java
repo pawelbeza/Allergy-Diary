@@ -14,11 +14,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button goToCalendar = findViewById(R.id.goToCalendar);
-
         goToCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button goToCharts = findViewById(R.id.goToGraphs);
+        goToCharts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ChartsActivity.class);
                 startActivity(intent);
             }
         });
