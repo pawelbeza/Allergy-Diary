@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Allergy Diary</string>
     <string name="calendar">Calendar</string>
+    <string name="diary">Allergy Diary</string>
     <string name="graphs">Graphs</string>
     <string name="week">week</string>
     <string name="month">month</string>

@@ -12,8 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <!--TODO Reduce  number of buttons-->
-
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,15 +41,15 @@
                     android:padding="16dp">
 
                     <Button
-                        android:id="@+id/goToCalendar"
+                        android:id="@+id/goToDiary"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:background="@drawable/ic_maincalendar" />
+                        android:background="@drawable/ic_notebook_4" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/calendar"
+                        android:text="@string/diary"
                         android:textSize="18sp" />
 
                 </LinearLayout>

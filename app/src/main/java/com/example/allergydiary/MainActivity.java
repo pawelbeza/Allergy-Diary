@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button goToCalendar = findViewById(R.id.goToCalendar);
+        Button goToCalendar = findViewById(R.id.goToDiary);
         goToCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
