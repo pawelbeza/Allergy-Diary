@@ -22,9 +22,6 @@ public class CalendarActivity extends AppCompatActivity {
     Switch simpleSwitch;
     private TextView date;
     private DatabaseHelper db;
-    private int mYear;
-    private int mMonth;
-    private int mDayOfMonth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +38,6 @@ public class CalendarActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
         date = findViewById(R.id.textView1);
 
-        getCurrentDate();
         datePicker();
         Button btnToDataBase = findViewById(R.id.btnToDataBase);
         btnToDataBase.setOnClickListener(new View.OnClickListener() {
@@ -63,17 +59,15 @@ public class CalendarActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    private void getCurrentDate() {
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        mYear = cal.get(java.util.Calendar.YEAR);
-        mMonth = cal.get(java.util.Calendar.MONTH) + 1;
-        mDayOfMonth = cal.get(java.util.Calendar.DAY_OF_MONTH);
-    }
-
-    //TODO After saving new record to database month in datePicker changes
     private void datePicker() {
         Button btn1 = findViewById(R.id.btnToCalendar);
         date = findViewById(R.id.textView1);
+
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        final int mYear = cal.get(java.util.Calendar.YEAR);
+        final int mMonth = cal.get(java.util.Calendar.MONTH) + 1;
+        final int mDayOfMonth = cal.get(java.util.Calendar.DAY_OF_MONTH);
+        date.setText(getString(R.string.date, mDayOfMonth, mMonth, mYear));
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +76,6 @@ public class CalendarActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                mYear = year;
-                                mMonth = month + 1;
-                                mDayOfMonth = dayOfMonth;
-                                Log.d(TAG, "CalendarActivity: " + mDayOfMonth + "/" + mMonth + "/" + mYear);
-
                                 date.setText(getString(R.string.date, dayOfMonth, month, year));
                             }
                         }, mYear, mMonth, mDayOfMonth);
@@ -94,7 +83,6 @@ public class CalendarActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-        date.setText(getString(R.string.date, mDayOfMonth, mMonth, mYear));
     }
 
     private void addData(int[] seekBarValues) {

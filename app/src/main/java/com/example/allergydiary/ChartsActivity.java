@@ -22,6 +22,7 @@ import java.util.Date;
 public class ChartsActivity extends AppCompatActivity{
     private static final String TAG = "ChartsActivity";
 
+    //TODO Add Listeners to buttons
     private ArrayList<Entry> Values = new ArrayList<>();
     long referenceTimestamp = Long.MAX_VALUE;
 
