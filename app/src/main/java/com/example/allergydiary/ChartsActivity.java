@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -17,24 +19,69 @@ import com.github.mikephil.charting.data.LineData;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ChartsActivity extends AppCompatActivity{
     private static final String TAG = "ChartsActivity";
+    Calendar cal;
 
-    //TODO Add Listeners to buttons
+    //TODO Add custom time interval
     private ArrayList<Entry> Values = new ArrayList<>();
     long referenceTimestamp = Long.MAX_VALUE;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charts);
 
-        getDataInRange("2017-6-1", "2029-6-30");
+        int btnID[] = {R.id.week, R.id.month, R.id.months};
+
+        cal = Calendar.getInstance();
+        final String toDate = getString(R.string.date, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+
+        findViewById(btnID[0]).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal = getTime(0,0, -7);
+                String fromDate = getString(R.string.date, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+                makeAndDisplayGraph(fromDate, toDate);
+            }
+        });
+
+        findViewById(btnID[1]).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal = getTime(0,-1, 0);
+                String fromDate = getString(R.string.date, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+                makeAndDisplayGraph(fromDate, toDate);
+            }
+        });
+
+        findViewById(btnID[2]).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal = getTime(0,-3, 0);
+                String fromDate = getString(R.string.date, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+                makeAndDisplayGraph(fromDate, toDate);
+            }
+        });
+    }
+
+        private Calendar getTime(int addToYear, int addToMonth, int addToDay) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, addToYear);
+        cal.add(Calendar.MONTH, addToMonth);
+        cal.add(Calendar.DAY_OF_MONTH, addToDay);
+        return cal;
+    }
+
+    private void makeAndDisplayGraph(String fromDate, String toDate) {
+        Values.clear();
+        getDataInRange(fromDate, toDate);
         displayGraph(Values);
     }
+
     private void displayGraph(ArrayList<Entry> Values) {
 
         LineChart mChart = findViewById(R.id.LineChart);
@@ -69,7 +116,7 @@ public class ChartsActivity extends AppCompatActivity{
             int feeling = cursor.getInt(cursor.getColumnIndexOrThrow("FEELING"));
             long timestamp_date = toTimestamp(date);
             referenceTimestamp = Math.min(reference_timestamps, timestamp_date);
-            Values.add(new Entry(timestamp_date, feeling));
+             Values.add(new Entry(timestamp_date, feeling));
         }
 
         for (int i=0;i<Values.size();i++) {

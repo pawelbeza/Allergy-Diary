@@ -15,7 +15,7 @@ public class DateAxisValueFormatter extends ValueFormatter {
 
     public DateAxisValueFormatter(long referenceTimestamp) {
         this.referenceTimestamp = referenceTimestamp;
-        this.mDataFormat = new SimpleDateFormat("MM-dd", Locale.ENGLISH);
+        this.mDataFormat = new SimpleDateFormat("MM:dd", Locale.ENGLISH);
         this.mDate = new Date();
     }
 
@@ -33,7 +33,7 @@ public class DateAxisValueFormatter extends ValueFormatter {
 
     private String getHour(long timestamp) {
         try{
-            mDate.setTime(timestamp*1000);
+            mDate.setTime(timestamp);
             return mDataFormat.format(mDate);
         }
         catch(Exception ex){

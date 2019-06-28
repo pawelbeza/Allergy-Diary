@@ -23,6 +23,8 @@ public class CalendarActivity extends AppCompatActivity {
     private TextView date;
     private DatabaseHelper db;
 
+    //TODO remove all seekBars except General Feeling
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
