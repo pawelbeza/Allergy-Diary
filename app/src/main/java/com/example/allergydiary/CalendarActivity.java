@@ -31,10 +31,6 @@ public class CalendarActivity extends AppCompatActivity {
         setContentView(R.layout.calendar_layout);
 
         seekBars.add((SeekBar) findViewById(R.id.seekBar1));
-        seekBars.add((SeekBar) findViewById(R.id.seekBar2));
-        seekBars.add((SeekBar) findViewById(R.id.seekBar3));
-        seekBars.add((SeekBar) findViewById(R.id.seekBar4));
-        seekBars.add((SeekBar) findViewById(R.id.seekBar5));
 
         simpleSwitch = findViewById(R.id.Switch);
         db = new DatabaseHelper(this);
@@ -53,10 +49,10 @@ public class CalendarActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        int[] seekBarValues = new int[6];
+        int[] seekBarValues = new int[2];
         for (int i = 0; i < seekBars.size(); i++)
             seekBarValues[i] = seekBars.get(i).getProgress();
-        seekBarValues[5] = simpleSwitch.isChecked() ? 1 : 0;
+        seekBarValues[1] = simpleSwitch.isChecked() ? 1 : 0;
         addData(seekBarValues);
         super.onPause();
     }

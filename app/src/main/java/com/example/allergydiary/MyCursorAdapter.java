@@ -23,7 +23,7 @@ public class MyCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        int[] arr = {R.id.tv1, R.id.tv2, R.id.tv3, R.id.tv4, R.id.tv5, R.id.tv6, R.id.tv7};
+        int[] arr = {R.id.tv1, R.id.tv2};
         for (int i = 0; i < arr.length; i++) {
             TextView tv = view.findViewById(arr[i]);
             tv.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLS[i])));

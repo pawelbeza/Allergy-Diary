@@ -18,6 +18,6 @@
     <string name="noseSymptoms">Nose symptoms</string>
     <string name="cough">Cough</string>
     <string name="breath">Breathing problems</string>
-    <string name="medicine">Medicine taken</string>
+    <string name="medicine">Taken medicine</string>
     <string name="database">Database</string>
 </resources>

@@ -10,7 +10,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "allergic_symptoms.db";
     private static final String TABLE_NAME = "allergic_symptoms";
-    static final String[] COLS = {"DATE", "FEELING", "NOSE", "EYE", "COUGH", "BREATH", "MEDICINE"};
+    static final String[] COLS = {"DATE", "FEELING", "MEDICINE"};
     private static final String TAG = "DatabaseHelper";
 
     DatabaseHelper(Context context) {
