@@ -1,228 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
-    <!--<LinearLayout-->
-    <!--android:orientation="vertical"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center">-->
 
-    <!--<GridLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_alignParentLeft="true"-->
-
-    <!--android:layout_gravity="center"-->
-    <!--android:alignmentMode="alignMargins"-->
-    <!--android:columnCount="2"-->
-    <!--android:columnOrderPreserved="false"-->
-    <!--android:rowCount="3">-->
-
-    <!--<android.support.v7.widget.CardView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_rowWeight="1"-->
-    <!--android:layout_columnWeight="1"-->
-    <!--android:layout_margin="12dp"-->
-    <!--app:cardCornerRadius="12dp"-->
-    <!--app:cardElevation="12dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center"-->
-    <!--android:orientation="vertical"-->
-    <!--android:padding="16dp">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/goToDiary"-->
-    <!--android:layout_width="80dp"-->
-    <!--android:layout_height="80dp"-->
-    <!--android:background="@drawable/ic_notebook_4" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/diary"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--</LinearLayout>-->
-    <!--</android.support.v7.widget.CardView>-->
-
-    <!--<android.support.v7.widget.CardView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_rowWeight="1"-->
-    <!--android:layout_columnWeight="1"-->
-    <!--android:layout_margin="12dp"-->
-    <!--app:cardCornerRadius="12dp"-->
-    <!--app:cardElevation="12dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center"-->
-    <!--android:orientation="vertical"-->
-    <!--android:padding="16dp">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/goToGraphs"-->
-    <!--android:layout_width="80dp"-->
-    <!--android:layout_height="80dp"-->
-    <!--android:background="@drawable/ic_graph" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/graphs"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--</LinearLayout>-->
-    <!--</android.support.v7.widget.CardView>-->
-
-    <!--<android.support.v7.widget.CardView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_rowWeight="1"-->
-    <!--android:layout_columnWeight="1"-->
-    <!--android:layout_margin="12dp"-->
-    <!--app:cardCornerRadius="12dp"-->
-    <!--app:cardElevation="12dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center"-->
-    <!--android:orientation="vertical"-->
-    <!--android:padding="16dp">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/goToNotifications"-->
-    <!--android:layout_width="80dp"-->
-    <!--android:layout_height="80dp"-->
-    <!--android:background="@drawable/ic_alarm_1" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/notifications"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--</LinearLayout>-->
-    <!--</android.support.v7.widget.CardView>-->
-
-    <!--<android.support.v7.widget.CardView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_rowWeight="1"-->
-    <!--android:layout_columnWeight="1"-->
-    <!--android:layout_margin="12dp"-->
-    <!--app:cardCornerRadius="12dp"-->
-    <!--app:cardElevation="12dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center"-->
-    <!--android:orientation="vertical"-->
-    <!--android:padding="16dp">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/goToForecast"-->
-    <!--android:layout_width="80dp"-->
-    <!--android:layout_height="80dp"-->
-    <!--android:background="@drawable/ic_cloud" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/forecast"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--</LinearLayout>-->
-    <!--</android.support.v7.widget.CardView>-->
-
-    <!--<android.support.v7.widget.CardView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_rowWeight="1"-->
-    <!--android:layout_columnWeight="1"-->
-
-    <!--android:layout_margin="12dp"-->
-    <!--app:cardCornerRadius="12dp"-->
-    <!--app:cardElevation="12dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:gravity="center"-->
-    <!--android:orientation="vertical"-->
-    <!--android:padding="16dp">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/goToSettings"-->
-    <!--android:layout_width="80dp"-->
-    <!--android:layout_height="80dp"-->
-    <!--android:background="@drawable/ic_settings" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/settings"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--</LinearLayout>-->
-    <!--</android.support.v7.widget.CardView>-->
-
-    <!--<android.support.v7.widget.CardView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_rowWeight="1"-->
-    <!--android:layout_columnWeight="1"-->
-
-    <!--android:layout_margin="12dp"-->
-    <!--app:cardCornerRadius="12dp"-->
-    <!--app:cardElevation="12dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:gravity="center"-->
-    <!--android:orientation="vertical"-->
-    <!--android:padding="16dp">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/goToInfo"-->
-    <!--android:layout_width="80dp"-->
-    <!--android:layout_height="80dp"-->
-    <!--android:background="@drawable/ic_info" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/info"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--</LinearLayout>-->
-    <!--</android.support.v7.widget.CardView>-->
-    <!--</GridLayout>-->
-    <!--</LinearLayout>-->
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
-        android:layout_height="132dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/freestyle_script"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="80sp"
+        android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -232,6 +23,7 @@
         android:id="@+id/goToForecast"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/ic_cloud"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -240,14 +32,15 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="100dp"
-        android:layout_height="19dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/forecast"
         android:textAlignment="center"
         android:textColor="#0EA440"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/goToForecast" />
 
@@ -257,21 +50,22 @@
         android:layout_height="100dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="220dp"
         android:background="@drawable/ic_graph"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="100dp"
-        android:layout_height="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="16dp"
         android:text="@string/graphs"
         android:textAlignment="center"
         android:textColor="#0EA440"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/goToGraphs" />
 
@@ -279,7 +73,7 @@
         android:id="@+id/goToDiary"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="220dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:background="@drawable/ic_notebook_4"
@@ -288,14 +82,15 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="100dp"
-        android:layout_height="21dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:text="@string/diary"
         android:textAlignment="center"
         android:textColor="#0EA440"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/goToDiary" />
 
@@ -306,18 +101,19 @@
         android:layout_marginTop="160dp"
         android:background="@drawable/ic_settings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="100dp"
-        android:layout_height="19dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/settings"
         android:textAlignment="center"
         android:textColor="#0EA440"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
