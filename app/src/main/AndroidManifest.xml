@@ -19,6 +19,10 @@
         <activity android:name=".CalendarActivity"></activity>
         <activity android:name=".DataListActivity"></activity>
         <activity android:name=".ChartsActivity"></activity>
+        <activity android:name=".ForecastActivity"></activity>
+        <activity android:name=".SettingsActivity"></activity>
+
+
     </application>
 
 </manifest>

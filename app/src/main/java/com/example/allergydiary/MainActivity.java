@@ -13,20 +13,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button goToCalendar = findViewById(R.id.goToDiary);
-        goToCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-                startActivity(intent);
-            }
-        });
+        setButtonOnClickListener(R.id.goToDiary, CalendarActivity.class);
+        setButtonOnClickListener(R.id.goToGraphs, ChartsActivity.class);
+        setButtonOnClickListener(R.id.goToForecast, ForecastActivity.class);
+        setButtonOnClickListener(R.id.goToSettings, SettingsActivity.class);
+    }
 
-        Button goToCharts = findViewById(R.id.goToGraphs);
-        goToCharts.setOnClickListener(new View.OnClickListener() {
+    private void setButtonOnClickListener(int id, final Class<?> cls) {
+        Button goToActivity = findViewById(id);
+        goToActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ChartsActivity.class);
+                Intent intent = new Intent(MainActivity.this, cls);
                 startActivity(intent);
             }
         });
