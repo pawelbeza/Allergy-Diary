@@ -16,12 +16,18 @@ import java.util.Calendar;
 
 public class DiaryActivity extends AppCompatActivity {
     private static final String TAG = "DiaryActivity";
+
     private String date;
     private DatabaseHelper db;
     private SeekBar seekBar;
     private Switch simpleSwitch;
 
-    //TODO close database
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

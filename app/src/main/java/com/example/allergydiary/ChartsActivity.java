@@ -25,6 +25,7 @@ import java.util.Date;
 public class ChartsActivity extends AppCompatActivity{
     private static final String TAG = "ChartsActivity";
     Calendar cal;
+    DatabaseHelper db;
 
     private ArrayList<Entry> Values = new ArrayList<>();
     long referenceTimestamp = Long.MAX_VALUE;
@@ -67,7 +68,13 @@ public class ChartsActivity extends AppCompatActivity{
         });
     }
 
-        private Calendar getTime(int addToYear, int addToMonth, int addToDay) {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+    }
+
+    private Calendar getTime(int addToYear, int addToMonth, int addToDay) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, addToYear);
         cal.add(Calendar.MONTH, addToMonth);
@@ -105,7 +112,7 @@ public class ChartsActivity extends AppCompatActivity{
         mChart.invalidate();
     }
     private void getDataInRange(String fromDate, String toDate) {
-        DatabaseHelper db = new DatabaseHelper(this);
+        db = new DatabaseHelper(this);
         Cursor cursor = db.getDataBaseContents(fromDate, toDate);
         cursor.getCount();
 

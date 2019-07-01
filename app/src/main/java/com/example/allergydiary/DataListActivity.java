@@ -11,13 +11,14 @@ public class DataListActivity extends AppCompatActivity {
     private MyCursorAdapter customAdapter;
     private Cursor mCursor;
     private ListView listView;
+    private DatabaseHelper db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datalist_layout);
 
-        DatabaseHelper db = new DatabaseHelper(this);
+        db = new DatabaseHelper(this);
         listView = findViewById(R.id.listView1);
         mCursor = db.getDataBaseContents();
 
