@@ -54,6 +54,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 
+    Cursor getDataBaseContents(String Date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE DATE = '" + Date + "'";
+        return db.rawQuery(query, null);
+    }
+
     Cursor getDataBaseContents(String fromDate, String toDate){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE DATE BETWEEN '" + fromDate + "' AND '" + toDate +"'";

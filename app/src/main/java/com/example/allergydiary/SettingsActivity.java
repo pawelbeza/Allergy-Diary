@@ -9,5 +9,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_settings);
+        //TODO Add notifications and save them using 'Shared Preferences'
     }
 }

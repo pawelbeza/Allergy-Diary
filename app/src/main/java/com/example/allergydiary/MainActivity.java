@@ -8,12 +8,13 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    //TODO Add Navigation Bar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setButtonOnClickListener(R.id.goToDiary, CalendarActivity.class);
+        setButtonOnClickListener(R.id.goToDiary, DiaryActivity.class);
         setButtonOnClickListener(R.id.goToGraphs, ChartsActivity.class);
         setButtonOnClickListener(R.id.goToForecast, ForecastActivity.class);
         setButtonOnClickListener(R.id.goToSettings, SettingsActivity.class);
