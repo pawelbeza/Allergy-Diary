@@ -26,7 +26,6 @@ public class ChartsActivity extends AppCompatActivity{
     private static final String TAG = "ChartsActivity";
     Calendar cal;
 
-    //TODO Add custom time interval
     private ArrayList<Entry> Values = new ArrayList<>();
     long referenceTimestamp = Long.MAX_VALUE;
 

@@ -1,29 +1,24 @@
 package com.example.allergydiary;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.CalendarView;
 import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CalendarActivity extends AppCompatActivity {
-    private static final String TAG = "CalendarActivity";
     ArrayList<SeekBar> seekBars = new ArrayList<>();
     Switch simpleSwitch;
-    private TextView date;
+    private String date;
     private DatabaseHelper db;
-
-    //TODO remove all seekBars except General Feeling
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,9 +29,9 @@ public class CalendarActivity extends AppCompatActivity {
 
         simpleSwitch = findViewById(R.id.Switch);
         db = new DatabaseHelper(this);
-        date = findViewById(R.id.textView1);
+        getCurrDate();
 
-        datePicker();
+        calendarView();
         Button btnToDataBase = findViewById(R.id.btnToDataBase);
         btnToDataBase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,44 +42,36 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
+    private void getCurrDate() {
+        Calendar calendar = Calendar.getInstance();
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        date = getString(R.string.date, dayOfMonth, month, year);
+    }
+
     @Override
     protected void onPause() {
         int[] seekBarValues = new int[2];
-        for (int i = 0; i < seekBars.size(); i++)
-            seekBarValues[i] = seekBars.get(i).getProgress();
+        SeekBar seekBar = findViewById(R.id.seekBar1);
+        seekBarValues[0] = seekBar.getProgress();
         seekBarValues[1] = simpleSwitch.isChecked() ? 1 : 0;
         addData(seekBarValues);
         super.onPause();
     }
 
-    private void datePicker() {
-        Button btn1 = findViewById(R.id.btnToCalendar);
-        date = findViewById(R.id.textView1);
-
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        final int mYear = cal.get(java.util.Calendar.YEAR);
-        final int mMonth = cal.get(java.util.Calendar.MONTH) + 1;
-        final int mDayOfMonth = cal.get(java.util.Calendar.DAY_OF_MONTH);
-        date.setText(getString(R.string.date, mDayOfMonth, mMonth, mYear));
-
-        btn1.setOnClickListener(new View.OnClickListener() {
+    private void calendarView() {
+        CalendarView calendarView = findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(CalendarActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                date.setText(getString(R.string.date, dayOfMonth, month, year));
-                            }
-                        }, mYear, mMonth, mDayOfMonth);
-
-                datePickerDialog.show();
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                date = getString(R.string.date, dayOfMonth, month, year);
             }
         });
     }
 
     private void addData(int[] seekBarValues) {
-        boolean insertData = db.addData(date.getText().toString(), seekBarValues);
+        boolean insertData = db.addData(date, seekBarValues);
         if (insertData) {
             toastMessage("Insertion successful");
         } else {

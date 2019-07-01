@@ -13,6 +13,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String[] COLS = {"DATE", "FEELING", "MEDICINE"};
     private static final String TAG = "DatabaseHelper";
 
+
+    //TODO Take care of closing database
+
     DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
