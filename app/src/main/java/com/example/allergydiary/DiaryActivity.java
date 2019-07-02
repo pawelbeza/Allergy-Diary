@@ -22,7 +22,6 @@ public class DiaryActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private Switch simpleSwitch;
 
-    //TODO Blocking choice of dates after current date
     //TODO Fix adding feeling to multiple days
     @Override
     protected void onDestroy() {
@@ -39,8 +38,10 @@ public class DiaryActivity extends AppCompatActivity {
         seekBar = findViewById(R.id.seekBar);
         simpleSwitch = findViewById(R.id.Switch);
 
+        setMaxDate();
         getCurrDate();
         calendarView();
+
         Button btnToDataBase = findViewById(R.id.btnToDataBase);
         btnToDataBase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +50,21 @@ public class DiaryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void setMaxDate() {
+        CalendarView calendarView = findViewById(R.id.calendarView);
+        calendarView.setMaxDate(System.currentTimeMillis());
+    }
+
+
+    private void getCurrDate() {
+        Calendar calendar = Calendar.getInstance();
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        date = getString(R.string.date, dayOfMonth, month, year);
+        setSavedValues();
     }
 
     private void setSavedValues() {
@@ -61,15 +77,6 @@ public class DiaryActivity extends AppCompatActivity {
 
         int medicine = cursor.getInt(cursor.getColumnIndex("MEDICINE"));
         simpleSwitch.setChecked(medicine == 1);
-    }
-
-    private void getCurrDate() {
-        Calendar calendar = Calendar.getInstance();
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
-        date = getString(R.string.date, dayOfMonth, month, year);
-        setSavedValues();
     }
 
     @Override
