@@ -2,6 +2,8 @@
     <string name="app_name">Allergy Diary</string>
     <string name="diary">Allergy Diary</string>
     <string name="graphs">Graphs</string>
+    <string name="feeling">How are you feeling now?</string>
+    <string name="symptoms">Allergic symptoms</string>
     <string name="week">week</string>
     <string name="month">month</string>
     <string name="months3">3 months</string>

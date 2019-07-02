@@ -22,6 +22,8 @@ public class DiaryActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private Switch simpleSwitch;
 
+    //TODO Blocking choice of dates after current date
+    //TODO Fix adding feeling to multiple days
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -31,7 +33,7 @@ public class DiaryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.calendar_layout);
+        setContentView(R.layout.activity_diary);
 
         db = new DatabaseHelper(this);
         seekBar = findViewById(R.id.seekBar);
