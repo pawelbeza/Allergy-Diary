@@ -24,7 +24,6 @@ public class DiaryActivity extends AppCompatActivity {
     private Switch simpleSwitch;
 
     //TODO Fix showing starting value of seekBars
-    //TODO Fix adding feeling to multiple days
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -88,8 +87,11 @@ public class DiaryActivity extends AppCompatActivity {
 
     private void setSavedValues() {
         Cursor cursor = db.getDataBaseContents(date);
-        if(cursor == null || cursor.getCount() == 0) //then there is no record with current date
+        if(cursor == null || cursor.getCount() == 0) {//then there is no record with current date
+            seekBar.setProgress(0);
+            simpleSwitch.setChecked(false);
             return;
+        }
         cursor.moveToNext();
         int feeling = cursor.getInt(cursor.getColumnIndex("FEELING"));
         seekBar.setProgress(feeling);
@@ -105,6 +107,7 @@ public class DiaryActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 date = getString(R.string.date, dayOfMonth, month, year);
+                setSavedValues();
             }
         });
     }
