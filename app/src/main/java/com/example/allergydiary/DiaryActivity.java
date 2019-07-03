@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class DiaryActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private Switch simpleSwitch;
 
+    //TODO Fix showing starting value of seekBars
     //TODO Fix adding feeling to multiple days
     @Override
     protected void onDestroy() {
@@ -38,9 +40,32 @@ public class DiaryActivity extends AppCompatActivity {
         seekBar = findViewById(R.id.seekBar);
         simpleSwitch = findViewById(R.id.Switch);
 
-        setMaxDate();
         getCurrDate();
         calendarView();
+
+        simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                addData();
+            }
+        });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                addData();
+            }
+        });
 
         Button btnToDataBase = findViewById(R.id.btnToDataBase);
         btnToDataBase.setOnClickListener(new View.OnClickListener() {
@@ -51,12 +76,6 @@ public class DiaryActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void setMaxDate() {
-        CalendarView calendarView = findViewById(R.id.calendarView);
-        calendarView.setMaxDate(System.currentTimeMillis());
-    }
-
 
     private void getCurrDate() {
         Calendar calendar = Calendar.getInstance();
@@ -79,17 +98,9 @@ public class DiaryActivity extends AppCompatActivity {
         simpleSwitch.setChecked(medicine == 1);
     }
 
-    @Override
-    protected void onPause() {
-        int[] seekBarValues = new int[2];
-        seekBarValues[0] = seekBar.getProgress();
-        seekBarValues[1] = simpleSwitch.isChecked() ? 1 : 0;
-        addData(seekBarValues);
-        super.onPause();
-    }
-
     private void calendarView() {
         CalendarView calendarView = findViewById(R.id.calendarView);
+        calendarView.setMaxDate(System.currentTimeMillis());
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -98,16 +109,16 @@ public class DiaryActivity extends AppCompatActivity {
         });
     }
 
-    private void addData(int[] seekBarValues) {
+    private void addData() {
+        int[] seekBarValues = new int[2];
+        seekBarValues[0] = seekBar.getProgress();
+        seekBarValues[1] = simpleSwitch.isChecked() ? 1 : 0;
+
         boolean insertData = db.addData(date, seekBarValues);
         if (insertData) {
             Log.d(TAG, "addData: "+ "Insertion successful");
         } else {
             Log.d(TAG, "addData: " + "Insertion failure");
         }
-    }
-
-    private void toastMessage(String message) {
-        Toast.makeText(DiaryActivity.this, message, Toast.LENGTH_LONG).show();
     }
 }
