@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class DateAxisValueFormatter extends ValueFormatter {
     private long referenceTimestamp; // minimum timestamp in your data set
@@ -28,10 +29,10 @@ public class DateAxisValueFormatter extends ValueFormatter {
         long originalTimestamp = referenceTimestamp + convertedTimestamp;
 
         // Convert timestamp to month-day
-        return getHour(originalTimestamp);
+        return getDate(TimeUnit.DAYS.toMillis(originalTimestamp));
     }
 
-    private String getHour(long timestamp) {
+    private String getDate(long timestamp) {
         try{
             mDate.setTime(timestamp);
             return mDataFormat.format(mDate);

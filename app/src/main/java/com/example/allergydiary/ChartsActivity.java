@@ -1,33 +1,36 @@
 package com.example.allergydiary;
 
+import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.data.LineData;
-
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 public class ChartsActivity extends AppCompatActivity{
     private static final String TAG = "ChartsActivity";
-    Calendar cal;
-    DatabaseHelper db;
+    private Calendar cal;
+    private DatabaseHelper db;
 
-    private ArrayList<Entry> Values = new ArrayList<>();
+    private ArrayList<BarEntry> Values = new ArrayList<>();
     long referenceTimestamp = Long.MAX_VALUE;
 
     @Override
@@ -35,34 +38,24 @@ public class ChartsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charts);
 
-        int btnID[] = {R.id.week, R.id.month, R.id.months};
+        db = new DatabaseHelper(this);
 
+        buttonOnClickListener(R.id.week, 0, 0, -7);
+        buttonOnClickListener(R.id.month, 0, -1, 0);
+        buttonOnClickListener(R.id.months, 0, -3, 0);
+    }
+
+    private void buttonOnClickListener(int ID, final int addToYear, final int addToMonth, final int addToDay) {
         cal = Calendar.getInstance();
-        final String toDate = getString(R.string.date, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+        GregorianCalendar gCal = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        final long toDate = gCal.getTimeInMillis();
 
-        findViewById(btnID[0]).setOnClickListener(new View.OnClickListener() {
+        findViewById(ID).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cal = getTime(0,0, -7);
-                String fromDate = getString(R.string.date, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
-                makeAndDisplayGraph(fromDate, toDate);
-            }
-        });
-
-        findViewById(btnID[1]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cal = getTime(0,-1, 0);
-                String fromDate = getString(R.string.date, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
-                makeAndDisplayGraph(fromDate, toDate);
-            }
-        });
-
-        findViewById(btnID[2]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cal = getTime(0,-3, 0);
-                String fromDate = getString(R.string.date, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+                cal = getTime(addToYear, addToMonth, addToDay);
+                GregorianCalendar gCal = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+                long fromDate = gCal.getTimeInMillis();
                 makeAndDisplayGraph(fromDate, toDate);
             }
         });
@@ -70,8 +63,8 @@ public class ChartsActivity extends AppCompatActivity{
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         db.close();
+        super.onDestroy();
     }
 
     private Calendar getTime(int addToYear, int addToMonth, int addToDay) {
@@ -82,65 +75,52 @@ public class ChartsActivity extends AppCompatActivity{
         return cal;
     }
 
-    private void makeAndDisplayGraph(String fromDate, String toDate) {
+    private void makeAndDisplayGraph(long fromDate, long toDate) {
         Values.clear();
         getDataInRange(fromDate, toDate);
-        displayGraph(Values);
+        displayGraph();
     }
 
-    private void displayGraph(ArrayList<Entry> Values) {
+    private void displayGraph() {
 
-        LineChart mChart = findViewById(R.id.LineChart);
+        BarChart barChart = findViewById(R.id.BarChart);
 
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
+        barChart.getDescription().setEnabled(false);
+//        mChart.setDragEnabled(true);
+//        mChart.setScaleEnabled(true);
 
-        LineDataSet set = new LineDataSet(Values, "Feeling");
+        BarDataSet barDataSet = new BarDataSet(Values, "Feeling");
+        barDataSet.setColor(Color.RED);
 
-        set.setFillAlpha(110);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set);
-
-        LineData data = new LineData(dataSets);
+        BarData barData = new BarData();
+        barData.addDataSet(barDataSet);
 
         ValueFormatter xAxisFormatter = new DateAxisValueFormatter(referenceTimestamp);
-        XAxis xAxis = mChart.getXAxis();
+        XAxis xAxis = barChart.getXAxis();
         xAxis.setValueFormatter(xAxisFormatter);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        mChart.setData(data);
-        mChart.invalidate();
+        barChart.setData(barData);
+        barChart.invalidate();
     }
-    private void getDataInRange(String fromDate, String toDate) {
-        db = new DatabaseHelper(this);
+    private void getDataInRange(long fromDate, long toDate) {
         Cursor cursor = db.getDataBaseContents(fromDate, toDate);
-        cursor.getCount();
 
-        long reference_timestamps = Long.MAX_VALUE;
+        Log.d(TAG, "getDataInRange: " + cursor.getCount());
+
         while (cursor.moveToNext()) {
-            String date = cursor.getString(cursor.getColumnIndexOrThrow("DATE"));
+            long date = cursor.getLong(cursor.getColumnIndexOrThrow("DATE"));
+            date = TimeUnit.MILLISECONDS.toDays(date);
             int feeling = cursor.getInt(cursor.getColumnIndexOrThrow("FEELING"));
-            long timestamp_date = toTimestamp(date);
-            referenceTimestamp = Math.min(reference_timestamps, timestamp_date);
-             Values.add(new Entry(timestamp_date, feeling));
+            Log.d(TAG, "getDataInRange: " + date + " " + feeling);
+            referenceTimestamp = Math.min(referenceTimestamp, date);
+            Values.add(new BarEntry(date, feeling));
         }
 
         for (int i=0;i<Values.size();i++) {
             float tmp = Values.get(i).getX() - referenceTimestamp;
             Values.get(i).setX(tmp);
         }
-
-    }
-    private long toTimestamp(String str_date){
-        try {
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatter.parse(str_date);
-            return date.getTime();
-        }
-        catch (Exception e) {
-            return 0;
-        }
-
 
     }
 }

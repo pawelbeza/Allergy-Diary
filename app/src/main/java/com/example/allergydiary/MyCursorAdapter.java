@@ -2,13 +2,21 @@ package com.example.allergydiary;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MyCursorAdapter extends CursorAdapter {
+    private static final String TAG = "MyCursorAdapter";
     private LayoutInflater cursorInflater;
 
     MyCursorAdapter(Context context, Cursor c) {
@@ -23,11 +31,13 @@ public class MyCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        int[] arr = {R.id.tv1, R.id.tv2};
-        for (int i = 0; i < arr.length; i++) {
-            TextView tv = view.findViewById(arr[i]);
-            tv.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLS[i])));
-        }
+        long date = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COLS[0]));
+        String formattedDate = new SimpleDateFormat("yyyy/MM/dd").format(date);
+        TextView tv1 = view.findViewById(R.id.tv1);
+        tv1.setText(formattedDate);
+
+        TextView tv2 = view.findViewById(R.id.tv2);
+        tv2.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLS[1])));
     }
 
     @Override

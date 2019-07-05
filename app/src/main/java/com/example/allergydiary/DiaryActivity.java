@@ -3,6 +3,7 @@ package com.example.allergydiary;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,18 +13,18 @@ import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.Toast;
+
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class DiaryActivity extends AppCompatActivity {
     private static final String TAG = "DiaryActivity";
 
-    private String date;
+    private long date;
     private DatabaseHelper db;
     private SeekBar seekBar;
     private Switch simpleSwitch;
 
-    //TODO Fix showing starting value of seekBars
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -81,7 +82,9 @@ public class DiaryActivity extends AppCompatActivity {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
-        date = getString(R.string.date, dayOfMonth, month, year);
+
+        GregorianCalendar cal = new GregorianCalendar(year,  month, dayOfMonth);
+        date = cal.getTimeInMillis();
         setSavedValues();
     }
 
@@ -105,8 +108,9 @@ public class DiaryActivity extends AppCompatActivity {
         calendarView.setMaxDate(System.currentTimeMillis());
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                date = getString(R.string.date, dayOfMonth, month, year);
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                GregorianCalendar cal = new GregorianCalendar(year,  month, dayOfMonth);
+                date = cal.getTimeInMillis();
                 setSavedValues();
             }
         });

@@ -7,14 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "allergic_symptoms.db";
     private static final String TABLE_NAME = "allergic_symptoms";
     static final String[] COLS = {"DATE", "FEELING", "MEDICINE"};
     private static final String TAG = "DatabaseHelper";
-
-
-    //TODO Take care of closing database
 
     DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         StringBuffer createTable = new StringBuffer("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ( _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "DATE TEXT UNIQUE");
+                "DATE BIGINT UNIQUE");
         for (int i = 1; i < COLS.length; i++) {
             Log.d(TAG, "onCreate: " + COLS[i]);
             createTable.append(", " + COLS[i] + " INT");
@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    boolean addData(String date, int[] seekBarValues) {
+    boolean addData(long date, int[] seekBarValues) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -49,20 +49,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
+
     Cursor getDataBaseContents() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 
-    Cursor getDataBaseContents(String Date) {
+    Cursor getDataBaseContents(long Date) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE DATE = '" + Date + "'";
         return db.rawQuery(query, null);
     }
 
-    Cursor getDataBaseContents(String fromDate, String toDate){
+    Cursor getDataBaseContents(long fromDate, long toDate){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE DATE BETWEEN '" + fromDate + "' AND '" + toDate +"'";
+        String query = "SELECT * FROM " + TABLE_NAME + "   WHERE DATE BETWEEN " + fromDate + " AND " + toDate;
         return db.rawQuery(query, null);
     }
 }

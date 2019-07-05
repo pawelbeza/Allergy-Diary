@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/LineChart"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/BarChart"
         android:layout_width="match_parent"
         android:layout_height="403dp"
         android:layout_marginTop="164dp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></com.github.mikephil.charting.charts.LineChart>
+        tools:layout_editor_absoluteX="0dp"></com.github.mikephil.charting.charts.BarChart>
 
     <Button
         android:id="@+id/week"
