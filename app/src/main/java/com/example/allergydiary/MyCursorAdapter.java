@@ -2,18 +2,13 @@ package com.example.allergydiary;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class MyCursorAdapter extends CursorAdapter {
     private static final String TAG = "MyCursorAdapter";

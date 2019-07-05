@@ -83,14 +83,14 @@ public class DiaryActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
 
-        GregorianCalendar cal = new GregorianCalendar(year,  month, dayOfMonth);
+        GregorianCalendar cal = new GregorianCalendar(year, month, dayOfMonth);
         date = cal.getTimeInMillis();
         setSavedValues();
     }
 
     private void setSavedValues() {
         Cursor cursor = db.getDataBaseContents(date);
-        if(cursor == null || cursor.getCount() == 0) {//then there is no record with current date
+        if (cursor == null || cursor.getCount() == 0) {//then there is no record with current date
             seekBar.setProgress(0);
             simpleSwitch.setChecked(false);
             return;
@@ -109,7 +109,7 @@ public class DiaryActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                GregorianCalendar cal = new GregorianCalendar(year,  month, dayOfMonth);
+                GregorianCalendar cal = new GregorianCalendar(year, month, dayOfMonth);
                 date = cal.getTimeInMillis();
                 setSavedValues();
             }
@@ -123,7 +123,7 @@ public class DiaryActivity extends AppCompatActivity {
 
         boolean insertData = db.addData(date, seekBarValues);
         if (insertData) {
-            Log.d(TAG, "addData: "+ "Insertion successful");
+            Log.d(TAG, "addData: " + "Insertion successful");
         } else {
             Log.d(TAG, "addData: " + "Insertion failure");
         }

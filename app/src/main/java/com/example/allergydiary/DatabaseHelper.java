@@ -7,9 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "allergic_symptoms.db";
     private static final String TABLE_NAME = "allergic_symptoms";

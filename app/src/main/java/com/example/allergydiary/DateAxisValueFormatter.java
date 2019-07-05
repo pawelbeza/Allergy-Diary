@@ -33,11 +33,10 @@ public class DateAxisValueFormatter extends ValueFormatter {
     }
 
     private String getDate(long timestamp) {
-        try{
+        try {
             mDate.setTime(timestamp);
             return mDataFormat.format(mDate);
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             return "xx";
         }
     }
