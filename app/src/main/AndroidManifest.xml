@@ -16,11 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DiaryActivity"></activity>
-        <activity android:name=".DataListActivity"></activity>
-        <activity android:name=".ChartsActivity"></activity>
-        <activity android:name=".ForecastActivity"></activity>
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".DiaryActivity"
+            android:parentActivityName="com.example.allergydiary.MainActivity"></activity>
+        <activity android:name=".DataListActivity"
+            android:parentActivityName="com.example.allergydiary.DiaryActivity"></activity>
+        <activity android:name=".ChartsActivity"
+            android:parentActivityName="com.example.allergydiary.MainActivity"></activity>
+        <activity android:name=".ForecastActivity"
+            android:parentActivityName="com.example.allergydiary.MainActivity"></activity>
+        <activity android:name=".SettingsActivity"
+            android:parentActivityName="com.example.allergydiary.MainActivity"></activity>
 
 
     </application>

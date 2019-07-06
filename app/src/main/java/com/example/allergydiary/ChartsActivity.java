@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -39,6 +41,9 @@ public class ChartsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charts);
 
+        setSupportActionBar( (Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         db = new DatabaseHelper(this);
 
         barChart = findViewById(R.id.BarChart);
@@ -48,6 +53,12 @@ public class ChartsActivity extends AppCompatActivity{
         buttonOnClickListener(R.id.months, 0, -3, 0);
 
         (findViewById(R.id.week)).performClick();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
     }
 
     private void buttonOnClickListener(int ID, final int addToYear, final int addToMonth, final int addToDay) {
