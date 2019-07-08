@@ -26,6 +26,7 @@ public class DiaryActivity extends AppCompatActivity {
 
     private long date;
     private DatabaseHelper db;
+    InlineCalendar inlineCalendar;
     private SeekBar seekBar;
     private Switch simpleSwitch;
 
@@ -44,12 +45,10 @@ public class DiaryActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = new DatabaseHelper(this);
-        seekBar = findViewById(R.id.seekBar);
-        simpleSwitch = findViewById(R.id.Switch);
 
-        getCurrDate();
         calendarView();
 
+        simpleSwitch = findViewById(R.id.Switch);
         simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -57,6 +56,7 @@ public class DiaryActivity extends AppCompatActivity {
             }
         });
 
+        seekBar = findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -82,6 +82,8 @@ public class DiaryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        getCurrDate();
     }
 
     @Override

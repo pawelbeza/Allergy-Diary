@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -32,7 +31,7 @@ public class ChartsActivity extends AppCompatActivity{
     private BarChart barChart;
     private Calendar cal;
     private DatabaseHelper db;
-
+    private InlineCalendar inlineCalendar;
     private ArrayList<BarEntry> Values = new ArrayList<>();
     long referenceTimestamp = Long.MAX_VALUE;
 
@@ -44,7 +43,29 @@ public class ChartsActivity extends AppCompatActivity{
         setSupportActionBar( (Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        cal = Calendar.getInstance();
         db = new DatabaseHelper(this);
+
+        inlineCalendar = findViewById(R.id.inlineCalendar);
+        inlineCalendar.setListener(new InlineCalendar.MyOnClickListener() {
+            @Override
+            public void onClickListener() {
+                Calendar cal = inlineCalendar.getCalendar();
+
+                cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+                cal.clear(Calendar.MINUTE);
+                cal.clear(Calendar.SECOND);
+                cal.clear(Calendar.MILLISECOND);
+
+                cal.set(Calendar.DAY_OF_MONTH, 1);
+                long startDate = cal.getTimeInMillis();
+
+                cal.add(Calendar.MONTH, 1);
+                cal.add(Calendar.MILLISECOND, -1);
+                long endDate = cal.getTimeInMillis();
+                makeAndDisplayGraph(startDate, endDate);
+            }
+        });
 
         barChart = findViewById(R.id.BarChart);
 
@@ -59,6 +80,12 @@ public class ChartsActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 
     private void buttonOnClickListener(int ID, final int addToYear, final int addToMonth, final int addToDay) {
@@ -77,12 +104,6 @@ public class ChartsActivity extends AppCompatActivity{
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        db.close();
-        super.onDestroy();
-    }
-
     private Calendar getTime(int addToYear, int addToMonth, int addToDay) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, addToYear);
@@ -91,7 +112,7 @@ public class ChartsActivity extends AppCompatActivity{
         return cal;
     }
 
-    private void makeAndDisplayGraph(long fromDate, long toDate) {
+    void makeAndDisplayGraph(long fromDate, long toDate) {
         Values.clear();
         getDataInRange(fromDate, toDate);
         displayGraph();
@@ -144,8 +165,6 @@ public class ChartsActivity extends AppCompatActivity{
     }
     private void getDataInRange(long fromDate, long toDate) {
         Cursor cursor = db.getDataBaseContents(fromDate, toDate);
-
-        Log.d(TAG, "getDataInRange: " + cursor.getCount());
 
         while (cursor.moveToNext()) {
             long date = cursor.getLong(cursor.getColumnIndexOrThrow("DATE"));

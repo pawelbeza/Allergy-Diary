@@ -10,6 +10,15 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
+    <com.example.allergydiary.InlineCalendar
+        android:id="@+id/inlineCalendar"
+        android:layout_width="249dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"></com.example.allergydiary.InlineCalendar>
+
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/BarChart"
         android:layout_width="match_parent"
@@ -17,14 +26,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/month"
-        app:layout_constraintVertical_bias="0.0"></com.github.mikephil.charting.charts.BarChart>
+        app:layout_constraintTop_toBottomOf="@+id/inlineCalendar"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp"></com.github.mikephil.charting.charts.BarChart>
 
     <Button
         android:id="@+id/week"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="56dp"
         android:background="#30000000"
         android:text="@string/week"
         android:textAlignment="center"
@@ -33,28 +43,13 @@
         app:layout_constraintEnd_toStartOf="@+id/month"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <Button
-        android:id="@+id/month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:background="#30000000"
-        android:text="@string/month"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/months"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/week"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/months"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="56dp"
         android:background="#30000000"
         android:text="@string/months3"
         android:textAlignment="center"
@@ -63,5 +58,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/month"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:background="#30000000"
+        android:text="@string/month"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/months"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/week"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
 </android.support.constraint.ConstraintLayout>
