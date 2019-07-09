@@ -5,28 +5,24 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
-import android.support.v7.widget.Toolbar;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DiaryActivity extends AppCompatActivity {
     private static final String TAG = "DiaryActivity";
-
     private long date;
     private DatabaseHelper db;
-    InlineCalendar inlineCalendar;
     private SeekBar seekBar;
     private Switch simpleSwitch;
 
@@ -41,7 +37,7 @@ public class DiaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
 
-        setSupportActionBar( (Toolbar) findViewById(R.id.toolbar));
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = new DatabaseHelper(this);

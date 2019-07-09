@@ -2,7 +2,6 @@ package com.example.allergydiary;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -10,26 +9,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class InlineCalendar extends LinearLayout {
-    private static final String TAG = "InlineCalendar";
-
     Button btnPrev;
     Button btnNext;
     TextView tvDate;
     Calendar calendar = Calendar.getInstance();
     private MyOnClickListener myOnClickListener;
 
-    public interface MyOnClickListener {
-        void onClickListener();
-    }
-
     public InlineCalendar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initControl(context, attrs);
+        initControl(context);
         initInterface();
     }
 
@@ -62,6 +54,8 @@ public class InlineCalendar extends LinearLayout {
             public void onClick(View v) {
                 updateCalendar(-1);
                 myOnClickListener.onClickListener();
+                boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH));
+                btnNext.setVisibility(condition ? View.INVISIBLE : View.VISIBLE);
             }
         });
 
@@ -71,11 +65,14 @@ public class InlineCalendar extends LinearLayout {
             public void onClick(View v) {
                 updateCalendar(1);
                 myOnClickListener.onClickListener();
+                boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH));
+                btnNext.setVisibility(condition ? View.INVISIBLE : View.VISIBLE);
             }
         });
+        btnNext.setVisibility(View.INVISIBLE);
     }
 
-    private void initControl(Context context, AttributeSet attrs) {
+    private void initControl(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.inline_calendar, this);
 
@@ -93,6 +90,10 @@ public class InlineCalendar extends LinearLayout {
     private String calendarToString() {
         SimpleDateFormat date_format = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
         return date_format.format(calendar.getTime());
+    }
+
+    public interface MyOnClickListener {
+        void onClickListener();
     }
 
 

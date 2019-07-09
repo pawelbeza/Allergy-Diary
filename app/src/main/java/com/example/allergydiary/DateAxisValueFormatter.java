@@ -14,7 +14,7 @@ public class DateAxisValueFormatter extends ValueFormatter {
     private DateFormat mDataFormat;
     private Date mDate;
 
-    public DateAxisValueFormatter(long referenceTimestamp) {
+    DateAxisValueFormatter(long referenceTimestamp) {
         this.referenceTimestamp = referenceTimestamp;
         this.mDataFormat = new SimpleDateFormat("MM:dd", Locale.ENGLISH);
         this.mDate = new Date();

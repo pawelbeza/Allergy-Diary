@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.View;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -19,17 +18,13 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 public class ChartsActivity extends AppCompatActivity{
-    private static final String TAG = "ChartsActivity";
-
-    //TODO DatePicker
     //TODO add some indication that medicine was taken on given day
+    //TODO add support for landscape view
 
     private BarChart barChart;
-    private Calendar cal;
     private DatabaseHelper db;
     private InlineCalendar inlineCalendar;
     private ArrayList<BarEntry> Values = new ArrayList<>();
@@ -43,7 +38,6 @@ public class ChartsActivity extends AppCompatActivity{
         setSupportActionBar( (Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        cal = Calendar.getInstance();
         db = new DatabaseHelper(this);
 
         inlineCalendar = findViewById(R.id.inlineCalendar);
@@ -69,11 +63,7 @@ public class ChartsActivity extends AppCompatActivity{
 
         barChart = findViewById(R.id.BarChart);
 
-        buttonOnClickListener(R.id.week, 0, 0, -7);
-        buttonOnClickListener(R.id.month, 0, -1, 0);
-        buttonOnClickListener(R.id.months, 0, -3, 0);
-
-        (findViewById(R.id.week)).performClick();
+        getCurrMonth();
     }
 
     @Override
@@ -88,28 +78,21 @@ public class ChartsActivity extends AppCompatActivity{
         super.onDestroy();
     }
 
-    private void buttonOnClickListener(int ID, final int addToYear, final int addToMonth, final int addToDay) {
-        cal = Calendar.getInstance();
-        GregorianCalendar gCal = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-        final long toDate = gCal.getTimeInMillis();
+    private void getCurrMonth() {
+        Calendar cal = inlineCalendar.getCalendar();
 
-        findViewById(ID).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cal = getTime(addToYear, addToMonth, addToDay);
-                GregorianCalendar gCal = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-                long fromDate = gCal.getTimeInMillis();
-                makeAndDisplayGraph(fromDate, toDate);
-            }
-        });
-    }
+        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
 
-    private Calendar getTime(int addToYear, int addToMonth, int addToDay) {
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.YEAR, addToYear);
-        cal.add(Calendar.MONTH, addToMonth);
-        cal.add(Calendar.DAY_OF_MONTH, addToDay);
-        return cal;
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        long startDate = cal.getTimeInMillis();
+
+        cal.add(Calendar.MONTH, 1);
+        cal.add(Calendar.MILLISECOND, -1);
+        long endDate = cal.getTimeInMillis();
+        makeAndDisplayGraph(startDate, endDate);
     }
 
     void makeAndDisplayGraph(long fromDate, long toDate) {
@@ -153,8 +136,8 @@ public class ChartsActivity extends AppCompatActivity{
         rightAxis.setAxisMaximum(10f);
 
         BarDataSet barDataSet = new BarDataSet(Values, "Feeling");
-        int startColor = ContextCompat.getColor(this, android.R.color.holo_green_light);
-        int endColor = ContextCompat.getColor(this, android.R.color.holo_red_dark);
+        int startColor = ContextCompat.getColor(this, R.color.green);
+        int endColor = ContextCompat.getColor(this, android.R.color.holo_blue_light);
         barDataSet.setGradientColor(startColor, endColor);
 
         BarData barData = new BarData(barDataSet);
@@ -168,7 +151,7 @@ public class ChartsActivity extends AppCompatActivity{
 
         while (cursor.moveToNext()) {
             long date = cursor.getLong(cursor.getColumnIndexOrThrow("DATE"));
-            date = TimeUnit.MILLISECONDS.toDays(date);
+            date = TimeUnit.MILLISECONDS.toDays(date) + 1; // +1 because TimeUnit rounds down
             int feeling = cursor.getInt(cursor.getColumnIndexOrThrow("FEELING"));
             referenceTimestamp = Math.min(referenceTimestamp, date);
             Values.add(new BarEntry(date, feeling));
