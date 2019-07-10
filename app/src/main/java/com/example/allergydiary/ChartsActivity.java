@@ -154,8 +154,12 @@ public class ChartsActivity extends AppCompatActivity{
             long date = cursor.getLong(cursor.getColumnIndexOrThrow("DATE"));
             date = TimeUnit.MILLISECONDS.toDays(date) + 1; // +1 because TimeUnit rounds down
             int feeling = cursor.getInt(cursor.getColumnIndexOrThrow("FEELING"));
+            boolean medicine = (cursor.getInt(cursor.getColumnIndexOrThrow("MEDICINE")) == 1);
             referenceTimestamp = Math.min(referenceTimestamp, date);
-            Values.add(new BarEntry(date, feeling));
+            if(medicine)
+                Values.add(new BarEntry(date, feeling, getResources().getDrawable(R.drawable.ic_pill)));
+            else
+                Values.add(new BarEntry(date, feeling));
         }
 
         for (int i=0;i<Values.size();i++) {

@@ -54,7 +54,8 @@ public class InlineCalendar extends LinearLayout {
             public void onClick(View v) {
                 updateCalendar(-1);
                 myOnClickListener.onClickListener();
-                boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH));
+                boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
+                        Calendar.getInstance().get(Calendar.YEAR) == calendar.get(Calendar.YEAR));
                 btnNext.setVisibility(condition ? View.INVISIBLE : View.VISIBLE);
             }
         });
@@ -65,7 +66,8 @@ public class InlineCalendar extends LinearLayout {
             public void onClick(View v) {
                 updateCalendar(1);
                 myOnClickListener.onClickListener();
-                boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH));
+                boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
+                        Calendar.getInstance().get(Calendar.YEAR) == calendar.get(Calendar.YEAR));
                 btnNext.setVisibility(condition ? View.INVISIBLE : View.VISIBLE);
             }
         });
