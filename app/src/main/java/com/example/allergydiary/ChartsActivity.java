@@ -21,7 +21,6 @@ import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class ChartsActivity extends AppCompatActivity{
-    //TODO add some indication that medicine was taken on given day
     //TODO add support for landscape view
 
     private BarChart barChart;
