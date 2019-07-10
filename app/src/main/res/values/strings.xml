@@ -13,4 +13,6 @@
     <string name="date">%3$d-%2$d-%1$d</string>
     <string name="medicine">Taken medicine</string>
     <string name="database">Database</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
