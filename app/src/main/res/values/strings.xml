@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Allergy Diary</string>
-    <string name="diary">Allergy Diary</string>
+    <string name="diary">Diary</string>
     <string name="graphs">Graphs</string>
     <string name="feeling">How are you feeling today?</string>
     <string name="symptoms">Allergic symptoms</string>

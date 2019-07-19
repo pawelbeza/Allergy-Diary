@@ -2,6 +2,7 @@ package com.example.allergydiary;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +14,12 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class InlineCalendar extends LinearLayout {
-    Button btnPrev;
-    Button btnNext;
-    TextView tvDate;
-    Calendar calendar = Calendar.getInstance();
+    private Button btnPrev;
+    private Button btnNext;
+    private TextView tvDate;
+    private Calendar calendar = Calendar.getInstance();
     private MyOnClickListener myOnClickListener;
+    private static final String TAG = "InlineCalendar";
 
     public InlineCalendar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,29 +51,22 @@ public class InlineCalendar extends LinearLayout {
     }
 
     private void assignClickHandlers() {
-        btnPrev.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateCalendar(-1);
-                myOnClickListener.onClickListener();
-                boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
-                        Calendar.getInstance().get(Calendar.YEAR) == calendar.get(Calendar.YEAR));
-                btnNext.setVisibility(condition ? View.INVISIBLE : View.VISIBLE);
-            }
-        });
-
-
-        btnNext.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateCalendar(1);
-                myOnClickListener.onClickListener();
-                boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
-                        Calendar.getInstance().get(Calendar.YEAR) == calendar.get(Calendar.YEAR));
-                btnNext.setVisibility(condition ? View.INVISIBLE : View.VISIBLE);
-            }
-        });
+        assignOnClickListener(btnPrev, -1);
+        assignOnClickListener(btnNext, 1);
         btnNext.setVisibility(View.INVISIBLE);
+    }
+
+    private void assignOnClickListener(final Button btn, final int addMonth) {
+        btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateCalendar(addMonth);
+                myOnClickListener.onClickListener();
+                boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
+                        Calendar.getInstance().get(Calendar.YEAR) == calendar.get(Calendar.YEAR));
+                btnNext.setVisibility(condition ? View.INVISIBLE : View.VISIBLE);
+            }
+        });
     }
 
     private void initControl(Context context) {
@@ -97,6 +92,4 @@ public class InlineCalendar extends LinearLayout {
     public interface MyOnClickListener {
         void onClickListener();
     }
-
-
 }
