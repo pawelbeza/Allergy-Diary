@@ -18,12 +18,6 @@
         app:srcCompat="@drawable/ic_dashed_line"
         tools:ignore="ContentDescription" />
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
-
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"

@@ -2,10 +2,13 @@ package com.example.allergydiary;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -19,24 +22,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-public class ChartsActivity extends AppCompatActivity{
+public class ChartsFragment extends Fragment {
     //TODO add support for landscape view
     //TODO close database
 
+    long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
     private DatabaseHelper db;
     private InlineCalendar inlineCalendar;
     private ArrayList<BarEntry> Values = new ArrayList<>();
-    long referenceTimestamp = Long.MAX_VALUE;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_charts, container, false);
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_charts);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        db = new DatabaseHelper(getActivity());
 
-        db = new DatabaseHelper(this);
-
-        inlineCalendar = findViewById(R.id.inlineCalendar);
+        inlineCalendar = view.findViewById(R.id.inlineCalendar);
         inlineCalendar.setListener(new InlineCalendar.MyOnClickListener() {
             @Override
             public void onClickListener() {
@@ -57,7 +64,7 @@ public class ChartsActivity extends AppCompatActivity{
             }
         });
 
-        barChart = findViewById(R.id.BarChart);
+        barChart = view.findViewById(R.id.BarChart);
 
         getCurrMonth();
     }
@@ -120,8 +127,8 @@ public class ChartsActivity extends AppCompatActivity{
         rightAxis.setAxisMaximum(10f);
 
         BarDataSet barDataSet = new BarDataSet(Values, "Feeling");
-        int startColor = ContextCompat.getColor(this, R.color.green);
-        int endColor = ContextCompat.getColor(this, android.R.color.holo_blue_light);
+        int startColor = ContextCompat.getColor(getActivity(), R.color.green);
+        int endColor = ContextCompat.getColor(getActivity(), android.R.color.holo_blue_light);
         barDataSet.setGradientColor(startColor, endColor);
 
         BarData barData = new BarData(barDataSet);
@@ -130,6 +137,7 @@ public class ChartsActivity extends AppCompatActivity{
         barChart.setData(barData);
         barChart.invalidate();
     }
+
     private void getDataInRange(long fromDate, long toDate) {
         Cursor cursor = db.getDataBaseContents(fromDate, toDate);
 
@@ -139,13 +147,13 @@ public class ChartsActivity extends AppCompatActivity{
             int feeling = cursor.getInt(cursor.getColumnIndexOrThrow("FEELING"));
             boolean medicine = (cursor.getInt(cursor.getColumnIndexOrThrow("MEDICINE")) == 1);
             referenceTimestamp = Math.min(referenceTimestamp, date);
-            if(medicine)
+            if (medicine)
                 Values.add(new BarEntry(date, feeling, getResources().getDrawable(R.drawable.ic_pill, null)));
             else
                 Values.add(new BarEntry(date, feeling));
         }
 
-        for (int i=0;i<Values.size();i++) {
+        for (int i = 0; i < Values.size(); i++) {
             float tmp = Values.get(i).getX() - referenceTimestamp;
             Values.get(i).setX(tmp);
         }

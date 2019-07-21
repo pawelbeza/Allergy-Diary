@@ -1,15 +1,14 @@
 package com.example.allergydiary;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
@@ -19,32 +18,32 @@ import android.widget.Switch;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class DiaryActivity extends AppCompatActivity {
+public class DiaryActivity extends Fragment {
     private static final String TAG = "DiaryActivity";
     private long date;
     private DatabaseHelper db;
     private SeekBar seekBar;
     private Switch simpleSwitch;
+    private CalendarView calendarView;
 
+    //TODO intent
+
+    @Nullable
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        db.close();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_diary, container, false);
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diary);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        db = new DatabaseHelper(getActivity());
 
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        db = new DatabaseHelper(this);
+        calendarView = view.findViewById(R.id.calendarView);
 
         calendarView();
 
-        simpleSwitch = findViewById(R.id.Switch);
+        simpleSwitch = view.findViewById(R.id.Switch);
         simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -52,7 +51,7 @@ public class DiaryActivity extends AppCompatActivity {
             }
         });
 
-        seekBar = findViewById(R.id.seekBar);
+        seekBar = view.findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -70,22 +69,16 @@ public class DiaryActivity extends AppCompatActivity {
             }
         });
 
-        Button btnToDataBase = findViewById(R.id.btnToDataBase);
+        Button btnToDataBase = view.findViewById(R.id.btnToDataBase);
         btnToDataBase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DiaryActivity.this, DataListActivity.class);
-                startActivity(intent);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new DataListActivity()).commit();
             }
         });
 
         getCurrDate();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
     }
 
     private void getCurrDate() {
@@ -108,6 +101,7 @@ public class DiaryActivity extends AppCompatActivity {
         }
         cursor.moveToNext();
         int feeling = cursor.getInt(cursor.getColumnIndex("FEELING"));
+
         seekBar.setProgress(feeling);
 
         int medicine = cursor.getInt(cursor.getColumnIndex("MEDICINE"));
@@ -115,7 +109,6 @@ public class DiaryActivity extends AppCompatActivity {
     }
 
     private void calendarView() {
-        CalendarView calendarView = findViewById(R.id.calendarView);
         calendarView.setMaxDate(System.currentTimeMillis());
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override

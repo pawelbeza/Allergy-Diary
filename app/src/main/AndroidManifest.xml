@@ -20,10 +20,10 @@
             android:parentActivityName="com.example.allergydiary.MainActivity"></activity>
         <activity android:name=".DataListActivity"
             android:parentActivityName="com.example.allergydiary.DiaryActivity"></activity>
-        <activity android:name=".ChartsActivity"></activity>
-        <activity android:name=".ForecastActivity"
+        <activity android:name=".ChartsFragment"></activity>
+        <activity android:name=".ForecastFragment"
             android:parentActivityName="com.example.allergydiary.MainActivity"></activity>
-        <activity android:name=".SettingsActivity"
+        <activity android:name=".SettingsFragment"
             android:parentActivityName="com.example.allergydiary.MainActivity"></activity>
 
 

@@ -26,5 +26,4 @@ public class CircleImageView extends de.hdodenhof.circleimageview.CircleImageVie
             setBorderColor(Color.WHITE);
         }
     }
-
 }
