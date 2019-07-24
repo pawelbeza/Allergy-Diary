@@ -26,8 +26,6 @@ public class DiaryActivity extends Fragment {
     private Switch simpleSwitch;
     private CalendarView calendarView;
 
-    //TODO intent
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

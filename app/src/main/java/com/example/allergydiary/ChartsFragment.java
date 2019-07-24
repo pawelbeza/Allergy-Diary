@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ChartsFragment extends Fragment {
     //TODO add support for landscape view
-    //TODO close database
 
     long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
@@ -128,7 +127,7 @@ public class ChartsFragment extends Fragment {
 
         BarDataSet barDataSet = new BarDataSet(Values, "Feeling");
         int startColor = ContextCompat.getColor(getActivity(), R.color.green);
-        int endColor = ContextCompat.getColor(getActivity(), android.R.color.holo_blue_light);
+        int endColor = ContextCompat.getColor(getActivity(), R.color.blue);
         barDataSet.setGradientColor(startColor, endColor);
 
         BarData barData = new BarData(barDataSet);

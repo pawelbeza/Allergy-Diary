@@ -17,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
 
     //TODO Read about navController
-    //TODO Add Navigation Bar
+    //TODO Read about Onboarding https://material.io/design/communication/onboarding.html#
+    //TODO Read about Cards https://material.io/design/components/cards.html#usage
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
+        return false;
     }
 
     @Override
