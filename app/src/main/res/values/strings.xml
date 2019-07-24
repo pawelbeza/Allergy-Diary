@@ -10,6 +10,9 @@
     <string name="months3">3 months</string>
     <string name="forecast">Forecast</string>
     <string name="settings">Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="everyday_survey">Everyday survey</string>
+    <string name="medication">Medication</string>
     <string name="date">%3$d-%2$d-%1$d</string>
     <string name="medicine">Taken medicine</string>
     <string name="database">Database</string>
