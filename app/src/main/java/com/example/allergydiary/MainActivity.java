@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (view.getId()) {
                     case R.id.toDiary:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new DiaryActivity()).commit();
+                                new DiaryFragment()).commit();
                         break;
                     case R.id.toForecast:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new DiaryActivity()).commit();
+                    new DiaryFragment()).commit();
         }
 
     }

@@ -14,12 +14,6 @@
         <include
             layout="@layout/toolbar" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:paddingTop="-12dp"
-            app:srcCompat="@drawable/ic_pill"/>
-
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"

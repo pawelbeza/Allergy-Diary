@@ -18,8 +18,8 @@ import android.widget.Switch;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class DiaryActivity extends Fragment {
-    private static final String TAG = "DiaryActivity";
+public class DiaryFragment extends Fragment {
+    private static final String TAG = "DiaryFragment";
     private long date;
     private DatabaseHelper db;
     private SeekBar seekBar;
@@ -67,14 +67,14 @@ public class DiaryActivity extends Fragment {
             }
         });
 
-        Button btnToDataBase = view.findViewById(R.id.btnToDataBase);
-        btnToDataBase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new DataListActivity()).commit();
-            }
-        });
+//        Button btnToDataBase = view.findViewById(R.id.btnToDataBase);
+//        btnToDataBase.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                        new DataListActivity()).commit();
+//            }
+//        });
 
         getCurrDate();
     }

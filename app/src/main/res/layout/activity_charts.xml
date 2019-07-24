@@ -11,7 +11,6 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="0dp"
         app:srcCompat="@drawable/ic_graph"/>
 
     <com.example.allergydiary.InlineCalendar

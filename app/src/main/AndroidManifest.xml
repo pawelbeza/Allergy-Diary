@@ -16,10 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DiaryActivity"
+        <activity android:name=".DiaryFragment"
             android:parentActivityName="com.example.allergydiary.MainActivity"></activity>
-        <activity android:name=".DataListActivity"
-            android:parentActivityName="com.example.allergydiary.DiaryActivity"></activity>
         <activity android:name=".ChartsFragment"></activity>
         <activity android:name=".ForecastFragment"
             android:parentActivityName="com.example.allergydiary.MainActivity"></activity>
