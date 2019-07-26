@@ -32,10 +32,12 @@
         android:background="@drawable/rounded_corner"/>
 
     <LinearLayout
+        android:id="@+id/switch1Layout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:layout_marginTop="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:background="@drawable/rounded_corner">
@@ -60,7 +62,8 @@
             android:id="@+id/switch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:theme="@style/SwitchTheme" />
     </LinearLayout>
 
     <TextView
@@ -75,10 +78,12 @@
         android:background="@drawable/rounded_corner"/>
 
     <LinearLayout
+        android:id="@+id/switch2Layout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/rounded_corner"
+        android:layout_marginTop="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:gravity="center">
@@ -102,16 +107,17 @@
         <Switch
             android:id="@+id/switch2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:theme="@style/SwitchTheme" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/switch3Layout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:orientation="horizontal"
+        android:layout_marginTop="5dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:background="@drawable/rounded_corner"
@@ -136,7 +142,8 @@
         <Switch
             android:id="@+id/switch3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:theme="@style/SwitchTheme" />
 
     </LinearLayout>
 

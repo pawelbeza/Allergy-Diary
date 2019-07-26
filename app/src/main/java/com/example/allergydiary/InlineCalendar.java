@@ -13,12 +13,12 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class InlineCalendar extends LinearLayout {
+    private static final String TAG = "InlineCalendar";
     private Button btnPrev;
     private Button btnNext;
     private TextView tvDate;
     private Calendar calendar = Calendar.getInstance();
     private MyOnClickListener myOnClickListener;
-    private static final String TAG = "InlineCalendar";
 
     public InlineCalendar(Context context, AttributeSet attrs) {
         super(context, attrs);

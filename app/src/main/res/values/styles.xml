@@ -26,4 +26,8 @@
         <item name="android:shadowDy"> 3 </item>
         <item name="android:shadowRadius"> 6 </item>
     </style>
+
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#148E13</item>
+    </style>
 </resources>

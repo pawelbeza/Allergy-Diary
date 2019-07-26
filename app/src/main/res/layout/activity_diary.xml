@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="-40dp"
+            android:layout_marginTop="-30dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -69,7 +69,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:bar_color="#68cdcd"
+                app:bar_color="#68CDCD"
                 app:size="small"
                 tools:targetApi="lollipop" />
 
@@ -92,25 +92,22 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/switchLayout"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:background="@drawable/rounded_corner"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_marginTop="15dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="@string/medicine"
-            android:textStyle="bold"
-            android:textSize="20sp" />
-
         <Switch
             android:id="@+id/Switch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/medicine"
+            android:textStyle="bold"
+            android:switchPadding="10dp"
+            android:textSize="20sp"
+            android:theme="@style/SwitchTheme" />
     </LinearLayout>
 </LinearLayout>
