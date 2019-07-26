@@ -8,9 +8,9 @@
     android:gravity="center">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="0dp"
         app:srcCompat="@drawable/ic_notebook_4"
         tools:ignore="ContentDescription"/>
 
@@ -22,45 +22,74 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
         android:background="@drawable/rounded_corner"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/symptoms"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="1dp">
+            android:layout_marginTop="-40dp"
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:id="@+id/imageView"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/fluidSlider"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_happy_face"
                 tools:ignore="ContentDescription" />
 
-            <SeekBar
-                android:id="@+id/seekBar"
+            <com.ramotion.fluidslider.FluidSlider
+                android:id="@+id/fluidSlider"
                 android:layout_width="250dp"
-                android:layout_height="20dp"
-                android:max="10" />
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                app:duration="@android:integer/config_mediumAnimTime"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:bar_color="#68cdcd"
+                app:size="small"
+                tools:targetApi="lollipop" />
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:id="@+id/imageView2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/fluidSlider"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_sad_face"
                 tools:ignore="ContentDescription" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,7 +102,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:text="@string/medicine"
             android:textStyle="bold"
             android:textSize="20sp" />

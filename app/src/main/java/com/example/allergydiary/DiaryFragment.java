@@ -2,27 +2,34 @@ package com.example.allergydiary;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 
+import com.ramotion.fluidslider.FluidSlider;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function1;
 
 public class DiaryFragment extends Fragment {
     private static final String TAG = "DiaryFragment";
     private long date;
     private DatabaseHelper db;
-    private SeekBar seekBar;
+//    private SeekBar seekBar;
+    private int fluidProgress;
+    private FluidSlider slider;
     private Switch simpleSwitch;
     private CalendarView calendarView;
 
@@ -49,24 +56,30 @@ public class DiaryFragment extends Fragment {
             }
         });
 
-        seekBar = view.findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        final int max = 10;
+
+        slider = getActivity().findViewById(R.id.fluidSlider);
+
+        slider.setEndText(String.valueOf(max));
+
+        slider.setPositionListener(new Function1<Float, Unit>() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                addData();
+            public Unit invoke(Float pos) {
+                fluidProgress = (int)(max * pos);
+                slider.setBubbleText(String.valueOf(fluidProgress));
+                Log.d("D", "setPositionTrackingListener" + fluidProgress);
+                return Unit.INSTANCE;
             }
         });
 
+        slider.setEndTrackingListener(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                Log.d("D", "setBeginTrackingListener");
+                addData();
+                return Unit.INSTANCE;
+            }
+        });
 //        Button btnToDataBase = view.findViewById(R.id.btnToDataBase);
 //        btnToDataBase.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -93,14 +106,14 @@ public class DiaryFragment extends Fragment {
     private void setSavedValues() {
         Cursor cursor = db.getDataBaseContents(date);
         if (cursor == null || cursor.getCount() == 0) {//then there is no record with current date
-            seekBar.setProgress(0);
+            slider.setPosition(0);
             simpleSwitch.setChecked(false);
             return;
         }
         cursor.moveToNext();
         int feeling = cursor.getInt(cursor.getColumnIndex("FEELING"));
 
-        seekBar.setProgress(feeling);
+        slider.setPosition((float)(feeling/10.0));
 
         int medicine = cursor.getInt(cursor.getColumnIndex("MEDICINE"));
         simpleSwitch.setChecked(medicine == 1);
@@ -120,7 +133,7 @@ public class DiaryFragment extends Fragment {
 
     private void addData() {
         int[] seekBarValues = new int[2];
-        seekBarValues[0] = seekBar.getProgress();
+        seekBarValues[0] = fluidProgress;
         seekBarValues[1] = simpleSwitch.isChecked() ? 1 : 0;
 
         boolean insertData = db.addData(date, seekBarValues);
