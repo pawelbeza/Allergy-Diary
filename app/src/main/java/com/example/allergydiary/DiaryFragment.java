@@ -3,6 +3,7 @@ package com.example.allergydiary;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.database.Cursor;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class DiaryFragment extends Fragment {
     private FluidSlider slider;
     private Switch simpleSwitch;
     private CalendarView calendarView;
+    private final int cornerRadius = 40;
 
     //TODO Organise styles for strings
     //TODO Add animation between launching fragments
@@ -65,7 +67,11 @@ public class DiaryFragment extends Fragment {
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                getActivity().findViewById(R.id.switchLayout).setBackgroundColor((int) animation.getAnimatedValue());
+                View view = getActivity().findViewById(R.id.switchLayout);
+                GradientDrawable shape = new GradientDrawable();
+                shape.setColor((int) animation.getAnimatedValue());
+                shape.setCornerRadius(cornerRadius);
+                view.setBackground(shape);
             }
         });
 
@@ -74,7 +80,6 @@ public class DiaryFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) colorAnimation.start();
                 else colorAnimation.reverse();
-                Log.d(TAG, "onCheckedChanged: :(((((((");
                 addData();
             }
         });
@@ -111,18 +116,27 @@ public class DiaryFragment extends Fragment {
     }
 
     private void setSwitchBackground(boolean b) {
+        simpleSwitch.setChecked(b);
+        simpleSwitch.jumpDrawablesToCurrentState();
+
+        View view = getActivity().findViewById(R.id.switchLayout);
+        GradientDrawable shape = new GradientDrawable();
+        shape.setCornerRadius(cornerRadius);
         if (b)
-            getActivity().findViewById(R.id.switchLayout).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.bright_green));
-        else {
-            Log.d(TAG, "setSwitchBackground: ");
-            getActivity().findViewById(R.id.switchLayout).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.bright_red));
-        }
+            shape.setColor(getResources().getColor(R.color.bright_green, null));
+        else
+            shape.setColor(getResources().getColor(R.color.bright_red, null));
+        view.setBackground(shape);
     }
 
     private void setSavedValues() {
         Cursor cursor = db.getDataBaseContents(date);
-        if (cursor == null || cursor.getCount() == 0)//then there is no record with current date
+        if (cursor == null || cursor.getCount() == 0) {//then there is no record with current date
+            setSwitchBackground(false);
+            slider.setPosition(0);
+            slider.setBubbleText("0");
             return;
+        }
         cursor.moveToNext();
         int feeling = cursor.getInt(cursor.getColumnIndex("FEELING"));
 
@@ -130,8 +144,6 @@ public class DiaryFragment extends Fragment {
         slider.setBubbleText(String.valueOf(feeling));
 
         boolean medicine = cursor.getInt(cursor.getColumnIndex("MEDICINE")) == 1;
-        simpleSwitch.setChecked(medicine);
-        simpleSwitch.jumpDrawablesToCurrentState();
         setSwitchBackground(medicine);
     }
 

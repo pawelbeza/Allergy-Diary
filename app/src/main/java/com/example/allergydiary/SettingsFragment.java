@@ -2,11 +2,19 @@ package com.example.allergydiary;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +25,20 @@ import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-public class SettingsFragment extends Fragment {
+import java.util.Calendar;
+import java.util.Locale;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
+public class SettingsFragment extends Fragment {
+    private final int cornerRadius = 40;
+    private NotificationManagerCompat notificationManager;
+
+    //TODO Fix choosing hour
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,9 +48,11 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        notificationManager = NotificationManagerCompat.from(getActivity());
     }
 
-    public void assignClickHandler(int tvID, int swID, int toBeColored) {
+    private void assignClickHandler(int tvID, int swID, int toBeColored) {
         final TextView textView = getActivity().findViewById(tvID);
         final Switch sw = getActivity().findViewById(swID);
         textView.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +61,7 @@ public class SettingsFragment extends Fragment {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        textView.setText(hourOfDay + ":" + minute);
+                        textView.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
                         sw.setChecked(true);
                     }
                 }, 0, 0, DateFormat.is24HourFormat(getActivity()));
@@ -62,7 +81,10 @@ public class SettingsFragment extends Fragment {
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                view.setBackgroundColor((int) animation.getAnimatedValue());
+                GradientDrawable shape = new GradientDrawable();
+                shape.setColor((int) animation.getAnimatedValue());
+                shape.setCornerRadius(cornerRadius);
+                view.setBackground(shape);
             }
         });
 
@@ -73,6 +95,21 @@ public class SettingsFragment extends Fragment {
                 else    colorAnimation.reverse();
             }
         });
+    }
+
+    private void setSwitchBackground(boolean b, int toBeColoredID, int switchID) {
+        Switch simpleSwitch = getActivity().findViewById(switchID);
+        simpleSwitch.setChecked(b);
+        simpleSwitch.jumpDrawablesToCurrentState();
+
+        View view = getActivity().findViewById(toBeColoredID);
+        GradientDrawable shape = new GradientDrawable();
+        shape.setCornerRadius(cornerRadius);
+        if (b)
+            shape.setColor(getResources().getColor(R.color.bright_green, null));
+        else
+            shape.setColor(getResources().getColor(R.color.bright_red, null));
+        view.setBackground(shape);
     }
 
     @Override
@@ -91,9 +128,67 @@ public class SettingsFragment extends Fragment {
 
             TextView tv = getActivity().findViewById(tvIDs[i]);
             editor.putString("PopUpSchedule" + i, tv.getText().toString());
+
+            setAlarm(sw.isChecked(), tv, i, Notifications.getNotificationContents(i));
         }
 
+        setDeviceBootReceiver();
+
         editor.apply();
+    }
+
+
+    private void setAlarm(Boolean dailyNotify, TextView tv, int notificationId, String[] notificationContent) {
+        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+        alarmIntent.putExtra("notificationContent", notificationContent);
+        alarmIntent.putExtra("id", notificationId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), notificationId, alarmIntent, 0);
+
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        if (dailyNotify) {
+            Log.d(TAG, "setAlarm: ENABLE");
+            //enable daily notifications
+            Calendar calendar = TimeHelper.stringToCalendar(tv.getText().toString());
+            // if notification time is before selected time, send notification the next day
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DATE, 1);
+            }
+            if (manager != null) {
+                manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, pendingIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
+            }
+        } else { //disable Daily Notifications
+            Log.d(TAG, "setAlarm: DISABLE");
+            if (PendingIntent.getBroadcast(getActivity(), notificationId, alarmIntent, 0) != null && manager != null) {
+                manager.cancel(pendingIntent);
+            }
+        }
+    }
+
+    private void setDeviceBootReceiver() {
+        PackageManager pm = getActivity().getPackageManager();
+        ComponentName receiver = new ComponentName(getActivity(), DeviceBootReceiver.class);
+
+        int[] switchIDs = {R.id.switch1, R.id.switch2, R.id.switch3};
+
+        for (int id : switchIDs) {
+            Switch sw = getActivity().findViewById(id);
+            if (sw.isChecked()) {
+                //To enable Boot Receiver class
+                pm.setComponentEnabledSetting(receiver,
+                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                        PackageManager.DONT_KILL_APP);
+                return;
+            }
+        }
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
     }
 
     @Override
@@ -103,30 +198,27 @@ public class SettingsFragment extends Fragment {
         int[] switchIDs = {R.id.switch1, R.id.switch2, R.id.switch3};
         int[] toBeColoredIDs = {R.id.switch1Layout, R.id.switch2Layout, R.id.switch3Layout};
         int[] tvIDs = {R.id.everyDay, R.id.morning, R.id.evening};
+        String[] time = {"20:00", "8:00", "20:00"};
 
         SharedPreferences sharedPref;
         try {
             sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         } catch (NullPointerException e) {
-            getActivity().findViewById(R.id.switch1Layout).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.bright_red));
-            getActivity().findViewById(R.id.switch2Layout).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.bright_red));
-            getActivity().findViewById(R.id.switch3Layout).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.bright_red));
+            for (int i = 0; i < switchIDs.length; i++)
+                setSwitchBackground(false, toBeColoredIDs[i], switchIDs[i]);
             return;
         }
 
         for (int i = 0; i < 3; i++) {
             Boolean isChecked = sharedPref.getBoolean("PopUpScheduleChecked" + i, false);
-            Switch sw = getActivity().findViewById(switchIDs[i]);
             View view = getActivity().findViewById(toBeColoredIDs[i]);
-            sw.setChecked(isChecked);
-            sw.jumpDrawablesToCurrentState();
 
             if (isChecked)
-                view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.bright_green));
+                setSwitchBackground(true, toBeColoredIDs[i], switchIDs[i]);
             else
-                view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.bright_red));
+                setSwitchBackground(false, toBeColoredIDs[i], switchIDs[i]);
 
-            String hour = sharedPref.getString("PopUpSchedule" + i, "12:00");
+            String hour = sharedPref.getString("PopUpSchedule" + i, time[i]);
             TextView tv = view.findViewById(tvIDs[i]);
             tv.setText(hour);
         }

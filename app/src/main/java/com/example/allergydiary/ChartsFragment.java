@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ChartsFragment extends Fragment {
     //TODO add support for landscape view
-    //TODO add background for other resolutions
 
     long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;

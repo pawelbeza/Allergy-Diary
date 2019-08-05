@@ -90,24 +90,32 @@
                 tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/switchLayout"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:background="@drawable/rounded_corner"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginTop="15dp">
 
-        <Switch
-            android:id="@+id/Switch"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/switchLayout"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="@string/medicine"
-            android:textStyle="bold"
-            android:switchPadding="10dp"
-            android:textSize="20sp"
-            android:theme="@style/SwitchTheme" />
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:text="@string/medicine"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/Switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/SwitchTheme" />
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
