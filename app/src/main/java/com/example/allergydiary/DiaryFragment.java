@@ -122,10 +122,9 @@ public class DiaryFragment extends Fragment {
         View view = getActivity().findViewById(R.id.switchLayout);
         GradientDrawable shape = new GradientDrawable();
         shape.setCornerRadius(cornerRadius);
-        if (b)
-            shape.setColor(getResources().getColor(R.color.bright_green, null));
-        else
-            shape.setColor(getResources().getColor(R.color.bright_red, null));
+        int color = b ? ContextCompat.getColor(getActivity(), R.color.bright_green) :
+                ContextCompat.getColor(getActivity(), R.color.bright_red);
+        shape.setColor(color);
         view.setBackground(shape);
     }
 

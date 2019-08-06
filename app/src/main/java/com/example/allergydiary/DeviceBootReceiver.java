@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -13,7 +14,15 @@ import java.util.Objects;
 public class DeviceBootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (Objects.equals(intent.getAction(), "android.intent.action.BOOT_COMPLETED")) {
+        boolean b;
+        String booting = "android.intent.action.BOOT_COMPLETED";
+        if (Build.VERSION.SDK_INT >= 19) {
+            b = Objects.equals(intent.getAction(), booting);
+        } else {
+            String action = intent.getAction();
+            b = (action != null && action.equals(booting));
+        }
+        if (b) {
             // on device boot complete, reset the alarm
             for (int i = 0; i < 3; i++) {
                 Intent alarmIntent = new Intent(context, AlarmReceiver.class);

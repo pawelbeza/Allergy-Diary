@@ -25,7 +25,6 @@ import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -36,7 +35,6 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SettingsFragment extends Fragment {
     private final int cornerRadius = 40;
-    private NotificationManagerCompat notificationManager;
 
     //TODO Fix choosing hour
     @Nullable
@@ -49,7 +47,6 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        notificationManager = NotificationManagerCompat.from(getActivity());
     }
 
     private void assignClickHandler(int tvID, int swID, int toBeColored) {
@@ -105,10 +102,9 @@ public class SettingsFragment extends Fragment {
         View view = getActivity().findViewById(toBeColoredID);
         GradientDrawable shape = new GradientDrawable();
         shape.setCornerRadius(cornerRadius);
-        if (b)
-            shape.setColor(getResources().getColor(R.color.bright_green, null));
-        else
-            shape.setColor(getResources().getColor(R.color.bright_red, null));
+        int color = b ? ContextCompat.getColor(getActivity(), R.color.bright_green) :
+                ContextCompat.getColor(getActivity(), R.color.bright_red);
+        shape.setColor(color);
         view.setBackground(shape);
     }
 

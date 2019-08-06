@@ -1,14 +1,15 @@
 package com.example.allergydiary;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.view.Menu;
-import android.view.View;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.github.mzule.fantasyslide.SideBar;
 import com.github.mzule.fantasyslide.SimpleFantasyListener;

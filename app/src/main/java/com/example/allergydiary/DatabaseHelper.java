@@ -5,13 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    static final String[] COLS = {"DATE", "FEELING", "MEDICINE"};
+    private static final String[] COLS = {"DATE", "FEELING", "MEDICINE"};
     private static final String DATABASE_NAME = "allergic_symptoms.db";
     private static final String TABLE_NAME = "allergic_symptoms";
-    private static final String TAG = "DatabaseHelper";
 
     DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -19,11 +17,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        StringBuffer createTable = new StringBuffer("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ( _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "DATE BIGINT UNIQUE");
+        StringBuilder createTable = new StringBuilder("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ( _id INTEGER PRIMARY KEY AUTOINCREMENT, DATE BIGINT UNIQUE");
         for (int i = 1; i < COLS.length; i++) {
-            Log.d(TAG, "onCreate: " + COLS[i]);
-            createTable.append(", " + COLS[i] + " INT");
+            String newColumn = ", " + COLS[i] + " INT";
+            createTable.append(newColumn);
         }
         createTable.append(")");
         db.execSQL(createTable.toString());

@@ -30,8 +30,10 @@ public class AllergyDiary extends Application {
             defaultChannel.setDescription("Default Importance Daily Notification");
 
             NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(highChannel);
-            manager.createNotificationChannel(defaultChannel);
+            if (manager != null) {
+                manager.createNotificationChannel(highChannel);
+                manager.createNotificationChannel(defaultChannel);
+            }
         }
     }
 }

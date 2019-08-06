@@ -1,6 +1,7 @@
 package com.example.allergydiary;
 
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class ChartsFragment extends Fragment {
     //TODO add support for landscape view
 
-    long referenceTimestamp = Long.MAX_VALUE;
+    private long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
     private DatabaseHelper db;
     private InlineCalendar inlineCalendar;
@@ -86,7 +87,7 @@ public class ChartsFragment extends Fragment {
         makeAndDisplayGraph(startDate, endDate);
     }
 
-    void makeAndDisplayGraph(long fromDate, long toDate) {
+    private void makeAndDisplayGraph(long fromDate, long toDate) {
         Values.clear();
         getDataInRange(fromDate, toDate);
         displayGraph();
@@ -147,8 +148,14 @@ public class ChartsFragment extends Fragment {
             int feeling = cursor.getInt(cursor.getColumnIndexOrThrow("FEELING"));
             boolean medicine = (cursor.getInt(cursor.getColumnIndexOrThrow("MEDICINE")) == 1);
             referenceTimestamp = Math.min(referenceTimestamp, date);
-            if (medicine)
-                Values.add(new BarEntry(date, feeling, getResources().getDrawable(R.drawable.ic_pill, null)));
+            if (medicine) {
+                Drawable icon;
+                if (android.os.Build.VERSION.SDK_INT >= 21)
+                    icon = getResources().getDrawable(R.drawable.ic_pill, null);
+                else
+                    icon = ContextCompat.getDrawable(getActivity(), R.drawable.ic_pill);
+                Values.add(new BarEntry(date, feeling, icon));
+            }
             else
                 Values.add(new BarEntry(date, feeling));
         }
