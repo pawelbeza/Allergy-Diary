@@ -23,8 +23,16 @@ public class DeviceBootReceiver extends BroadcastReceiver {
             b = (action != null && action.equals(booting));
         }
         if (b) {
+
             // on device boot complete, reset the alarm
             for (int i = 0; i < 3; i++) {
+                final SharedPreferences sharedPref = context.getSharedPreferences(MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
+
+                Boolean isChecked = sharedPref.getBoolean("PopUpScheduleChecked" + i, false);
+                if (!isChecked) {
+                    continue;
+                }
+
                 Intent alarmIntent = new Intent(context, AlarmReceiver.class);
                 String[] notificationContent = Notifications.getNotificationContents(i);
                 alarmIntent.putExtra("notificationContent", notificationContent);
@@ -32,7 +40,6 @@ public class DeviceBootReceiver extends BroadcastReceiver {
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, i, alarmIntent, 0);
 
                 AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                final SharedPreferences sharedPref = context.getSharedPreferences(MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
 
                 String date = sharedPref.getString("PopUpSchedule" + i, "20:00");
                 Calendar tmpCal = TimeHelper.stringToCalendar(date);
@@ -50,6 +57,9 @@ public class DeviceBootReceiver extends BroadcastReceiver {
                 if (manager != null) {
                     manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                             AlarmManager.INTERVAL_DAY, pendingIntent);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    }
                 }
             }
         }

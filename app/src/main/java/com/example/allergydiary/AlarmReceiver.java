@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String[] notificationContent = intent.getStringArrayExtra("notificationContent");

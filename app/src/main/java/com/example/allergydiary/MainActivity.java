@@ -1,6 +1,9 @@
 package com.example.allergydiary;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -15,6 +18,8 @@ import com.github.mzule.fantasyslide.SideBar;
 import com.github.mzule.fantasyslide.SimpleFantasyListener;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "Main";
+
     private DrawerLayout drawer;
 
     //TODO Read about navController

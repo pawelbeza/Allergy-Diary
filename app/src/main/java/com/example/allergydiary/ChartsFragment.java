@@ -26,7 +26,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ChartsFragment extends Fragment {
     //TODO add support for landscape view
-
+    //TODO Add launcher screen
+    //TODO Add back button
     private long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
     private DatabaseHelper db;
@@ -36,7 +37,7 @@ public class ChartsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_charts, container, false);
+        return inflater.inflate(R.layout.fragment_charts, container, false);
     }
 
     @Override

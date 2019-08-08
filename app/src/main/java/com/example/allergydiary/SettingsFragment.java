@@ -37,10 +37,11 @@ public class SettingsFragment extends Fragment {
     private final int cornerRadius = 40;
 
     //TODO Fix choosing hour
+    //TODO Fix Booting
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_settings, container, false);
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
     @Override
