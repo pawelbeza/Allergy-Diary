@@ -31,7 +31,7 @@ public class ChartsFragment extends Fragment {
     private long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
     private DatabaseHelper db;
-    private InlineCalendar inlineCalendar;
+    private InlineCalendarPicker calendarPicker;
     private ArrayList<BarEntry> Values = new ArrayList<>();
 
     @Nullable
@@ -45,11 +45,11 @@ public class ChartsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         db = new DatabaseHelper(getActivity());
 
-        inlineCalendar = view.findViewById(R.id.inlineCalendar);
-        inlineCalendar.setListener(new InlineCalendar.MyOnClickListener() {
+        calendarPicker = view.findViewById(R.id.inlineCalendar);
+        calendarPicker.setListener(new InlineCalendarPicker.MyOnClickListener() {
             @Override
             public void onClickListener() {
-                Calendar cal = inlineCalendar.getCalendar();
+                Calendar cal = calendarPicker.getCalendar();
 
                 cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
                 cal.clear(Calendar.MINUTE);
@@ -72,7 +72,7 @@ public class ChartsFragment extends Fragment {
     }
 
     private void getCurrMonth() {
-        Calendar cal = inlineCalendar.getCalendar();
+        Calendar cal = calendarPicker.getCalendar();
 
         cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
         cal.clear(Calendar.MINUTE);

@@ -14,4 +14,9 @@
         app:srcCompat="@drawable/ic_cloud"
         tools:ignore="ContentDescription" />
 
+    <com.example.allergydiary.RegionPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_contour1" />
+
 </LinearLayout>
