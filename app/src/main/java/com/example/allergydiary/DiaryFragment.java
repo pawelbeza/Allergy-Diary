@@ -2,10 +2,8 @@ package com.example.allergydiary;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
-import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.ramotion.fluidslider.FluidSlider;
 
@@ -30,12 +29,12 @@ import kotlin.jvm.functions.Function1;
 public class DiaryFragment extends Fragment {
     private static final String TAG = "DiaryFragment";
     private long date;
-    private DatabaseHelper db;
     private int fluidProgress;
     private FluidSlider slider;
     private Switch simpleSwitch;
     private CalendarView calendarView;
     private final int cornerRadius = 40;
+    private AllergicSymptomViewModel symptomViewModel;
 
     //TODO Organise styles for strings
     //TODO Add animation between launching fragments
@@ -49,7 +48,8 @@ public class DiaryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        db = new DatabaseHelper(getActivity());
+
+        symptomViewModel = ViewModelProviders.of(getActivity()).get(AllergicSymptomViewModel.class);
 
         calendarView = view.findViewById(R.id.calendarView);
 
@@ -102,6 +102,8 @@ public class DiaryFragment extends Fragment {
                 return Unit.INSTANCE;
             }
         });
+
+        symptomViewModel = ViewModelProviders.of(getActivity()).get(AllergicSymptomViewModel.class);
     }
 
     private void getCurrDate() {
@@ -129,20 +131,19 @@ public class DiaryFragment extends Fragment {
     }
 
     private void setSavedValues() {
-        Cursor cursor = db.getDataBaseContents(date);
-        if (cursor == null || cursor.getCount() == 0) {//then there is no record with current date
+        AllergicSymptom liveData = symptomViewModel.getDataBaseContents(date);
+        if (liveData == null) {//then there is no record with current date
             setSwitchBackground(false);
             slider.setPosition(0);
             slider.setBubbleText("0");
             return;
         }
-        cursor.moveToNext();
-        int feeling = cursor.getInt(cursor.getColumnIndex("FEELING"));
+        int feeling = liveData.getFeeling();
 
         slider.setPosition((float)(feeling/10.0));
         slider.setBubbleText(String.valueOf(feeling));
 
-        boolean medicine = cursor.getInt(cursor.getColumnIndex("MEDICINE")) == 1;
+        boolean medicine = liveData.isMedicine();
         setSwitchBackground(medicine);
     }
 
@@ -163,11 +164,7 @@ public class DiaryFragment extends Fragment {
         seekBarValues[0] = fluidProgress;
         seekBarValues[1] = simpleSwitch.isChecked() ? 1 : 0;
 
-        boolean insertData = db.addData(date, seekBarValues);
-        if (insertData) {
-            Log.d(TAG, "addData: " + "Insertion successful");
-        } else {
-            Log.d(TAG, "addData: " + "Insertion failure");
-        }
+        AllergicSymptom symptom = new AllergicSymptom(date, seekBarValues[0], simpleSwitch.isChecked());
+        symptomViewModel.upsert(symptom);
     }
 }

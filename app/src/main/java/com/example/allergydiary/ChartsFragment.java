@@ -1,6 +1,5 @@
 package com.example.allergydiary;
 
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -22,6 +22,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ChartsFragment extends Fragment {
@@ -30,9 +31,9 @@ public class ChartsFragment extends Fragment {
     //TODO Add back button
     private long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
-    private DatabaseHelper db;
     private InlineCalendarPicker calendarPicker;
     private ArrayList<BarEntry> Values = new ArrayList<>();
+    private AllergicSymptomViewModel symptomViewModel;
 
     @Nullable
     @Override
@@ -43,7 +44,7 @@ public class ChartsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        db = new DatabaseHelper(getActivity());
+        symptomViewModel = ViewModelProviders.of(getActivity()).get(AllergicSymptomViewModel.class);
 
         calendarPicker = view.findViewById(R.id.inlineCalendar);
         calendarPicker.setListener(new InlineCalendarPicker.MyOnClickListener() {
@@ -128,7 +129,7 @@ public class ChartsFragment extends Fragment {
         rightAxis.setAxisMinimum(0f);
         rightAxis.setAxisMaximum(10f);
 
-        BarDataSet barDataSet = new BarDataSet(Values, "Feeling");
+        BarDataSet barDataSet = new BarDataSet(Values, "AllergicSymptom");
         int startColor = ContextCompat.getColor(getActivity(), R.color.bright_green);
         int endColor = ContextCompat.getColor(getActivity(), R.color.bright_blue);
         barDataSet.setGradientColor(startColor, endColor);
@@ -141,13 +142,12 @@ public class ChartsFragment extends Fragment {
     }
 
     private void getDataInRange(long fromDate, long toDate) {
-        Cursor cursor = db.getDataBaseContents(fromDate, toDate);
-
-        while (cursor.moveToNext()) {
-            long date = cursor.getLong(cursor.getColumnIndexOrThrow("DATE"));
+        List<AllergicSymptom> symptoms = symptomViewModel.getDataBaseContents(fromDate, toDate);
+        for (AllergicSymptom symptom : symptoms) {
+            long date = symptom.getDate();
             date = TimeUnit.MILLISECONDS.toDays(date) + 1; // +1 because TimeUnit rounds down
-            int feeling = cursor.getInt(cursor.getColumnIndexOrThrow("FEELING"));
-            boolean medicine = (cursor.getInt(cursor.getColumnIndexOrThrow("MEDICINE")) == 1);
+            int feeling = symptom.getFeeling();
+            boolean medicine = symptom.isMedicine();
             referenceTimestamp = Math.min(referenceTimestamp, date);
             if (medicine) {
                 Drawable icon;
