@@ -2,14 +2,9 @@ package com.example.allergydiary;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.Calendar;
 
 abstract public class PickerWidget extends LinearLayout {
     private static final String TAG = "InlineCalendar";

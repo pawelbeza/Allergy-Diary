@@ -1,5 +1,7 @@
 package com.example.allergydiary;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +15,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import java.util.List;
 
+import static android.view.View.getDefaultSize;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ForecastFragment extends Fragment {
+    private RegionPicker regionPicker;
     private AllergenForecastViewModel forecastViewModel;
 
     @Nullable
@@ -38,5 +42,26 @@ public class ForecastFragment extends Fragment {
                     allergenForecast.getIntensity());
 
         }
+
+        regionPicker = getActivity().findViewById(R.id.region);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        int region = regionPicker.getIndex();
+        editor.putInt("RegionIndex", region);
+        editor.apply();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int region = sharedPref.getInt("RegionIndex", 0);
+        regionPicker.setIndex(region);
     }
 }

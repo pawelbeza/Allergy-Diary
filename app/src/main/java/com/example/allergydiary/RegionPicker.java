@@ -24,6 +24,7 @@ public class RegionPicker extends PickerWidget {
 
     public void setIndex(int index) {
         this.index = index;
+        updatePicker(0);
     }
 
     protected void assignUiElements() {
