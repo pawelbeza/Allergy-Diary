@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
-import com.jaredrummler.android.widget.AnimatedSvgView;
+import java.util.List;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ForecastFragment extends Fragment {
+    private AllergenForecastViewModel forecastViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -24,6 +27,16 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        DatabaseCopier.getInstance(getActivity());
+        forecastViewModel = ViewModelProviders.of(getActivity()).get(AllergenForecastViewModel.class);
 
+        List<AllergenForecast> list = forecastViewModel.getDataBaseContents(1, 1, 1);
+        for (int i = 0; i < list.size(); i++) {
+            AllergenForecast allergenForecast = list.get(i);
+            Log.d(TAG, "onViewCreated: " + allergenForecast.getRegion() + " " + allergenForecast.getRegion() + " " +
+                    allergenForecast.getName() + " " + allergenForecast.getMonth() + " " + allergenForecast.getDecade() + " " +
+                    allergenForecast.getIntensity());
+
+        }
     }
 }
