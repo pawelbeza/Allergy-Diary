@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.ForecastDatabase;
 
 import androidx.room.Dao;
 import androidx.room.Query;

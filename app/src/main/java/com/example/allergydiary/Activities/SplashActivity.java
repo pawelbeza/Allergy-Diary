@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.os.Handler;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.allergydiary.R;
 import com.jaredrummler.android.widget.AnimatedSvgView;
 
 public class SplashActivity extends AppCompatActivity {

@@ -13,7 +13,7 @@
         android:layout_marginTop="60dp"
         app:srcCompat="@drawable/ic_graph"/>
 
-    <com.example.allergydiary.InlineCalendarPicker
+    <com.example.allergydiary.Widgets.InlineCalendarPickerWidget
         android:id="@+id/inlineCalendar"
         android:layout_marginTop="30dp"
         android:layout_width="wrap_content"

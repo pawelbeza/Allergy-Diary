@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Fragments;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -17,6 +17,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.allergydiary.AllergyDiaryDatabase.AllergicSymptom;
+import com.example.allergydiary.AllergyDiaryDatabase.AllergicSymptomViewModel;
+import com.example.allergydiary.R;
 import com.ramotion.fluidslider.FluidSlider;
 
 import java.util.Calendar;
@@ -27,7 +30,6 @@ import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
 
 public class DiaryFragment extends Fragment {
-    private static final String TAG = "DiaryFragment";
     private long date;
     private int fluidProgress;
     private FluidSlider slider;

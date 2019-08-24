@@ -1,9 +1,12 @@
-package com.example.allergydiary;
+package com.example.allergydiary.ForecastDatabase;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+
+import com.example.allergydiary.ForecastDatabase.AllergenForecast;
+import com.example.allergydiary.ForecastDatabase.AllergenForecastRepository;
 
 import java.util.List;
 

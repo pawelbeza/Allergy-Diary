@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.AllergyDiaryDatabase;
 
 import android.content.Context;
 

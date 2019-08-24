@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.ForecastRecycleView;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.allergydiary.ForecastDatabase.AllergenForecast;
+import com.example.allergydiary.ForecastRecycleView.ForecastViewHolder;
+import com.example.allergydiary.R;
 
 import java.util.List;
 

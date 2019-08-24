@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Notifications;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
+
+import com.example.allergydiary.AllergyDiary;
+import com.example.allergydiary.Activities.MainActivity;
+import com.example.allergydiary.R;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.ForecastDatabase;
 
 import android.app.Application;
 import android.os.AsyncTask;

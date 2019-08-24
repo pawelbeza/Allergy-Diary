@@ -1,23 +1,22 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.allergydiary.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class InlineCalendarPicker extends PickerWidget {
+public class InlineCalendarPickerWidget extends PickerWidget {
     private TextView tvDate;
     private Calendar calendar = Calendar.getInstance();
 
-    public InlineCalendarPicker(Context context, AttributeSet attrs) {
+    public InlineCalendarPickerWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
         initControl(context);
         initInterface();

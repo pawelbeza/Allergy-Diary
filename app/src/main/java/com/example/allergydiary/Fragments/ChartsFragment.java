@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Fragments;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,6 +12,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.allergydiary.AllergyDiaryDatabase.AllergicSymptom;
+import com.example.allergydiary.AllergyDiaryDatabase.AllergicSymptomViewModel;
+import com.example.allergydiary.DateAxisValueFormatter;
+import com.example.allergydiary.R;
+import com.example.allergydiary.Widgets.InlineCalendarPickerWidget;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -27,11 +32,10 @@ import java.util.concurrent.TimeUnit;
 
 public class ChartsFragment extends Fragment {
     //TODO add support for landscape view
-    //TODO Add launcher screen
     //TODO Add back button
     private long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
-    private InlineCalendarPicker calendarPicker;
+    private InlineCalendarPickerWidget calendarPicker;
     private ArrayList<BarEntry> Values = new ArrayList<>();
     private AllergicSymptomViewModel symptomViewModel;
 
@@ -47,7 +51,7 @@ public class ChartsFragment extends Fragment {
         symptomViewModel = ViewModelProviders.of(getActivity()).get(AllergicSymptomViewModel.class);
 
         calendarPicker = view.findViewById(R.id.inlineCalendar);
-        calendarPicker.setListener(new InlineCalendarPicker.MyOnClickListener() {
+        calendarPicker.setListener(new InlineCalendarPickerWidget.MyOnClickListener() {
             @Override
             public void onClickListener() {
                 Calendar cal = calendarPicker.getCalendar();

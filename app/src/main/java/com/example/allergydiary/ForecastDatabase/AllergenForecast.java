@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.ForecastDatabase;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

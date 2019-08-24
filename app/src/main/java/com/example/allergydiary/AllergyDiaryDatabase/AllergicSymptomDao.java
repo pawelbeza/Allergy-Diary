@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.AllergyDiaryDatabase;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -6,8 +6,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
-
-//TODO stworzyc upserta
 
 @Dao
 public interface AllergicSymptomDao {

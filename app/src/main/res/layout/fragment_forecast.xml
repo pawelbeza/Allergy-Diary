@@ -11,10 +11,10 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="60dp"
-        app:srcCompat="@drawable/ic_cloud"
+        app:srcCompat="@drawable/ic_launcher"
         tools:ignore="ContentDescription" />
 
-    <com.example.allergydiary.RegionPicker
+    <com.example.allergydiary.Widgets.RegionPickerWidget
         android:id="@+id/region"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

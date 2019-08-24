@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.AllergyDiaryDatabase;
 
 import androidx.room.Entity;
 import androidx.room.Index;

@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.ForecastRecycleView;
 
 import android.content.Context;
 import android.view.View;
@@ -9,10 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.allergydiary.ForecastDatabase.AllergenForecast;
+import com.example.allergydiary.R;
+
 public class ForecastViewHolder extends RecyclerView.ViewHolder {
     private ImageView[] imageViews = new ImageView[3];
     private TextView tv;
-    Context context;
+    private Context context;
 
     public ForecastViewHolder(@NonNull View itemView, Context context) {
         super(itemView);

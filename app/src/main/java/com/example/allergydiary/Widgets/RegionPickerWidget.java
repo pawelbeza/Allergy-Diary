@@ -1,18 +1,19 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 
-public class RegionPicker extends PickerWidget {
-    private static final String TAG = "InlineCalendar";
+import com.example.allergydiary.R;
+
+public class RegionPickerWidget extends PickerWidget {
     final int[] imageResources = {R.drawable.ic_contour1, R.drawable.ic_contour2,
             R.drawable.ic_contour3, R.drawable.ic_contour4};
     private ImageView imageView;
     private int index = 0;
 
-    public RegionPicker(Context context, AttributeSet attrs) {
+    public RegionPickerWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
         initControl(context);
         initInterface();

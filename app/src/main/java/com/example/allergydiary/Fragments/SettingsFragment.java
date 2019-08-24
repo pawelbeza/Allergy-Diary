@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Fragments;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -28,6 +28,12 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.allergydiary.Notifications.DeviceBootReceiver;
+import com.example.allergydiary.Notifications.Notification;
+import com.example.allergydiary.Notifications.AlarmReceiver;
+import com.example.allergydiary.R;
+import com.example.allergydiary.TimeHelper;
+
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -36,8 +42,6 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class SettingsFragment extends Fragment {
     private final int cornerRadius = 40;
 
-    //TODO Fix choosing hour
-    //TODO Fix Booting
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -126,7 +130,7 @@ public class SettingsFragment extends Fragment {
             TextView tv = getActivity().findViewById(tvIDs[i]);
             editor.putString("PopUpSchedule" + i, tv.getText().toString());
 
-            setAlarm(sw.isChecked(), tv, i, Notifications.getNotificationContents(i));
+            setAlarm(sw.isChecked(), tv, i, Notification.getNotificationContents(i));
         }
 
         setDeviceBootReceiver();
@@ -158,7 +162,7 @@ public class SettingsFragment extends Fragment {
                     manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 }
             }
-        } else { //disable Daily Notifications
+        } else { //disable Daily Notification
             Log.d(TAG, "setAlarm: DISABLE");
             if (PendingIntent.getBroadcast(getActivity(), notificationId, alarmIntent, 0) != null && manager != null) {
                 manager.cancel(pendingIntent);

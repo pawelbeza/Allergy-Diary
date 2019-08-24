@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 abstract public class PickerWidget extends LinearLayout {
-    private static final String TAG = "InlineCalendar";
     protected Button btnPrev;
     protected Button btnNext;
     protected MyOnClickListener myOnClickListener;

@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.allergydiary.ForecastDatabase.AllergenForecastViewModel;
+import com.example.allergydiary.DatabaseCopier;
+import com.example.allergydiary.ForecastRecycleView.ForecastAdapter;
+import com.example.allergydiary.ForecastDatabase.AllergenForecast;
+import com.example.allergydiary.R;
+import com.example.allergydiary.Widgets.PickerWidget;
+import com.example.allergydiary.Widgets.RegionPickerWidget;
 import com.stone.vega.library.VegaLayoutManager;
 
 import java.util.ArrayList;
@@ -21,7 +28,7 @@ import java.util.List;
 
 public class ForecastFragment extends Fragment {
     //TODO Correct country contours
-    private RegionPicker regionPicker;
+    private RegionPickerWidget regionPicker;
     private AllergenForecastViewModel forecastViewModel;
     private RecyclerView recyclerView;
     private List<AllergenForecast> database = new ArrayList<>();

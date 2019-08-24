@@ -1,9 +1,6 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -14,6 +11,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.allergydiary.Fragments.ChartsFragment;
+import com.example.allergydiary.Fragments.DiaryFragment;
+import com.example.allergydiary.Fragments.ForecastFragment;
+import com.example.allergydiary.Fragments.SettingsFragment;
+import com.example.allergydiary.R;
 import com.github.mzule.fantasyslide.SideBar;
 import com.github.mzule.fantasyslide.SimpleFantasyListener;
 

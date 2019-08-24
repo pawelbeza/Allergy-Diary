@@ -1,4 +1,4 @@
-package com.example.allergydiary;
+package com.example.allergydiary.Notifications;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+
+import com.example.allergydiary.Activities.MainActivity;
+import com.example.allergydiary.TimeHelper;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -34,7 +37,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
                 }
 
                 Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-                String[] notificationContent = Notifications.getNotificationContents(i);
+                String[] notificationContent = Notification.getNotificationContents(i);
                 alarmIntent.putExtra("notificationContent", notificationContent);
                 alarmIntent.putExtra("id", i);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, i, alarmIntent, 0);
