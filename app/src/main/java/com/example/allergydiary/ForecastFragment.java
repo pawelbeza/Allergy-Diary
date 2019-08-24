@@ -3,7 +3,6 @@ package com.example.allergydiary;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.stone.vega.library.VegaLayoutManager;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-
-import static android.view.View.getDefaultSize;
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class ForecastFragment extends Fragment {
+    //TODO Correct country contours
     private RegionPicker regionPicker;
     private AllergenForecastViewModel forecastViewModel;
     private RecyclerView recyclerView;
     private List<AllergenForecast> database = new ArrayList<>();
+    private ForecastAdapter forecastAdapter;
 
     @Nullable
     @Override
@@ -41,39 +39,46 @@ public class ForecastFragment extends Fragment {
         DatabaseCopier.getInstance(getActivity());
         forecastViewModel = ViewModelProviders.of(getActivity()).get(AllergenForecastViewModel.class);
 
-        List<AllergenForecast> list = forecastViewModel.getDataBaseContents(1, 1, 1);
-        for (int i = 0; i < list.size(); i++) {
-            AllergenForecast allergenForecast = list.get(i);
-            Log.d(TAG, "onViewCreated: " + allergenForecast.getRegion() + " " + allergenForecast.getRegion() + " " +
-                    allergenForecast.getName() + " " + allergenForecast.getMonth() + " " + allergenForecast.getDecade() + " " +
-                    allergenForecast.getIntensity());
-
-        }
-
         regionPicker = getActivity().findViewById(R.id.region);
 
         recyclerView = getActivity().findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 2));
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 0));
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 3));
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 1));
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 2));
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 3));
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 2));
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 2));
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 0));
-        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 3));
+        updateForecast();
 
-        VegaLayoutManager layoutManager = new VegaLayoutManager();;
-        recyclerView.setLayoutManager(new VegaLayoutManager());
-        ForecastAdapter forecastAdapter = new ForecastAdapter(getActivity(), database);
-        recyclerView.setAdapter(forecastAdapter);
-        recyclerView.setNestedScrollingEnabled(false);
-        forecastAdapter.notifyDataSetChanged();
+        regionPicker.setListener(new PickerWidget.MyOnClickListener() {
+            @Override
+            public void onClickListener() {
+                updateForecast();
+            }
+        });
+    }
 
+    private void updateForecast() {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_MONTH);
 
+        int decade;
+        if (dayOfWeek <= 10)
+            decade = 1;
+        else if (dayOfWeek <= 20)
+            decade = 2;
+        else //cannot simplify to /= 10 because 31 is also in 3rd decade
+            decade = 3;
+
+        int region = regionPicker.getIndex() + 1;
+
+        List<AllergenForecast> database = forecastViewModel.getDataBaseContents(region, month, decade);
+
+        if (forecastAdapter == null) {
+            recyclerView.setLayoutManager(new VegaLayoutManager());
+            forecastAdapter = new ForecastAdapter(getActivity(), database);
+            recyclerView.setAdapter(forecastAdapter);
+        } else {
+            forecastAdapter.swapDataSet(database);
+            forecastAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

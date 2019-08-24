@@ -1,10 +1,8 @@
 package com.example.allergydiary;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,8 +10,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ForecastViewHolder extends RecyclerView.ViewHolder {
-    ImageView[] imageViews = new ImageView[3];
-    TextView tv;
+    private ImageView[] imageViews = new ImageView[3];
+    private TextView tv;
     Context context;
 
     public ForecastViewHolder(@NonNull View itemView, Context context) {
@@ -54,5 +52,8 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
             ImageView view = imageViews[i];
             view.setColorFilter(color);
         }
+
+        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        tv.setText(name);
     }
 }
