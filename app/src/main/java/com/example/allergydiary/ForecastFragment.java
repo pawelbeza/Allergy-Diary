@@ -12,8 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.stone.vega.library.VegaLayoutManager;
+
+import java.util.ArrayList;
 import java.util.List;
+
 
 import static android.view.View.getDefaultSize;
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -21,6 +26,8 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class ForecastFragment extends Fragment {
     private RegionPicker regionPicker;
     private AllergenForecastViewModel forecastViewModel;
+    private RecyclerView recyclerView;
+    private List<AllergenForecast> database = new ArrayList<>();
 
     @Nullable
     @Override
@@ -44,6 +51,29 @@ public class ForecastFragment extends Fragment {
         }
 
         regionPicker = getActivity().findViewById(R.id.region);
+
+        recyclerView = getActivity().findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 2));
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 0));
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 3));
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 1));
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 2));
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 3));
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 2));
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 2));
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 0));
+        database.add(new AllergenForecast(1, "Leszczyna", 1, 1, 3));
+
+        VegaLayoutManager layoutManager = new VegaLayoutManager();;
+        recyclerView.setLayoutManager(new VegaLayoutManager());
+        ForecastAdapter forecastAdapter = new ForecastAdapter(getActivity(), database);
+        recyclerView.setAdapter(forecastAdapter);
+        recyclerView.setNestedScrollingEnabled(false);
+        forecastAdapter.notifyDataSetChanged();
+
+
     }
 
     @Override

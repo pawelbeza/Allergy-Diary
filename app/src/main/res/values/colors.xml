@@ -6,4 +6,9 @@
     <color name="bright_green">#66E6B2</color>
     <color name="bright_blue">#69AEED</color>
     <color name="bright_red">#ff7b7b</color>
+    <color name="green">#479e4c</color>
+    <color name="red">#9d3334</color>
+    <color name="orange">#e99146</color>
+    <color name="smoky_white">#dddddd</color>>
+
 </resources>

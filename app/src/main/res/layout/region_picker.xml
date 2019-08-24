@@ -16,8 +16,8 @@
 
     <ImageView
         android:id="@+id/display_region"
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
 
     <Button
         android:id="@+id/calendar_next_button"
