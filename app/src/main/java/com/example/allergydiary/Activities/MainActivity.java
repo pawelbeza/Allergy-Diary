@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     //TODO Read about navController
     //TODO Read about Onboarding https://material.io/design/communication/onboarding.html#
     //TODO Read about Cards https://material.io/design/components/cards.html#usage
-    //TODO Divide java files into widgets and ...
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
