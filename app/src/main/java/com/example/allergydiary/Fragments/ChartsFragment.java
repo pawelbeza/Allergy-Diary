@@ -1,28 +1,16 @@
 package com.example.allergydiary.Fragments;
 
-import android.content.ClipData;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
-import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,11 +42,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static android.content.ContentValues.TAG;
-
 public class ChartsFragment extends Fragment {
     //TODO add support for landscape view
-    //TODO fix splash screen(back btn)
     private long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
     private InlineCalendarPickerWidget calendarPicker;

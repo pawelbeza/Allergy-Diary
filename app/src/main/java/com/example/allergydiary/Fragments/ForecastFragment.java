@@ -27,7 +27,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class ForecastFragment extends Fragment {
-    //TODO Correct country contours
     private RegionPickerWidget regionPicker;
     private AllergenForecastViewModel forecastViewModel;
     private RecyclerView recyclerView;

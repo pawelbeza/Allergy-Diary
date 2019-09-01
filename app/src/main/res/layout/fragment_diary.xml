@@ -37,12 +37,8 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/symptoms"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            style="@style/DefaultText"
+            android:text="@string/symptoms"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -110,13 +106,10 @@
             android:paddingBottom="10dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/DefaultText"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:text="@string/medicine"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="@string/medicine" />
 
             <Switch
                 android:id="@+id/Switch"

@@ -15,11 +15,8 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/notifications"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
+        style="@style/HeaderText"
+        android:text="@string/notifications"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -38,11 +35,8 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/everyday_survey"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                style="@style/HeaderText"
+                android:text="@string/everyday_survey" />
 
             <LinearLayout
                 android:id="@+id/switch1Layout"
@@ -55,14 +49,10 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-
                     android:layout_marginRight="15dp"
                     android:text="Schedule"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/DefaultText" />
 
                 <TextView
                     android:id="@+id/everyDay"
@@ -73,7 +63,6 @@
                     android:background="@drawable/rounded_corner"
                     android:padding="5dp"
                     android:text="20:00"
-                    android:textAlignment="center"
                     android:textSize="20sp" />
 
                 <Switch
@@ -103,12 +92,8 @@
                 android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/medication"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                style="@style/HeaderText"
+                android:text="@string/medication"/>
 
             <LinearLayout
                 android:id="@+id/switch2Layout"
@@ -121,14 +106,10 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/DefaultText"
                     android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
-
-                    android:text="Morning"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:text="Morning" />
 
                 <TextView
                     android:id="@+id/morning"
@@ -139,7 +120,6 @@
                     android:background="@drawable/rounded_corner"
                     android:padding="5dp"
                     android:text="8:00"
-                    android:textAlignment="center"
                     android:textSize="20sp" />
 
                 <Switch
@@ -161,13 +141,10 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/DefaultText"
                     android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
-                    android:text="Evening"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:text="Evening" />
 
                 <TextView
                     android:id="@+id/evening"
