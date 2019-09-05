@@ -57,21 +57,15 @@ public class SettingsFragment extends Fragment {
     private void assignClickHandler(int tvID, int swID, int toBeColored) {
         final TextView textView = getActivity().findViewById(tvID);
         final Switch sw = getActivity().findViewById(swID);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        textView.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
-                        sw.setChecked(true);
-                    }
-                }, 0, 0, DateFormat.is24HourFormat(getActivity()));
-                timePickerDialog.show();
-            }
+        textView.setOnClickListener(v -> {
+            TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), (view, hourOfDay, minute) -> {
+                textView.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                sw.setChecked(true);
+            }, 0, 0, DateFormat.is24HourFormat(getActivity()));
+            timePickerDialog.show();
         });
 
-        assignSwitchOnClickListener((Switch) getActivity().findViewById(swID), getActivity().findViewById(toBeColored));
+        assignSwitchOnClickListener(getActivity().findViewById(swID), getActivity().findViewById(toBeColored));
     }
 
     private void assignSwitchOnClickListener(Switch simpleSwitch, final View view) {
@@ -80,22 +74,16 @@ public class SettingsFragment extends Fragment {
         final ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250);
 
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                GradientDrawable shape = new GradientDrawable();
-                shape.setColor((int) animation.getAnimatedValue());
-                shape.setCornerRadius(cornerRadius);
-                view.setBackground(shape);
-            }
+        colorAnimation.addUpdateListener(animation -> {
+            GradientDrawable shape = new GradientDrawable();
+            shape.setColor((int) animation.getAnimatedValue());
+            shape.setCornerRadius(cornerRadius);
+            view.setBackground(shape);
         });
 
-        simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)   colorAnimation.start();
-                else    colorAnimation.reverse();
-            }
+        simpleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked)   colorAnimation.start();
+            else    colorAnimation.reverse();
         });
     }
 

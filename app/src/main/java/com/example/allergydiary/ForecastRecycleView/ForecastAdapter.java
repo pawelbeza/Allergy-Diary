@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.allergydiary.ForecastDatabase.AllergenForecast;
-import com.example.allergydiary.ForecastRecycleView.ForecastViewHolder;
 import com.example.allergydiary.R;
 
 import java.util.List;

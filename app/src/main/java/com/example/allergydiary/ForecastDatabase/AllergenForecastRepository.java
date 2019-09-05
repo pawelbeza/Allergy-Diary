@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 public class AllergenForecastRepository {
     private AllergenForecastDao forecastDao;
 
-    public AllergenForecastRepository(Application application) {
+    AllergenForecastRepository(Application application) {
         AllergenForecastDatabase database = AllergenForecastDatabase.getInstance(application);
         forecastDao = database.allergenForecastDao();
     }
@@ -49,7 +49,7 @@ public class AllergenForecastRepository {
         private int month;
         private int decade;
 
-        public getDataBaseContentsInRange(AllergenForecastDao forecastDao, int region, int month, int decade) {
+        getDataBaseContentsInRange(AllergenForecastDao forecastDao, int region, int month, int decade) {
             this.forecastDao = forecastDao;
             this.region = region;
             this.month = month;

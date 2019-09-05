@@ -5,9 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.allergydiary.ForecastDatabase.AllergenForecast;
-import com.example.allergydiary.ForecastDatabase.AllergenForecastRepository;
-
 import java.util.List;
 
 public class AllergenForecastViewModel extends AndroidViewModel {

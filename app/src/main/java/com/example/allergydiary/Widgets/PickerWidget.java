@@ -22,10 +22,7 @@ abstract public class PickerWidget extends LinearLayout {
     abstract protected void assignUiElements();
 
     protected void initInterface() {
-        myOnClickListener = new MyOnClickListener() {
-            @Override
-            public void onClickListener() {
-            }
+        myOnClickListener = () -> {
         };
     }
 
@@ -35,17 +32,14 @@ abstract public class PickerWidget extends LinearLayout {
     }
 
     protected void assignOnClickListener(final Button btn, final int addToPicker) {
-        btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updatePicker(addToPicker);
-                myOnClickListener.onClickListener();
-                arrowVisibility();
-            }
+        btn.setOnClickListener(v -> {
+            updatePicker(addToPicker);
+            myOnClickListener.onClickListener();
+            arrowVisibility();
         });
     }
 
-    protected void arrowVisibility(){};
+    protected void arrowVisibility(){}
 
     abstract protected void initControl(Context context);
 

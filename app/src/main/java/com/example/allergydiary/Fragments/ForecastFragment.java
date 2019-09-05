@@ -1,15 +1,11 @@
 package com.example.allergydiary.Fragments;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,28 +13,21 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.allergydiary.ForecastDatabase.AllergenForecastViewModel;
 import com.example.allergydiary.DatabaseCopier;
-import com.example.allergydiary.ForecastRecycleView.ForecastAdapter;
 import com.example.allergydiary.ForecastDatabase.AllergenForecast;
+import com.example.allergydiary.ForecastDatabase.AllergenForecastViewModel;
+import com.example.allergydiary.ForecastRecycleView.ForecastAdapter;
 import com.example.allergydiary.R;
-import com.example.allergydiary.Widgets.PickerWidget;
 import com.example.allergydiary.Widgets.RegionPickerWidget;
 import com.stone.vega.library.VegaLayoutManager;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ForecastFragment extends Fragment {
     private RegionPickerWidget regionPicker;
     private AllergenForecastViewModel forecastViewModel;
     private RecyclerView recyclerView;
-    private List<AllergenForecast> database = new ArrayList<>();
     private ForecastAdapter forecastAdapter;
 
     @Nullable
@@ -60,12 +49,7 @@ public class ForecastFragment extends Fragment {
 
         updateForecast();
 
-        regionPicker.setListener(new PickerWidget.MyOnClickListener() {
-            @Override
-            public void onClickListener() {
-                updateForecast();
-            }
-        });
+        regionPicker.setListener(this::updateForecast);
     }
 
     private void updateForecast() {

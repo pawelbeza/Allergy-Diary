@@ -2,8 +2,6 @@ package com.example.allergydiary.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
@@ -41,7 +39,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,35 +69,27 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
 
 
         calendarPicker = view.findViewById(R.id.inlineCalendar);
-        calendarPicker.setListener(new InlineCalendarPickerWidget.MyOnClickListener() {
-            @Override
-            public void onClickListener() {
-                Calendar cal = calendarPicker.getCalendar();
+        calendarPicker.setListener(() -> {
+            Calendar cal = calendarPicker.getCalendar();
 
-                cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-                cal.clear(Calendar.MINUTE);
-                cal.clear(Calendar.SECOND);
-                cal.clear(Calendar.MILLISECOND);
+            cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+            cal.clear(Calendar.MINUTE);
+            cal.clear(Calendar.SECOND);
+            cal.clear(Calendar.MILLISECOND);
 
-                cal.set(Calendar.DAY_OF_MONTH, 1);
-                long startDate = cal.getTimeInMillis();
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            long startDate = cal.getTimeInMillis();
 
-                cal.add(Calendar.MONTH, 1);
-                cal.add(Calendar.MILLISECOND, -1);
-                long endDate = cal.getTimeInMillis();
-                makeAndDisplayGraph(barChart, true, startDate, endDate);
-            }
+            cal.add(Calendar.MONTH, 1);
+            cal.add(Calendar.MILLISECOND, -1);
+            long endDate = cal.getTimeInMillis();
+            makeAndDisplayGraph(barChart, true, startDate, endDate);
         });
 
         getCurrMonth();
 
         Button button = getActivity().findViewById(R.id.generateReport);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openRangePicker();
-            }
-        });
+        button.setOnClickListener(view1 -> openRangePicker());
     }
 
     private void openRangePicker() {

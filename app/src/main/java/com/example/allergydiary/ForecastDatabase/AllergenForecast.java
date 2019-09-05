@@ -22,7 +22,7 @@ public class AllergenForecast {
 
     private int intensity;
 
-    public AllergenForecast(int region, String name, int month, int decade, int intensity) {
+    public AllergenForecast(int region, @NotNull String name, int month, int decade, int intensity) {
         this.region = region;
         this.name = name;
         this.month = month;
@@ -42,6 +42,7 @@ public class AllergenForecast {
         return region;
     }
 
+    @NotNull
     public String getName() {
         return name;
     }

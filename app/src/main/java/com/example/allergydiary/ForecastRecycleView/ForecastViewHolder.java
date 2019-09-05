@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.allergydiary.ForecastDatabase.AllergenForecast;
 import com.example.allergydiary.R;
 
-public class ForecastViewHolder extends RecyclerView.ViewHolder {
+class ForecastViewHolder extends RecyclerView.ViewHolder {
     private ImageView[] imageViews = new ImageView[3];
     private TextView tv;
     private Context context;
 
-    public ForecastViewHolder(@NonNull View itemView, Context context) {
+    ForecastViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
         this.context = context;
         this.tv = itemView.findViewById(R.id.allergen_name);
@@ -26,7 +26,7 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
             imageViews[i] = itemView.findViewById(ids[i]);
     }
 
-    public void bindData(AllergenForecast allergenForecast) {
+    void bindData(AllergenForecast allergenForecast) {
         String name = allergenForecast.getName();
         int numToColor = allergenForecast.getIntensity();
         int color;

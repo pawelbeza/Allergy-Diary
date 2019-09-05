@@ -9,12 +9,12 @@ import java.util.concurrent.ExecutionException;
 public class AllergicSymptomRepository {
     private AllergicSymptomDao symptomDao;
 
-    public AllergicSymptomRepository(Application application) {
+    AllergicSymptomRepository(Application application) {
         AllergicSymptomDatabase database = AllergicSymptomDatabase.getInstance(application);
         symptomDao = database.allergicSymptomDao();
     }
 
-    public void upsert(AllergicSymptom symptom) {
+    void upsert(AllergicSymptom symptom) {
         new UpsertSymptomAsyncTask(symptomDao).execute(symptom);
     }
 

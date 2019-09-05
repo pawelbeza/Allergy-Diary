@@ -39,7 +39,6 @@ public class DiaryFragment extends Fragment {
     private AllergicSymptomViewModel symptomViewModel;
 
     //TODO Add animation between launching fragments
-    //TODO Add sharing health reports
 
     @Nullable
     @Override
@@ -66,43 +65,31 @@ public class DiaryFragment extends Fragment {
         final ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250);
 
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                View view = getActivity().findViewById(R.id.switchLayout);
-                GradientDrawable shape = new GradientDrawable();
-                shape.setColor((int) animation.getAnimatedValue());
-                shape.setCornerRadius(cornerRadius);
-                view.setBackground(shape);
-            }
+        colorAnimation.addUpdateListener(animation -> {
+            View view1 = getActivity().findViewById(R.id.switchLayout);
+            GradientDrawable shape = new GradientDrawable();
+            shape.setColor((int) animation.getAnimatedValue());
+            shape.setCornerRadius(cornerRadius);
+            view1.setBackground(shape);
         });
 
-        simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) colorAnimation.start();
-                else colorAnimation.reverse();
-                addData();
-            }
+        simpleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) colorAnimation.start();
+            else colorAnimation.reverse();
+            addData();
         });
 
         final int max = 10;
         slider.setEndText(String.valueOf(max));
-        slider.setPositionListener(new Function1<Float, Unit>() {
-            @Override
-            public Unit invoke(Float pos) {
-                fluidProgress = (int)(max * pos);
-                slider.setBubbleText(String.valueOf(fluidProgress));
-                return Unit.INSTANCE;
-            }
+        slider.setPositionListener(pos -> {
+            fluidProgress = (int)(max * pos);
+            slider.setBubbleText(String.valueOf(fluidProgress));
+            return Unit.INSTANCE;
         });
 
-        slider.setEndTrackingListener(new Function0<Unit>() {
-            @Override
-            public Unit invoke() {
-                addData();
-                return Unit.INSTANCE;
-            }
+        slider.setEndTrackingListener(() -> {
+            addData();
+            return Unit.INSTANCE;
         });
 
         symptomViewModel = ViewModelProviders.of(getActivity()).get(AllergicSymptomViewModel.class);
@@ -151,13 +138,10 @@ public class DiaryFragment extends Fragment {
 
     private void calendarView() {
         calendarView.setMaxDate(System.currentTimeMillis());
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                GregorianCalendar cal = new GregorianCalendar(year, month, dayOfMonth);
-                date = cal.getTimeInMillis();
-                setSavedValues();
-            }
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            GregorianCalendar cal = new GregorianCalendar(year, month, dayOfMonth);
+            date = cal.getTimeInMillis();
+            setSavedValues();
         });
     }
 
