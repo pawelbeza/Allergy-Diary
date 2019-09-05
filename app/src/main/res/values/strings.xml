@@ -4,6 +4,7 @@
     <string name="graphs">Graphs</string>
     <string name="feeling">How do you feel today?</string>
     <string name="symptoms">Allergic symptoms</string>
+    <string name="report">Generate report</string>
     <string name="back">Go back</string>
     <string name="week">week</string>
     <string name="month">month</string>
@@ -18,5 +19,4 @@
     <string name="database">Database</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
 </resources>

@@ -38,8 +38,8 @@ public class DiaryFragment extends Fragment {
     private final int cornerRadius = 40;
     private AllergicSymptomViewModel symptomViewModel;
 
-    //TODO Organise styles for strings
     //TODO Add animation between launching fragments
+    //TODO Add sharing health reports
 
     @Nullable
     @Override

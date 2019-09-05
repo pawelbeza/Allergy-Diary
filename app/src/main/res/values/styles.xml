@@ -41,4 +41,9 @@
     <style name="SwitchTheme" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">#148E13</item>
     </style>
+
+    <style name="DatePickerTheme" parent="@android:style/Theme.Holo.Light.Dialog.MinWidth">
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+    </style>
 </resources>

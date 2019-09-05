@@ -2,6 +2,8 @@ package com.example.allergydiary.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
@@ -19,6 +21,11 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.applandeo.materialcalendarview.CalendarUtils;
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.DatePicker;
+import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
+import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 import com.example.allergydiary.AllergyDiaryDatabase.AllergicSymptom;
 import com.example.allergydiary.AllergyDiaryDatabase.AllergicSymptomViewModel;
 import com.example.allergydiary.BuildConfig;
@@ -42,7 +49,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ChartsFragment extends Fragment {
+public class ChartsFragment extends Fragment implements OnSelectDateListener {
     //TODO add support for landscape view
     private long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
@@ -91,16 +98,36 @@ public class ChartsFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveGraphToPDF();
+                openRangePicker();
             }
         });
-
     }
 
-    private void saveGraphToPDF(){
-        if (!isExternalStorageReadable()) {
-            return;
-        }
+    private void openRangePicker() {
+        Calendar min = Calendar.getInstance();
+        min.add(Calendar.MONTH, -1);
+
+        Calendar max = Calendar.getInstance();
+
+        List<Calendar> selectedDays = new ArrayList<>();
+        selectedDays.add(min);
+        selectedDays.addAll(CalendarUtils.getDatesRange(min, max));
+        selectedDays.add(max);
+
+        DatePickerBuilder rangeBuilder = new DatePickerBuilder(getActivity(), this)
+                .setPickerType(CalendarView.RANGE_PICKER)
+                .setSelectedDays(selectedDays)
+                .setMaximumDate(max)
+                .setHeaderColor(R.color.dirty_green)
+                .setSelectionColor(R.color.dirty_green)
+                .setTodayLabelColor(R.color.colorAccent);
+
+        DatePicker rangePicker = rangeBuilder.build();
+        rangePicker.show();
+    }
+
+    private void saveGraphToPDF(long fromDate, long toDate){
+        if (!isExternalStorageReadable()) return;
 
         PdfDocument document = new PdfDocument();
 
@@ -120,7 +147,7 @@ public class ChartsFragment extends Fragment {
 
         BarChart barChartToPDF = content.findViewById(R.id.barChartToPDF);
 
-//        makeAndDisplayGraph(barChartToPDF, false, fromDate, toDate);
+        makeAndDisplayGraph(barChartToPDF, false, fromDate, toDate);
 
         content.draw(page.getCanvas());
 
@@ -132,8 +159,6 @@ public class ChartsFragment extends Fragment {
             //make sure you have asked for storage permission before this
             File f = new File(targetPdf);
             document.writeTo(new FileOutputStream(f));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,7 +215,7 @@ public class ChartsFragment extends Fragment {
 
         barChart.getDescription().setEnabled(false);
 
-        if (animate)    barChart.animateY(1500);
+        if (animate) barChart.animateY(1500);
 
         barChart.setDrawGridBackground(false);
         barChart.getLegend().setEnabled(false);
@@ -254,5 +279,12 @@ public class ChartsFragment extends Fragment {
             float tmp = Values.get(i).getX() - referenceTimestamp;
             Values.get(i).setX(tmp);
         }
+    }
+
+    @Override
+    public void onSelect(List<Calendar> calendar) {
+        Calendar fromDate = calendar.get(0);
+        Calendar toDate = calendar.get(calendar.size() - 1);
+        saveGraphToPDF(fromDate.getTimeInMillis(), toDate.getTimeInMillis());
     }
 }

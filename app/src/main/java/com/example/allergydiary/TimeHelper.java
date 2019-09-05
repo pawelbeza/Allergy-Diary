@@ -1,6 +1,10 @@
 package com.example.allergydiary;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class TimeHelper {
     public static Calendar stringToCalendar(String time) {
@@ -15,5 +19,11 @@ public class TimeHelper {
         calendar.set(Calendar.SECOND, 0);
 
         return calendar;
+    }
+
+    public static String calendarToString(Calendar calendar) {
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        String formatted = format1.format(calendar.getTime());
+        return formatted;
     }
 }

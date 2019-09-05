@@ -1,11 +1,15 @@
 package com.example.allergydiary.Fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +26,13 @@ import com.example.allergydiary.Widgets.PickerWidget;
 import com.example.allergydiary.Widgets.RegionPickerWidget;
 import com.stone.vega.library.VegaLayoutManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ForecastFragment extends Fragment {
     private RegionPickerWidget regionPicker;
