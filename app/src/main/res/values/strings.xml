@@ -19,4 +19,13 @@
     <string name="database">Database</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string-array
+        name="statistic_names">
+        <item>Number of records</item>
+        <item>Average</item>
+        <item>Median</item>
+        <item>Min value</item>
+        <item>Max value</item>
+        <item>Taken pills</item>
+    </string-array>
 </resources>

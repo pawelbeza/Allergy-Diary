@@ -18,6 +18,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.applandeo.materialcalendarview.CalendarUtils;
 import com.applandeo.materialcalendarview.CalendarView;
@@ -29,6 +31,7 @@ import com.example.allergydiary.AllergyDiaryDatabase.AllergicSymptomViewModel;
 import com.example.allergydiary.BuildConfig;
 import com.example.allergydiary.DateAxisValueFormatter;
 import com.example.allergydiary.R;
+import com.example.allergydiary.StatisticsRecycleView.StatisticsAdapter;
 import com.example.allergydiary.Widgets.InlineCalendarPickerWidget;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -37,22 +40,27 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.stone.vega.library.VegaLayoutManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ChartsFragment extends Fragment implements OnSelectDateListener {
-    //TODO add support for landscape view
     private long referenceTimestamp = Long.MAX_VALUE;
     private BarChart barChart;
     private InlineCalendarPickerWidget calendarPicker;
     private ArrayList<BarEntry> Values = new ArrayList<>();
+    private ArrayList<BarEntry> pdfValues = new ArrayList<>();
     private AllergicSymptomViewModel symptomViewModel;
+    private RecyclerView recyclerView;
+    private StatisticsAdapter statisticsAdapter;
+    private List<AllergicSymptom> symptoms;
 
     @Nullable
     @Override
@@ -83,10 +91,15 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
             cal.add(Calendar.MONTH, 1);
             cal.add(Calendar.MILLISECOND, -1);
             long endDate = cal.getTimeInMillis();
-            makeAndDisplayGraph(barChart, true, startDate, endDate);
+            makeAndDisplayGraph(Values, barChart, true, startDate, endDate);
+            updateStatistics(symptoms);
         });
 
-        getCurrMonth();
+        recyclerView = getActivity().findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
+
+        initializeGraph();
 
         Button button = getActivity().findViewById(R.id.generateReport);
         button.setOnClickListener(view1 -> openRangePicker());
@@ -136,16 +149,14 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
 
         BarChart barChartToPDF = content.findViewById(R.id.barChartToPDF);
 
-        makeAndDisplayGraph(barChartToPDF, false, fromDate, toDate);
+        makeAndDisplayGraph(pdfValues, barChartToPDF, false, fromDate, toDate);
 
         content.draw(page.getCanvas());
 
-//         finish the page
         document.finishPage(page);
 
         String targetPdf = getActivity().getExternalFilesDir(null).getPath() + File.separator + "allergy_report.pdf";
         try {
-            //make sure you have asked for storage permission before this
             File f = new File(targetPdf);
             document.writeTo(new FileOutputStream(f));
         } catch (IOException e) {
@@ -177,7 +188,7 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
     }
 
 
-    private void getCurrMonth() {
+    private void initializeGraph() {
         Calendar cal = calendarPicker.getCalendar();
 
         cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
@@ -192,12 +203,13 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
         cal.add(Calendar.MILLISECOND, -1);
         long endDate = cal.getTimeInMillis();
 
-        makeAndDisplayGraph(barChart, true, startDate, endDate);
+        makeAndDisplayGraph(Values, barChart, true, startDate, endDate);
+        updateStatistics(symptoms);
     }
 
-    private void makeAndDisplayGraph(BarChart barChart, boolean animate, long fromDate, long toDate) {
+    private void makeAndDisplayGraph(ArrayList<BarEntry> Values, BarChart barChart, boolean animate, long fromDate, long toDate) {
         Values.clear();
-        getDataInRange(fromDate, toDate);
+        getDataInRange(Values, fromDate, toDate);
 
         barChart.setDrawBarShadow(false);
         barChart.setDrawValueAboveBar(true);
@@ -244,8 +256,8 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
         barChart.invalidate();
     }
 
-    private void getDataInRange(long fromDate, long toDate) {
-        List<AllergicSymptom> symptoms = symptomViewModel.getDataBaseContents(fromDate, toDate);
+    private void getDataInRange(ArrayList<BarEntry> Values, long fromDate, long toDate) {
+        symptoms = symptomViewModel.getDataBaseContents(fromDate, toDate);
         for (AllergicSymptom symptom : symptoms) {
             long date = symptom.getDate();
             date = TimeUnit.MILLISECONDS.toDays(date) + 1; // +1 because TimeUnit rounds down
@@ -268,6 +280,50 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
             float tmp = Values.get(i).getX() - referenceTimestamp;
             Values.get(i).setX(tmp);
         }
+    }
+
+    private void updateStatistics(List<AllergicSymptom> symptoms) {
+        List<Integer> values = new ArrayList<>();
+        for (AllergicSymptom symptom : symptoms) {
+            values.add(symptom.getFeeling());
+        }
+
+        if (values.size() == 0)
+            return;
+
+        Collections.sort(values);
+
+        double medianValue = medianValue(values);
+        double averageValue = averageValue(values);
+        int minValue = values.get(0);
+        int maxValue = values.get(values.size() - 1);
+        int numOfRecords = values.size();
+        int numOfPillsTaken = 0;
+        for (AllergicSymptom symptom : symptoms) numOfPillsTaken += (symptom.isMedicine()) ? 1 : 0;
+
+        double[] statistics = {numOfRecords, averageValue, medianValue, minValue, maxValue, numOfPillsTaken};
+        if (statisticsAdapter == null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            statisticsAdapter = new StatisticsAdapter(getActivity(), statistics);
+            recyclerView.setAdapter(statisticsAdapter);
+        } else {
+            statisticsAdapter.swapDataSet(statistics);
+            statisticsAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private double averageValue(List<Integer> values) {
+        int sum = 0;
+        for (int x : values) sum += x;
+        return (double) sum / values.size();
+    }
+
+    private double medianValue(List<Integer> values) { //assume that list is sorted
+        int listSize = values.size();
+        if (listSize % 2 == 1)
+            return values.get(listSize / 2);
+        else
+            return (double) values.get(listSize / 2 - 1) + values.get(listSize / 2);
     }
 
     @Override
