@@ -40,7 +40,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.stone.vega.library.VegaLayoutManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
