@@ -1,6 +1,7 @@
 package com.example.allergydiary.Activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -20,10 +21,11 @@ import com.github.mzule.fantasyslide.SideBar;
 import com.github.mzule.fantasyslide.SimpleFantasyListener;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "Main";
-
+    private int lastLaunchedFragment;
     private DrawerLayout drawer;
 
+    //Todo Add back btn
+    //TODO Add highlight to chosen fragment
     //TODO Read about navController
     //TODO Read about Onboarding https://material.io/design/communication/onboarding.html#
     //TODO Read about Cards https://material.io/design/components/cards.html#usage
@@ -51,24 +53,27 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onSelect(View view, int index) {
+                if (view.getId() == lastLaunchedFragment)
+                    return true;
                 switch (view.getId()) {
                     case R.id.toDiary:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.animation_enter, R.anim.animation_leave).replace(R.id.fragment_container,
                                 new DiaryFragment()).commit();
                         break;
                     case R.id.toForecast:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.animation_enter, R.anim.animation_leave).replace(R.id.fragment_container,
                                 new ForecastFragment()).commit();
                         break;
                     case R.id.toCharts:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.animation_enter, R.anim.animation_leave).replace(R.id.fragment_container,
                                 new ChartsFragment()).commit();
                         break;
                     case R.id.toSettings:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.animation_enter, R.anim.animation_leave).replace(R.id.fragment_container,
                                 new SettingsFragment()).commit();
                         break;
                 }
+                lastLaunchedFragment = view.getId();
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -82,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new DiaryFragment()).commit();
+            lastLaunchedFragment = R.id.toDiary;
         }
-
     }
 
     @Override

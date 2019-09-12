@@ -26,7 +26,6 @@ public class InlineCalendarPickerWidget extends PickerWidget {
     }
 
     protected void assignUiElements() {
-        // layout is inflated, assign local variables to components
         btnPrev = findViewById(R.id.calendar_prev_button);
         btnNext = findViewById(R.id.calendar_next_button);
         tvDate = findViewById(R.id.display_date);

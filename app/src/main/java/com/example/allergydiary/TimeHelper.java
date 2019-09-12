@@ -21,14 +21,12 @@ public class TimeHelper {
 
     public static String calendarToString(Calendar calendar) {
         SimpleDateFormat format1 = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
-        String formatted = format1.format(calendar.getTime());
-        return formatted;
+        return format1.format(calendar.getTime());
     }
 
     public static String timeStampToString(long calendar) {
         SimpleDateFormat format1 = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
-        String formatted = format1.format(calendar);
-        return formatted;
+        return format1.format(calendar);
     }
 
     public static Calendar getFirstDayOfMonth(Calendar cal) {
