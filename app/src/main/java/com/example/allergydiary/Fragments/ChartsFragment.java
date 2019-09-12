@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ import com.example.allergydiary.BuildConfig;
 import com.example.allergydiary.DateAxisValueFormatter;
 import com.example.allergydiary.R;
 import com.example.allergydiary.StatisticsRecycleView.StatisticsAdapter;
+import com.example.allergydiary.TimeHelper;
 import com.example.allergydiary.Widgets.InlineCalendarPickerWidget;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -44,6 +46,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -91,7 +94,7 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
             cal.add(Calendar.MILLISECOND, -1);
             long endDate = cal.getTimeInMillis();
             makeAndDisplayGraph(Values, barChart, true, startDate, endDate);
-            updateStatistics(symptoms);
+            updateStatistics(false, symptoms);
         });
 
         recyclerView = getActivity().findViewById(R.id.recycler_view);
@@ -127,32 +130,71 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
         rangePicker.show();
     }
 
-    private void saveGraphToPDF(long fromDate, long toDate){
-        if (!isExternalStorageReadable()) return;
-
-        PdfDocument document = new PdfDocument();
-
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(2250, 1400, 1).create();
-
-        PdfDocument.Page page = document.startPage(pageInfo);
-
+    private void createPdfPage(PdfDocument document, long fromDate, long toDate) {
         LayoutInflater inflater = (LayoutInflater)
                 getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View content = inflater.inflate(R.layout.pdf_layout, null);
+        ViewGroup contentPdf = (ViewGroup) inflater.inflate(R.layout.pdf_layout, null, false);
+
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(1400, 2250, 1).create();
+        PdfDocument.Page page = document.startPage(pageInfo);
+
+        TextView tv = contentPdf.findViewById(R.id.date);
+        tv.setText(TimeHelper.timeStampToString(fromDate));
+
+        BarChart barChartPdf = contentPdf.findViewById(R.id.barChartToPDF);
+
+        makeAndDisplayGraph(pdfValues, barChartPdf, false, fromDate, toDate);
+        double[] statistics = updateStatistics(true, symptoms);
+
+//        It has to be inflated manually since RecycleView has some delays in updating rows
+//        (notifyDataSetChanged() is called after drawing content of Pdf which results in
+//        blank statistics)
+        inflateStatistics(contentPdf, statistics);
 
         int measureWidth = View.MeasureSpec.makeMeasureSpec(page.getCanvas().getWidth(), View.MeasureSpec.EXACTLY);
         int measuredHeight = View.MeasureSpec.makeMeasureSpec(page.getCanvas().getHeight(), View.MeasureSpec.EXACTLY);
 
-        content.measure(measureWidth, measuredHeight);
-        content.layout(0, 0, page.getCanvas().getWidth(), page.getCanvas().getHeight());
+        contentPdf.measure(measureWidth, measuredHeight);
+        contentPdf.layout(0, 0, page.getCanvas().getWidth(), page.getCanvas().getHeight());
 
-        BarChart barChartToPDF = content.findViewById(R.id.barChartToPDF);
-
-        makeAndDisplayGraph(pdfValues, barChartToPDF, false, fromDate, toDate);
-
-        content.draw(page.getCanvas());
-
+        contentPdf.draw(page.getCanvas());
         document.finishPage(page);
+    }
+
+    private void inflateStatistics(ViewGroup contentPdf, double[] statistics) {
+        String[] names = getActivity().getResources().getStringArray(R.array.statistic_names);
+
+        for (int i = 0; i < statistics.length; i++) {
+            View row = LayoutInflater.from(getActivity()).inflate(R.layout.statistics_item, contentPdf.findViewById(R.id.statistics_layout), false);
+            TextView name = row.findViewById(R.id.name);
+            TextView result = row.findViewById(R.id.result);
+
+            name.setText(names[i]);
+
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(1);
+            String strResult = df.format(statistics[i]);
+            result.setText(strResult);
+
+            ViewGroup.LayoutParams layoutParams = row.getLayoutParams();
+            layoutParams.width = 800;
+            row.setLayoutParams(layoutParams);
+
+            contentPdf.addView(row);
+        }
+    }
+
+    private void saveGraphToPDF(Calendar fromDate, Calendar toDate) {
+        if (!isExternalStorageReadable()) return;
+
+        PdfDocument document = new PdfDocument();
+
+        while (fromDate.getTimeInMillis() < toDate.getTimeInMillis()) {
+            long fromCal = TimeHelper.getFirstDayOfMonth(toDate).getTimeInMillis();
+            long toCal = TimeHelper.getLastDayOfMonth(toDate).getTimeInMillis();
+            createPdfPage(document, fromCal, toCal);
+            toDate.add(Calendar.MONTH, -1);
+        }
 
         String targetPdf = getActivity().getExternalFilesDir(null).getPath() + File.separator + "allergy_report.pdf";
         try {
@@ -163,7 +205,6 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
         }
 
         File fileWithinMyDir = new File(targetPdf);
-
 
         if(fileWithinMyDir.exists()) {
             Uri uri = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider", fileWithinMyDir);
@@ -203,7 +244,7 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
         long endDate = cal.getTimeInMillis();
 
         makeAndDisplayGraph(Values, barChart, true, startDate, endDate);
-        updateStatistics(symptoms);
+        updateStatistics(false, symptoms);
     }
 
     private void makeAndDisplayGraph(ArrayList<BarEntry> Values, BarChart barChart, boolean animate, long fromDate, long toDate) {
@@ -281,34 +322,43 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
         }
     }
 
-    private void updateStatistics(List<AllergicSymptom> symptoms) {
+    private double[] updateStatistics(boolean toPdf, List<AllergicSymptom> symptoms) {
         List<Integer> values = new ArrayList<>();
         for (AllergicSymptom symptom : symptoms) {
             values.add(symptom.getFeeling());
         }
 
+        double[] statistics;
         if (values.size() == 0)
-            return;
+            statistics = new double[]{0, 0, 0, 0, 0, 0};
+        else {
+            Collections.sort(values);
 
-        Collections.sort(values);
+            double medianValue = medianValue(values);
+            double averageValue = averageValue(values);
+            int minValue = values.get(0);
+            int maxValue = values.get(values.size() - 1);
+            int numOfRecords = values.size();
+            int numOfPillsTaken = 0;
+            for (AllergicSymptom symptom : symptoms)
+                numOfPillsTaken += (symptom.isMedicine()) ? 1 : 0;
 
-        double medianValue = medianValue(values);
-        double averageValue = averageValue(values);
-        int minValue = values.get(0);
-        int maxValue = values.get(values.size() - 1);
-        int numOfRecords = values.size();
-        int numOfPillsTaken = 0;
-        for (AllergicSymptom symptom : symptoms) numOfPillsTaken += (symptom.isMedicine()) ? 1 : 0;
+            statistics = new double[]{numOfRecords, averageValue, medianValue, minValue, maxValue, numOfPillsTaken};
 
-        double[] statistics = {numOfRecords, averageValue, medianValue, minValue, maxValue, numOfPillsTaken};
-        if (statisticsAdapter == null) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            statisticsAdapter = new StatisticsAdapter(getActivity(), statistics);
-            recyclerView.setAdapter(statisticsAdapter);
-        } else {
-            statisticsAdapter.swapDataSet(statistics);
-            statisticsAdapter.notifyDataSetChanged();
         }
+
+        if (!toPdf) {
+            if (statisticsAdapter == null) {
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                statisticsAdapter = new StatisticsAdapter(getActivity(), statistics);
+                recyclerView.setAdapter(statisticsAdapter);
+            } else {
+                statisticsAdapter.swapDataSet(statistics);
+            }
+        }
+
+        return statistics;
     }
 
     private double averageValue(List<Integer> values) {
@@ -329,6 +379,6 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
     public void onSelect(List<Calendar> calendar) {
         Calendar fromDate = calendar.get(0);
         Calendar toDate = calendar.get(calendar.size() - 1);
-        saveGraphToPDF(fromDate.getTimeInMillis(), toDate.getTimeInMillis());
+        saveGraphToPDF(fromDate, toDate);
     }
 }

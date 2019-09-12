@@ -7,10 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.allergydiary.R;
+import com.example.allergydiary.TimeHelper;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class InlineCalendarPickerWidget extends PickerWidget {
     private TextView tvDate;
@@ -33,7 +32,6 @@ public class InlineCalendarPickerWidget extends PickerWidget {
         tvDate = findViewById(R.id.display_date);
     }
 
-
     @Override
     protected void assignClickHandlers() {
         super.assignClickHandlers();
@@ -49,12 +47,7 @@ public class InlineCalendarPickerWidget extends PickerWidget {
 
     public void updatePicker(int addToPicker) {
         calendar.add(Calendar.MONTH, addToPicker);
-        tvDate.setText(calendarToString());
-    }
-
-    private String calendarToString() {
-        SimpleDateFormat date_format = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
-        return date_format.format(calendar.getTime());
+        tvDate.setText(TimeHelper.calendarToString(calendar));
     }
 
     protected void initControl(Context context) {
