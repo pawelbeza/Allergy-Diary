@@ -177,7 +177,7 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
             result.setText(strResult);
 
             ViewGroup.LayoutParams layoutParams = row.getLayoutParams();
-            layoutParams.width = 800;
+            layoutParams.width = 1000;
             row.setLayoutParams(layoutParams);
 
             contentPdf.addView(row);
