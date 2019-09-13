@@ -136,7 +136,6 @@ public class SettingsFragment extends Fragment {
         AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
         if (dailyNotify) {
-            Log.d(TAG, "setAlarm: ENABLE");
             //enable daily notifications
             Calendar calendar = TimeHelper.stringToCalendar(tv.getText().toString());
             // if notification time is before selected time, send notification the next day
@@ -151,7 +150,6 @@ public class SettingsFragment extends Fragment {
                 }
             }
         } else { //disable Daily Notification
-            Log.d(TAG, "setAlarm: DISABLE");
             if (PendingIntent.getBroadcast(getActivity(), notificationId, alarmIntent, 0) != null && manager != null) {
                 manager.cancel(pendingIntent);
             }
