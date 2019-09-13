@@ -47,8 +47,6 @@ public class ForecastFragment extends Fragment {
         recyclerView = getActivity().findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
-        updateForecast();
-
         regionPicker.setListener(this::updateForecast);
     }
 
@@ -93,6 +91,11 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //nullifying to ensure that setting adapter is made when user clicks back button (without that
+        //no adapter attached error occurs
+        forecastAdapter = null;
+        updateForecast();
+
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         int region = sharedPref.getInt("RegionIndex", 0);
         regionPicker.setIndex(region);

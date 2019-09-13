@@ -1,7 +1,6 @@
 package com.example.allergydiary.Activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -21,14 +20,10 @@ import com.github.mzule.fantasyslide.SideBar;
 import com.github.mzule.fantasyslide.SimpleFantasyListener;
 
 public class MainActivity extends AppCompatActivity {
-    private int lastLaunchedFragment;
+    private static int lastLaunchedFragment;
     private DrawerLayout drawer;
 
-    //Todo Add back btn
-    //TODO Add highlight to chosen fragment
-    //TODO Read about navController
     //TODO Read about Onboarding https://material.io/design/communication/onboarding.html#
-    //TODO Read about Cards https://material.io/design/components/cards.html#usage
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,20 +52,24 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 switch (view.getId()) {
                     case R.id.toDiary:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.animation_enter, R.anim.animation_leave).replace(R.id.fragment_container,
-                                new DiaryFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
+                                R.anim.slide_out_right, R.anim.slide_in_right).replace(R.id.fragment_container,
+                                new DiaryFragment()).addToBackStack("Diary").commit();
                         break;
                     case R.id.toForecast:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.animation_enter, R.anim.animation_leave).replace(R.id.fragment_container,
-                                new ForecastFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
+                                R.anim.slide_out_right, R.anim.slide_in_right).replace(R.id.fragment_container,
+                                new ForecastFragment()).addToBackStack("Forecast").commit();
                         break;
                     case R.id.toCharts:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.animation_enter, R.anim.animation_leave).replace(R.id.fragment_container,
-                                new ChartsFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
+                                R.anim.slide_out_right, R.anim.slide_in_right).replace(R.id.fragment_container,
+                                new ChartsFragment()).addToBackStack("Charts").commit();
                         break;
                     case R.id.toSettings:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.animation_enter, R.anim.animation_leave).replace(R.id.fragment_container,
-                                new SettingsFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
+                                R.anim.slide_out_right, R.anim.slide_in_right).replace(R.id.fragment_container,
+                                new SettingsFragment()).addToBackStack("Settings").commit();
                         break;
                 }
                 lastLaunchedFragment = view.getId();

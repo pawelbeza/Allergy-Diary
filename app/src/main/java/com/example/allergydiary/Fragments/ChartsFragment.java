@@ -361,6 +361,15 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
         return statistics;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //nullifying to ensure that setting adapter is made when user clicks back button (without that
+        //no adapter attached error occurs
+        statisticsAdapter = null;
+        initializeGraph();
+    }
+
     private double averageValue(List<Integer> values) {
         int sum = 0;
         for (int x : values) sum += x;
