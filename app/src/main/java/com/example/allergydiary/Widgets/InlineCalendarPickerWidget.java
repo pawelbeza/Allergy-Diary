@@ -3,7 +3,6 @@ package com.example.allergydiary.Widgets;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextSwitcher;
@@ -19,15 +18,12 @@ import com.example.allergydiary.TimeHelper;
 
 import java.util.Calendar;
 
-import static android.content.ContentValues.TAG;
-
 public class InlineCalendarPickerWidget extends PickerWidget {
     private TextSwitcher textSwitcher;
     private Calendar calendar = Calendar.getInstance();
 
     public InlineCalendarPickerWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Log.d(TAG, "InlineCalendarPickerWidget: " + TimeHelper.calendarToString(calendar));
         initInterface();
         initControl(context);
         SmartSwipe.wrap(layout)
@@ -38,10 +34,8 @@ public class InlineCalendarPickerWidget extends PickerWidget {
                     @Override
                     public void onSwipeOpened(SmartSwipeWrapper wrapper, SwipeConsumer consumer, int direction) {
                         if (direction == 1) {
-                            Log.d("dsadadada", "onSwipeOpened: 1");
                             updatePicker(-1);
                         } else if (direction == 2 && !isCurrentDate()) {
-                            Log.d("dsadadada", "onSwipeOpened: 2 " + isCurrentDate());
                             updatePicker(1);
                         }
                     }

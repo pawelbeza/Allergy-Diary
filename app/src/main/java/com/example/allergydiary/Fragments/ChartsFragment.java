@@ -130,6 +130,7 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
         rangePicker.show();
     }
 
+    //TODO deprecated
     private void createPdfPage(PdfDocument document, long fromDate, long toDate) {
         LayoutInflater inflater = (LayoutInflater)
                 getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -357,7 +358,6 @@ public class ChartsFragment extends Fragment implements OnSelectDateListener {
                 statisticsAdapter.swapDataSet(statistics);
             }
         }
-
         return statistics;
     }
 
