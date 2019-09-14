@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -14,10 +15,12 @@
         android:layout_marginRight="40dp"
         android:background="@drawable/ic_baseline_chevron_left_24px" />
 
-    <ImageView
+    <ImageSwitcher
         android:id="@+id/display_region"
         android:layout_width="150dp"
-        android:layout_height="150dp" />
+        android:layout_height="150dp"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right"/>
 
     <Button
         android:id="@+id/calendar_next_button"

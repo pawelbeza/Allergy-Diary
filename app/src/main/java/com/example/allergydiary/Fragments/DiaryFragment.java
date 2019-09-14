@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
@@ -26,8 +25,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
-import kotlin.jvm.functions.Function1;
 
 public class DiaryFragment extends Fragment {
     private long date;
@@ -37,8 +34,6 @@ public class DiaryFragment extends Fragment {
     private CalendarView calendarView;
     private final int cornerRadius = 40;
     private AllergicSymptomViewModel symptomViewModel;
-
-    //TODO Add animation between launching fragments
 
     @Nullable
     @Override

@@ -1,34 +1,70 @@
 package com.example.allergydiary.Widgets;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 
+import com.billy.android.swipe.SmartSwipe;
+import com.billy.android.swipe.SmartSwipeWrapper;
+import com.billy.android.swipe.SwipeConsumer;
+import com.billy.android.swipe.consumer.StayConsumer;
+import com.billy.android.swipe.listener.SimpleSwipeListener;
 import com.example.allergydiary.R;
 import com.example.allergydiary.TimeHelper;
 
 import java.util.Calendar;
 
+import static android.content.ContentValues.TAG;
+
 public class InlineCalendarPickerWidget extends PickerWidget {
-    private TextView tvDate;
+    private TextSwitcher textSwitcher;
     private Calendar calendar = Calendar.getInstance();
 
     public InlineCalendarPickerWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initControl(context);
+        Log.d(TAG, "InlineCalendarPickerWidget: " + TimeHelper.calendarToString(calendar));
         initInterface();
+        initControl(context);
+        SmartSwipe.wrap(layout)
+                .addConsumer(new StayConsumer())
+                .enableAllDirections()
+                .addListener(new SimpleSwipeListener() {
+
+                    @Override
+                    public void onSwipeOpened(SmartSwipeWrapper wrapper, SwipeConsumer consumer, int direction) {
+                        if (direction == 1) {
+                            Log.d("dsadadada", "onSwipeOpened: 1");
+                            updatePicker(-1);
+                        } else if (direction == 2 && !isCurrentDate()) {
+                            Log.d("dsadadada", "onSwipeOpened: 2 " + isCurrentDate());
+                            updatePicker(1);
+                        }
+                    }
+                });
     }
 
     public Calendar getCalendar() {
         return calendar;
     }
 
-    protected void assignUiElements() {
+    protected void assignUiElements(Context context) {
+        layout = findViewById(R.id.layout);
         btnPrev = findViewById(R.id.calendar_prev_button);
         btnNext = findViewById(R.id.calendar_next_button);
-        tvDate = findViewById(R.id.display_date);
+        textSwitcher = findViewById(R.id.display_date);
+        textSwitcher.setFactory(() -> {
+            TextView tv = new TextView(context);
+            if (Build.VERSION.SDK_INT < 23)
+                tv.setTextAppearance(context, R.style.InlineCalendarTheme);
+            else
+                tv.setTextAppearance(R.style.InlineCalendarTheme);
+            return tv;
+        });
     }
 
     @Override
@@ -39,21 +75,26 @@ public class InlineCalendarPickerWidget extends PickerWidget {
 
     @Override
     protected void arrowVisibility() {
-        boolean condition = (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
-                Calendar.getInstance().get(Calendar.YEAR) == calendar.get(Calendar.YEAR));
+        boolean condition = isCurrentDate();
         btnNext.setVisibility(condition ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    private boolean isCurrentDate() {
+        return (Calendar.getInstance().get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
+                Calendar.getInstance().get(Calendar.YEAR) == calendar.get(Calendar.YEAR));
     }
 
     public void updatePicker(int addToPicker) {
         calendar.add(Calendar.MONTH, addToPicker);
-        tvDate.setText(TimeHelper.calendarToString(calendar));
+        textSwitcher.setText(TimeHelper.calendarToString(calendar));
+        super.updatePicker(addToPicker);
     }
 
     protected void initControl(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.inline_calendar, this);
 
-        assignUiElements();
+        assignUiElements(context);
         assignClickHandlers();
 
         updatePicker(0);

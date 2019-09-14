@@ -43,11 +43,10 @@ public class ForecastFragment extends Fragment {
         forecastViewModel = ViewModelProviders.of(getActivity()).get(AllergenForecastViewModel.class);
 
         regionPicker = getActivity().findViewById(R.id.region);
+        regionPicker.setListener(this::updateForecast);
 
         recyclerView = getActivity().findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-
-        regionPicker.setListener(this::updateForecast);
     }
 
     private void updateForecast() {

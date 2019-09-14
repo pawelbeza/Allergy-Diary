@@ -56,4 +56,12 @@
         <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
         <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
     </style>
+
+    <style name="InlineCalendarTheme">
+        <item name="android:text">Feb 2019</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Large </item>
+        <item name="android:textColor">#222222 </item>
+        <item name="android:textSize">30sp </item>
+        <item name="android:textStyle">bold </item>
+    </style>
 </resources>

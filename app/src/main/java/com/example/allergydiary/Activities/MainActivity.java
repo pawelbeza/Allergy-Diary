@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static int lastLaunchedFragment;
     private DrawerLayout drawer;
 
+    //TODO Change PDF layout
     //TODO Read about Onboarding https://material.io/design/communication/onboarding.html#
     @Override
     protected void onCreate(Bundle savedInstanceState) {
