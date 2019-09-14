@@ -3,6 +3,7 @@ package com.example.allergydiary.Widgets;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 
@@ -55,8 +56,8 @@ public class RegionPickerWidget extends PickerWidget {
         imageSwitcher.setFactory(() -> {
             ImageView imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageView.setLayoutParams(new ImageSwitcher.LayoutParams(
-                    LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+            imageView.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
             return imageView;
         });
     }

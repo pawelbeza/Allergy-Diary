@@ -30,7 +30,7 @@ public class AllergenForecastRepository {
         }
     }
 
-    private class getAllDataBaseContents extends AsyncTask<Void, Void, List<AllergenForecast>> {
+    private static class getAllDataBaseContents extends AsyncTask<Void, Void, List<AllergenForecast>> {
         private AllergenForecastDao forecastDao;
 
         private getAllDataBaseContents(AllergenForecastDao forecastDao) {
@@ -43,7 +43,7 @@ public class AllergenForecastRepository {
         }
     }
 
-    private class getDataBaseContentsInRange extends AsyncTask<Void, Void, List<AllergenForecast>> {
+    private static class getDataBaseContentsInRange extends AsyncTask<Void, Void, List<AllergenForecast>> {
         private AllergenForecastDao forecastDao;
         private int region;
         private int month;

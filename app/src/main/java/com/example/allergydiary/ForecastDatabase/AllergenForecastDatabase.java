@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = AllergenForecast.class, version = 2)
 public abstract class AllergenForecastDatabase extends RoomDatabase {
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
 

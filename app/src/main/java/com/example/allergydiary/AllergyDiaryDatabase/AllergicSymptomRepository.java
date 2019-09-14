@@ -56,7 +56,7 @@ public class AllergicSymptomRepository {
         }
     }
 
-    private class getDataBaseContents extends AsyncTask<Void, Void, AllergicSymptom> {
+    private static class getDataBaseContents extends AsyncTask<Void, Void, AllergicSymptom> {
         private final long Date;
         private AllergicSymptomDao symptomDao;
 
@@ -71,7 +71,7 @@ public class AllergicSymptomRepository {
         }
     }
 
-    private class getDataBaseContentsInRange extends AsyncTask<Void, Void, List<AllergicSymptom>> {
+    private static class getDataBaseContentsInRange extends AsyncTask<Void, Void, List<AllergicSymptom>> {
         private final long fromDate;
         private final long toDate;
 
@@ -89,7 +89,7 @@ public class AllergicSymptomRepository {
         }
     }
 
-    private class getAllDataBaseContents extends AsyncTask<Void, Void, List<AllergicSymptom>> {
+    private static class getAllDataBaseContents extends AsyncTask<Void, Void, List<AllergicSymptom>> {
         private AllergicSymptomDao symptomDao;
 
         private getAllDataBaseContents(AllergicSymptomDao symptomDao) {

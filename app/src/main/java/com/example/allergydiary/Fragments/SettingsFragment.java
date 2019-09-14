@@ -14,30 +14,25 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.allergydiary.Notifications.AlarmReceiver;
 import com.example.allergydiary.Notifications.DeviceBootReceiver;
 import com.example.allergydiary.Notifications.Notification;
-import com.example.allergydiary.Notifications.AlarmReceiver;
 import com.example.allergydiary.R;
 import com.example.allergydiary.TimeHelper;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SettingsFragment extends Fragment {
     private final int cornerRadius = 40;
