@@ -55,22 +55,22 @@ public class MainActivity extends AppCompatActivity {
                 switch (view.getId()) {
                     case R.id.toDiary:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
-                                R.anim.slide_out_right, R.anim.slide_in_right).replace(R.id.fragment_container,
+                                R.anim.slide_in_right, R.anim.slide_out_right).replace(R.id.fragment_container,
                                 new DiaryFragment()).addToBackStack("Diary").commit();
                         break;
                     case R.id.toForecast:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
-                                R.anim.slide_out_right, R.anim.slide_in_right).replace(R.id.fragment_container,
+                                R.anim.slide_in_right, R.anim.slide_out_right).replace(R.id.fragment_container,
                                 new ForecastFragment()).addToBackStack("Forecast").commit();
                         break;
                     case R.id.toCharts:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
-                                R.anim.slide_out_right, R.anim.slide_in_right).replace(R.id.fragment_container,
+                                R.anim.slide_in_right, R.anim.slide_out_right).replace(R.id.fragment_container,
                                 new ChartsFragment()).addToBackStack("Charts").commit();
                         break;
                     case R.id.toSettings:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
-                                R.anim.slide_out_right, R.anim.slide_in_right).replace(R.id.fragment_container,
+                                R.anim.slide_in_right, R.anim.slide_out_right).replace(R.id.fragment_container,
                                 new SettingsFragment()).addToBackStack("Settings").commit();
                         break;
                 }
