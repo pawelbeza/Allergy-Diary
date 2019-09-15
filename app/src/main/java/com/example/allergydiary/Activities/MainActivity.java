@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
 
     //TODO Read about Onboarding https://material.io/design/communication/onboarding.html#
+    //TODO Add language choice
+    //TODO Add choosing allergens
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

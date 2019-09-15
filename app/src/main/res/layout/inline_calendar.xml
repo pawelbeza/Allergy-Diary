@@ -19,9 +19,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inAnimation="@android:anim/slide_in_left"
-        android:outAnimation="@android:anim/slide_out_right"/>
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/calendar_next_button"

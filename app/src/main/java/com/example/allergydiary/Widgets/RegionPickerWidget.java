@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 
@@ -22,6 +24,7 @@ public class RegionPickerWidget extends PickerWidget {
 
     public RegionPickerWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         initInterface();
         initControl(context);
         SmartSwipe.wrap(layout)
@@ -64,6 +67,14 @@ public class RegionPickerWidget extends PickerWidget {
 
     public void updatePicker(int addToPicker) {
         super.updatePicker(addToPicker);
+        if(addToPicker == 1) {
+            imageSwitcher.setInAnimation(inLeft);
+            imageSwitcher.setOutAnimation(outRight);
+        }
+        else {
+            imageSwitcher.setInAnimation(inRight);
+            imageSwitcher.setOutAnimation(outLeft);
+        }
         index = (index + addToPicker + imageResources.length) % imageResources.length;
         imageSwitcher.setImageResource(imageResources[index]);
     }

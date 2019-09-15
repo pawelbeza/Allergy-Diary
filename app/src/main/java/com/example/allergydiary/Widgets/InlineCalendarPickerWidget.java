@@ -79,6 +79,14 @@ public class InlineCalendarPickerWidget extends PickerWidget {
     }
 
     public void updatePicker(int addToPicker) {
+        if(addToPicker == 1) {
+            textSwitcher.setInAnimation(inLeft);
+            textSwitcher.setOutAnimation(outRight);
+        }
+        else {
+            textSwitcher.setInAnimation(inRight);
+            textSwitcher.setOutAnimation(outLeft);
+        }
         calendar.add(Calendar.MONTH, addToPicker);
         textSwitcher.setText(TimeHelper.calendarToString(calendar));
         super.updatePicker(addToPicker);
