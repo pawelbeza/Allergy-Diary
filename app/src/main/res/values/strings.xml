@@ -9,6 +9,7 @@
     <string name="week">week</string>
     <string name="month">month</string>
     <string name="months3">3 months</string>
+    <string name="statistics">Statistics</string>
     <string name="forecast">Forecast</string>
     <string name="settings">Settings</string>
     <string name="notifications">Notifications</string>
@@ -17,6 +18,7 @@
     <string name="date">%3$d-%2$d-%1$d</string>
     <string name="medicine">Taken medicine</string>
     <string name="database">Database</string>
+    <string name="allergen">Allergen</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string-array

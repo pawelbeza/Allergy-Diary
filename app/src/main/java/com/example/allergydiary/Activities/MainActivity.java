@@ -93,12 +93,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return false;
-    }
-
-    @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen((GravityCompat.START)))
             drawer.closeDrawer(GravityCompat.START);

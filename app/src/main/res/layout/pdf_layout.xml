@@ -17,5 +17,5 @@
         android:layout_height="350dp" />
     <TextView
         style="@style/HeaderText"
-        android:text="Statistics" />
+        android:text="@string/statistics" />
 </LinearLayout>
