@@ -8,6 +8,7 @@ public class AllergyDiary extends Application {
     public static final String HIGH_CHANNEL_ID = "HighImpChannel";
     public static final String DEFAULT_CHANNEL_ID = "DefaultImpChannel";
 
+    //TODO Fix white start
     @Override
     public void onCreate() {
         super.onCreate();

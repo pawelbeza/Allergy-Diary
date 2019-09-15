@@ -53,10 +53,10 @@ public class InlineCalendarPickerWidget extends PickerWidget {
         textSwitcher = findViewById(R.id.display_date);
         textSwitcher.setFactory(() -> {
             TextView tv = new TextView(context);
-            if (Build.VERSION.SDK_INT < 23)
-                tv.setTextAppearance(context, R.style.InlineCalendarTheme);
-            else
+            if (Build.VERSION.SDK_INT >= 23)
                 tv.setTextAppearance(R.style.InlineCalendarTheme);
+            else
+                tv.setTextAppearance(context, R.style.InlineCalendarTheme);
             return tv;
         });
     }
