@@ -1,7 +1,6 @@
 package com.example.allergydiary.Activities;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -10,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.example.allergydiary.Fragments.ChartsFragment;
 import com.example.allergydiary.Fragments.DiaryFragment;
@@ -20,12 +20,24 @@ import com.github.mzule.fantasyslide.SideBar;
 import com.github.mzule.fantasyslide.SimpleFantasyListener;
 
 public class MainActivity extends AppCompatActivity {
-    private static int lastLaunchedFragment;
     private DrawerLayout drawer;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     //TODO Read about Onboarding https://material.io/design/communication/onboarding.html#
     //TODO Add language choice
     //TODO Add choosing allergens
+
+    private boolean isSameFragment(Fragment fragment, int id) {
+        return id == R.id.toDiary && fragment instanceof DiaryFragment
+                || id == R.id.toForecast && fragment instanceof ForecastFragment
+                || id == R.id.toCharts && fragment instanceof ChartsFragment
+                || id == R.id.toSettings && fragment instanceof SettingsFragment;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onSelect(View view, int index) {
-                if (view.getId() == lastLaunchedFragment)
-                    return true;
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if (isSameFragment(fragment, view.getId())) return false;
                 switch (view.getId()) {
                     case R.id.toDiary:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
@@ -74,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                                 new SettingsFragment()).addToBackStack("Settings").commit();
                         break;
                 }
-                lastLaunchedFragment = view.getId();
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -88,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new DiaryFragment()).commit();
-            lastLaunchedFragment = R.id.toDiary;
         }
     }
 
