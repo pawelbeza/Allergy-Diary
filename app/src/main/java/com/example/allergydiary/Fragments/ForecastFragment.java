@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,6 +48,11 @@ public class ForecastFragment extends Fragment {
 
         recyclerView = getActivity().findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
+
+        Button btn = getActivity().findViewById(R.id.changeBtn);
+        btn.setOnClickListener(view1 -> getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
+                R.anim.slide_in_right, R.anim.slide_out_right).replace(R.id.fragment_container,
+                new ChangeAllergensFragment()).addToBackStack("ChangeAllergens").commit());
     }
 
     private void updateForecast() {

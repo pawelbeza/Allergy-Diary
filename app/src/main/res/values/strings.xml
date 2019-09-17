@@ -30,4 +30,21 @@
         <item>Max value</item>
         <item>Taken pills</item>
     </string-array>
+    <string-array
+        name="allergen_picker">
+        <item>Leszczyna</item>
+        <item>Olsza</item>
+        <item>Brzoza</item>
+        <item>Topola</item>
+        <item>Dąb</item>
+        <item>Trawa</item>
+        <item>Babka</item>
+        <item>Szczaw</item>
+        <item>Pokrzywa</item>
+        <item>Komosa</item>
+        <item>Bylica</item>
+        <item>Ambrozja</item>
+        <item>Cladosporium</item>
+        <item>Alternaria</item>
+    </string-array>
 </resources>
