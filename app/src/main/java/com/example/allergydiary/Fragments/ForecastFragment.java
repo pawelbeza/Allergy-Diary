@@ -22,6 +22,7 @@ import com.example.allergydiary.R;
 import com.example.allergydiary.Widgets.RegionPickerWidget;
 import com.stone.vega.library.VegaLayoutManager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -71,13 +72,21 @@ public class ForecastFragment extends Fragment {
         int region = regionPicker.getIndex() + 1;
 
         List<AllergenForecast> database = forecastViewModel.getDataBaseContents(region, month, decade);
+        List<AllergenForecast> pickedAllergens = new ArrayList<>();
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(ChangeAllergensFragment.prefName, Context.MODE_PRIVATE);
+        for (AllergenForecast forecast : database) {
+            String name = forecast.getName();
+            name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+            if (sharedPref.getBoolean(name, true))
+                pickedAllergens.add(forecast);
+        }
 
         if (forecastAdapter == null) {
             recyclerView.setLayoutManager(new VegaLayoutManager());
-            forecastAdapter = new ForecastAdapter(getActivity(), database);
+            forecastAdapter = new ForecastAdapter(getActivity(), pickedAllergens);
             recyclerView.setAdapter(forecastAdapter);
         } else {
-            forecastAdapter.swapDataSet(database);
+            forecastAdapter.swapDataSet(pickedAllergens);
             forecastAdapter.notifyDataSetChanged();
         }
     }

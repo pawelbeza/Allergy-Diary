@@ -1,7 +1,6 @@
 package com.example.allergydiary.ForecastRecycleView;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.allergydiary.ForecastDatabase.AllergenForecast;
 import com.example.allergydiary.R;
-
-import static android.content.ContentValues.TAG;
 
 class ForecastViewHolder extends RecyclerView.ViewHolder {
     private ImageView[] imageViews = new ImageView[3];
@@ -31,7 +28,6 @@ class ForecastViewHolder extends RecyclerView.ViewHolder {
 
     void bindData(AllergenForecast allergenForecast) {
         String name = allergenForecast.getName();
-        Log.d(TAG, "bindData: " + name);
         int numToColor = allergenForecast.getIntensity();
         int color;
         switch (numToColor) {

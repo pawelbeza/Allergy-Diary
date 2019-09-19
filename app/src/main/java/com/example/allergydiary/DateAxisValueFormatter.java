@@ -40,5 +40,4 @@ public class DateAxisValueFormatter extends ValueFormatter {
             return "xx";
         }
     }
-
 }

@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO Read about Onboarding https://material.io/design/communication/onboarding.html#
     //TODO Add language choice
-    //TODO Add choosing allergens
 
     private boolean isSameFragment(Fragment fragment, int id) {
         return id == R.id.toDiary && fragment instanceof DiaryFragment
