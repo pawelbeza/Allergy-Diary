@@ -33,7 +33,7 @@
             android:paddingTop="15dp"
             android:paddingEnd="20dp"
             android:paddingBottom="15dp"
-            android:text="Change allergens" />
+            android:text="@string/changeBtn" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

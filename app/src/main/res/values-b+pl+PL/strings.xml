@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dziennik Alergika</string>
+    <string name="diary">Dziennik</string>
+    <string name="feeling">Jak się dzisiaj czujesz?</string>
+    <string name="symptoms">Symptomy alergiczne</string>
+    <string name="report">Generuj raport</string>
+    <string name="month">Miesiąc</string>
+    <string name="statistics">Statystyki</string>
+    <string name="forecast">Pylenie</string>
+    <string name="settings">Opcje</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="everyday_survey">Codzienna ankieta</string>
+    <string name="medication">Leki</string>
+    <string name="medicine">Wzięte leki</string>
+    <string name="allergen">Alergen</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="schedule">Zaplanuj</string>
+    <string name="morning">Poranek</string>
+    <string name="evening">Wieczór</string>
+    <string name="changeBtn">Zmień alergeny</string>
+    <string name="saveBtn">Zapisz</string>
+    <string name="generateReportBtn">Wygeneruj raport</string>
+    <string name="pickAllergens">Wybierz alergeny:</string>
+    <string-array
+        name="statistic_names">
+        <item>Ilość danych</item>
+        <item>Średnia</item>
+        <item>Mediana</item>
+        <item>Wartość min</item>
+        <item>Wartość max</item>
+        <item>Wzięte tabletki</item>
+    </string-array>
+    <string-array
+        name="allergen_picker">
+        <item>Alternaria</item>
+        <item>Ambrozja</item>
+        <item>Babka</item>
+        <item>Brzoza</item>
+        <item>Bylica</item>
+        <item>Cladosporium</item>
+        <item>Dąb</item>
+        <item>Komosa</item>
+        <item>Leszczyna</item>
+        <item>Olsza</item>
+        <item>Pokrzywa</item>
+        <item>Szczaw</item>
+        <item>Topola</item>
+        <item>Trawa</item>
+    </string-array>
+</resources>

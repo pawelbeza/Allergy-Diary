@@ -33,7 +33,7 @@
             android:paddingTop="15dp"
             android:paddingEnd="20dp"
             android:paddingBottom="15dp"
-            android:text="Save" />
+            android:text="@string/saveBtn" />
     </LinearLayout>
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_below="@+id/fragment_image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
-        android:text="Pick allergens:"
+        android:text="@string/pickAllergens"
         app:srcCompat="@drawable/ic_contour1" />
 
     <androidx.recyclerview.widget.RecyclerView

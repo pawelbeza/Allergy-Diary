@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:text="Schedule"
+                        android:text="@string/schedule"
                         android:textStyle="bold" />
                 </RelativeLayout>
             </LinearLayout>
@@ -115,7 +115,7 @@
                         style="@style/DefaultText"
                         android:textStyle="bold"
                         android:layout_marginStart="30dp"
-                        android:text="Morning" />
+                        android:text="@string/morning" />
 
                     <TextView
                         android:id="@+id/morning"
@@ -148,7 +148,7 @@
                         style="@style/DefaultText"
                         android:textStyle="bold"
                         android:layout_marginStart="30dp"
-                        android:text="Evening" />
+                        android:text="@string/evening" />
 
                     <TextView
                         android:id="@+id/evening"
