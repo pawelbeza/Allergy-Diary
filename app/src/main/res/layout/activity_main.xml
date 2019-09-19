@@ -68,7 +68,7 @@
             android:drawableStart="@drawable/ic_round_diary_24px"
             android:text="@string/diary" />
         <TextView
-            android:id="@+id/toCharts"
+            android:id="@+id/toStatistics"
             style="@style/MenuText"
             android:drawableStart="@drawable/ic_round_bar_chart_24px"
             android:text="@string/statistics" />

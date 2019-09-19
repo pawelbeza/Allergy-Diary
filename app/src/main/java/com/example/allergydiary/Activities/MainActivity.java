@@ -11,7 +11,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.example.allergydiary.Fragments.ChartsFragment;
+import com.example.allergydiary.Fragments.StatisticsFragment;
 import com.example.allergydiary.Fragments.DiaryFragment;
 import com.example.allergydiary.Fragments.ForecastFragment;
 import com.example.allergydiary.Fragments.SettingsFragment;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isSameFragment(Fragment fragment, int id) {
         return id == R.id.toDiary && fragment instanceof DiaryFragment
                 || id == R.id.toForecast && fragment instanceof ForecastFragment
-                || id == R.id.toCharts && fragment instanceof ChartsFragment
+                || id == R.id.toStatistics && fragment instanceof StatisticsFragment
                 || id == R.id.toSettings && fragment instanceof SettingsFragment;
     }
 
@@ -74,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
                                 R.anim.slide_in_right, R.anim.slide_out_right).replace(R.id.fragment_container,
                                 new ForecastFragment()).addToBackStack("Forecast").commit();
                         break;
-                    case R.id.toCharts:
+                    case R.id.toStatistics:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
                                 R.anim.slide_in_right, R.anim.slide_out_right).replace(R.id.fragment_container,
-                                new ChartsFragment()).addToBackStack("Charts").commit();
+                                new StatisticsFragment()).addToBackStack("Charts").commit();
                         break;
                     case R.id.toSettings:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
