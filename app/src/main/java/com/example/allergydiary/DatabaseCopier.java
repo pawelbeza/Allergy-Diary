@@ -1,6 +1,7 @@
 package com.example.allergydiary;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
 import java.io.File;
@@ -11,13 +12,22 @@ import java.io.OutputStream;
 
 public class DatabaseCopier {
     private static final String TAG = DatabaseCopier.class.getSimpleName();
-    private static final String DATABASE_NAME = "allergy_forecast.db";
+    private static final String DATABASE_NAME_ENG = "allergy_forecast_eng.db";
+    private static final String DATABASE_NAME_PL = "allergy_forecast_pl.db";
+    private static final String POLISH_CODE = "pl_PL";
+    public static final String DATABASE_NAME = Resources.getSystem().getConfiguration().locale.toString().equals(POLISH_CODE) ?
+            DATABASE_NAME_PL : DATABASE_NAME_ENG;
 
     private static Context appContext;
 
     private DatabaseCopier() {
         //call method that check if database not exists and copy prepopulated file from assets
-        copyAttachedDatabase(appContext, DATABASE_NAME);
+        String configurationLanguage =  Resources.getSystem().getConfiguration().locale.toString();
+        Log.d(TAG, "DatabaseCopier: " + configurationLanguage);
+        if(configurationLanguage.equals(POLISH_CODE))
+            copyAttachedDatabase(appContext, DATABASE_NAME);
+        else
+            copyAttachedDatabase(appContext, DATABASE_NAME);
     }
 
     public static DatabaseCopier getInstance(Context context) {
