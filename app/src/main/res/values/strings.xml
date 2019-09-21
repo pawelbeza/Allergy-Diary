@@ -27,6 +27,14 @@
         report with your doctor</string>
     <string name="forecastDescription">Choose allergens and track pollen forecast in your
         region</string>
+    <string-array name="questionnaireNotification">
+        <item>Allergy Diary</item>
+        <item>Time for filling daily questionnaire</item>
+    </string-array>
+    <string-array name="medicineNotification">
+        <item>Allergy Diary</item>
+        <item>Time for taking medicine</item>
+    </string-array>
     <string-array
         name="statistic_names">
         <item>Number of records</item>

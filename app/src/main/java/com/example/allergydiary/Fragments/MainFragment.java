@@ -26,10 +26,7 @@ public class MainFragment extends Fragment {
         super.onResume();
     }
 
-    //TODO Change architecture app to single activity
-    //TODO Fix deprecation
-    //TODO Make polish translation of notifications and set daily notification by default
-    //TODO Animations activity
+    //TODO set daily notification by default
 
     private boolean isSameFragment(Fragment fragment, int id) {
         return id == R.id.toDiary && fragment instanceof DiaryFragment

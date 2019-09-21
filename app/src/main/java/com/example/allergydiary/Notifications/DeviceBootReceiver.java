@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 
 import com.example.allergydiary.Fragments.MainFragment;
+import com.example.allergydiary.R;
 import com.example.allergydiary.TimeHelper;
 
 import java.util.Calendar;
@@ -37,7 +38,9 @@ public class DeviceBootReceiver extends BroadcastReceiver {
                 }
 
                 Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-                String[] notificationContent = Notification.getNotificationContents(i);
+                String[] notificationContent = i == 0 ? context.getResources().getStringArray(R.array.questionnaireNotification)
+                        : context.getResources().getStringArray(R.array.medicineNotification);
+
                 alarmIntent.putExtra("notificationContent", notificationContent);
                 alarmIntent.putExtra("id", i);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, i, alarmIntent, 0);

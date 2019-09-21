@@ -28,6 +28,14 @@
         raporty swojemu lekarzowi </string>
     <string name="forecastDescription">Wybierz alergeny i bądź na bieżąco z prognozą pylenia
         w twojej okolicy</string>
+    <string-array name="questionnaireNotification">
+        <item>Dziennik Alergika</item>
+        <item>Czas wypełnić codzienną ankiete</item>
+    </string-array>
+    <string-array name="medicineNotification">
+        <item>Dziennik Alergika</item>
+        <item>Czas na wzięcie leków</item>
+    </string-array>
     <string-array
         name="statistic_names">
         <item>Ilość danych</item>
