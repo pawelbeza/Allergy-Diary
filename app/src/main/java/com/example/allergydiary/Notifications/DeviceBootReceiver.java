@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 
-import com.example.allergydiary.Activities.MainActivity;
+import com.example.allergydiary.Fragments.MainFragment;
 import com.example.allergydiary.TimeHelper;
 
 import java.util.Calendar;
@@ -29,7 +29,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
 
             // on device boot complete, reset the alarm
             for (int i = 0; i < 3; i++) {
-                final SharedPreferences sharedPref = context.getSharedPreferences(MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
+                final SharedPreferences sharedPref = context.getSharedPreferences(MainFragment.class.getSimpleName(), Context.MODE_PRIVATE);
 
                 Boolean isChecked = sharedPref.getBoolean("PopUpScheduleChecked" + i, false);
                 if (!isChecked) {

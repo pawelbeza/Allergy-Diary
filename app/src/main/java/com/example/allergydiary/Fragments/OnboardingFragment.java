@@ -1,10 +1,14 @@
-package com.example.allergydiary.Activities;
+package com.example.allergydiary.Fragments;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -14,23 +18,29 @@ import com.ramotion.paperonboarding.PaperOnboardingPage;
 
 import java.util.ArrayList;
 
-public class OnboardingActivity extends AppCompatActivity {
+public class OnboardingFragment extends Fragment {
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_onboarding, container, false);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.onboarding_activity);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
         final PaperOnboardingFragment onBoardingFragment = PaperOnboardingFragment.newInstance(getDataForOnboarding());
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, onBoardingFragment);
+        fragmentTransaction.add(R.id.main_container, onBoardingFragment);
         fragmentTransaction.commit();
 
         onBoardingFragment.setOnRightOutListener(() -> {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
+            getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                    R.anim.fast_fade_in, R.anim.fast_fade_out).replace(R.id.main_container,
+                    new MainFragment()).commit();
         });
     }
 

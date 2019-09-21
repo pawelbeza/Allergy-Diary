@@ -1,6 +1,7 @@
 package com.example.allergydiary;
 
-import android.content.res.Resources;
+import android.content.Context;
+import android.os.Build;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,13 +22,19 @@ public class TimeHelper {
         return calendar;
     }
 
-    public static String calendarToString(Calendar calendar) {
-        SimpleDateFormat format1 = new SimpleDateFormat("MMM yyyy", Resources.getSystem().getConfiguration().locale);
+    public static String calendarToString(Context context, Calendar calendar) {
+        Locale locale = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ?
+                context.getResources().getConfiguration().getLocales().get(0) :
+                context.getResources().getConfiguration().locale;
+        SimpleDateFormat format1 = new SimpleDateFormat("MMM yyyy", locale);
         return format1.format(calendar.getTime());
     }
 
-    public static String timeStampToString(long calendar) {
-        SimpleDateFormat format1 = new SimpleDateFormat("MMM yyyy", Resources.getSystem().getConfiguration().locale);
+    public static String timeStampToString(Context context, long calendar) {
+        Locale locale = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ?
+                context.getResources().getConfiguration().getLocales().get(0) :
+                context.getResources().getConfiguration().locale;
+        SimpleDateFormat format1 = new SimpleDateFormat("MMM yyyy", locale);
         return format1.format(calendar);
     }
 

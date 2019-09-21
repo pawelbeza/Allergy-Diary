@@ -23,7 +23,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths" />
         </provider>
-        <activity android:name=".Activities.SplashActivity"
+        <activity android:name=".Activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,9 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainActivity"
+        <activity android:name=".Fragments.MainFragment"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.OnboardingActivity" />
+        <activity android:name=".Fragments.OnboardingFragment" />
 
         <receiver android:name=".Notifications.DeviceBootReceiver"
             android:enabled="false">

@@ -139,7 +139,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
         PdfDocument.Page page = document.startPage(pageInfo);
 
         TextView tv = contentPdf.findViewById(R.id.date);
-        tv.setText(TimeHelper.timeStampToString(fromDate));
+        tv.setText(TimeHelper.timeStampToString(getActivity(), fromDate));
 
         BarChart barChartPdf = contentPdf.findViewById(R.id.barChartToPDF);
 

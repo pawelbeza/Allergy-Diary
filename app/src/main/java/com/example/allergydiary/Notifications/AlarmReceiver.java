@@ -9,7 +9,7 @@ import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 
 import com.example.allergydiary.AllergyDiary;
-import com.example.allergydiary.Activities.MainActivity;
+import com.example.allergydiary.Fragments.MainFragment;
 import com.example.allergydiary.R;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -50,7 +50,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setContentInfo("INFO");
 
         if (id == 0) {
-            Intent notificationIntent = new Intent(context, MainActivity.class);
+            Intent notificationIntent = new Intent(context, MainFragment.class);
 
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                     | Intent.FLAG_ACTIVITY_SINGLE_TOP);

@@ -21,9 +21,11 @@ import java.util.Calendar;
 public class InlineCalendarPickerWidget extends PickerWidget {
     private TextSwitcher textSwitcher;
     private Calendar calendar = Calendar.getInstance();
+    private Context context;
 
     public InlineCalendarPickerWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         initInterface();
         initControl(context);
         SmartSwipe.wrap(layout)
@@ -88,7 +90,7 @@ public class InlineCalendarPickerWidget extends PickerWidget {
             textSwitcher.setOutAnimation(outLeft);
         }
         calendar.add(Calendar.MONTH, addToPicker);
-        textSwitcher.setText(TimeHelper.calendarToString(calendar));
+        textSwitcher.setText(TimeHelper.calendarToString(context, calendar));
         super.updatePicker(addToPicker);
     }
 
