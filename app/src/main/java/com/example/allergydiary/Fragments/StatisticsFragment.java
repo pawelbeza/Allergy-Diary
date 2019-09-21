@@ -1,5 +1,6 @@
 package com.example.allergydiary.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -51,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class StatisticsFragment extends Fragment implements OnSelectDateListener {
@@ -73,7 +75,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        symptomViewModel = ViewModelProviders.of(getActivity()).get(AllergicSymptomViewModel.class);
+        symptomViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AllergicSymptomViewModel.class);
 
         barChart = view.findViewById(R.id.BarChart);
 
@@ -131,9 +133,9 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
     }
 
     private void createPdfPage(PdfDocument document, long fromDate, long toDate) {
-        LayoutInflater inflater = (LayoutInflater)
-                getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ViewGroup contentPdf = (ViewGroup) inflater.inflate(R.layout.pdf_layout, null, false);
+        LayoutInflater inflater = (LayoutInflater) Objects
+                .requireNonNull(getActivity()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        @SuppressLint("InflateParams") ViewGroup contentPdf = (ViewGroup) Objects.requireNonNull(inflater).inflate(R.layout.pdf_layout, null, false);
 
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(1400, 2250, 1).create();
         PdfDocument.Page page = document.startPage(pageInfo);
@@ -162,7 +164,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
     }
 
     private void inflateStatistics(ViewGroup contentPdf, double[] statistics) {
-        String[] names = getActivity().getResources().getStringArray(R.array.statistic_names);
+        String[] names = Objects.requireNonNull(getActivity()).getResources().getStringArray(R.array.statistic_names);
 
         for (int i = 0; i < statistics.length; i++) {
             View row = LayoutInflater.from(getActivity()).inflate(R.layout.statistics_item, contentPdf.findViewById(R.id.statistics_layout), false);
@@ -196,7 +198,8 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
             toDate.add(Calendar.MONTH, -1);
         }
 
-        String targetPdf = getActivity().getExternalFilesDir(null).getPath() + File.separator + "allergy_report.pdf";
+        String targetPdf = Objects.requireNonNull(Objects.requireNonNull(getActivity())
+                .getExternalFilesDir(null)).getPath() + File.separator + "allergy_report.pdf";
         try {
             File f = new File(targetPdf);
             document.writeTo(new FileOutputStream(f));
@@ -285,7 +288,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
         rightAxis.setAxisMaximum(10f);
 
         BarDataSet barDataSet = new BarDataSet(Values, "AllergicSymptom");
-        int startColor = ContextCompat.getColor(getActivity(), R.color.bright_green);
+        int startColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.bright_green);
         int endColor = ContextCompat.getColor(getActivity(), R.color.bright_blue);
         barDataSet.setGradientColor(startColor, endColor);
 
@@ -309,7 +312,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
                 if (android.os.Build.VERSION.SDK_INT >= 21)
                     icon = getResources().getDrawable(R.drawable.ic_pill, null);
                 else
-                    icon = ContextCompat.getDrawable(getActivity(), R.drawable.ic_pill);
+                    icon = ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_pill);
                 Values.add(new BarEntry(date, feeling, icon));
             }
             else
@@ -351,7 +354,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
             if (statisticsAdapter == null) {
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                statisticsAdapter = new StatisticsAdapter(getActivity(), statistics);
+                statisticsAdapter = new StatisticsAdapter(Objects.requireNonNull(getActivity()), statistics);
                 recyclerView.setAdapter(statisticsAdapter);
             } else {
                 statisticsAdapter.swapDataSet(statistics);

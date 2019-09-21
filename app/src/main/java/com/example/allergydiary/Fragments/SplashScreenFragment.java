@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.example.allergydiary.R;
 import com.jaredrummler.android.widget.AnimatedSvgView;
 
+import java.util.Objects;
+
 public class SplashScreenFragment extends Fragment {
     private String prefName = "onboarding";
 
@@ -26,7 +28,7 @@ public class SplashScreenFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        AnimatedSvgView svgView = getActivity().findViewById(R.id.animated_svg_view);
+        AnimatedSvgView svgView = Objects.requireNonNull(getActivity()).findViewById(R.id.animated_svg_view);
         svgView.start();
 
         new Handler().postDelayed(() -> {

@@ -17,6 +17,7 @@ import com.example.allergydiary.R;
 import com.example.allergydiary.TimeHelper;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class InlineCalendarPickerWidget extends PickerWidget {
     private TextSwitcher textSwitcher;
@@ -96,7 +97,7 @@ public class InlineCalendarPickerWidget extends PickerWidget {
 
     protected void initControl(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.inline_calendar, this);
+        Objects.requireNonNull(inflater).inflate(R.layout.inline_calendar, this);
 
         assignUiElements(context);
         assignClickHandlers();

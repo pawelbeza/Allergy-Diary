@@ -25,6 +25,7 @@ import com.stone.vega.library.VegaLayoutManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class ForecastFragment extends Fragment {
     private RegionPickerWidget regionPicker;
@@ -42,7 +43,7 @@ public class ForecastFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         DatabaseCopier.getInstance(getActivity());
-        forecastViewModel = ViewModelProviders.of(getActivity()).get(AllergenForecastViewModel.class);
+        forecastViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AllergenForecastViewModel.class);
 
         regionPicker = getActivity().findViewById(R.id.region);
         regionPicker.setListener(this::updateForecast);
@@ -73,7 +74,8 @@ public class ForecastFragment extends Fragment {
 
         List<AllergenForecast> database = forecastViewModel.getDataBaseContents(region, month, decade);
         List<AllergenForecast> pickedAllergens = new ArrayList<>();
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(ChangeAllergensFragment.prefName, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = Objects.requireNonNull(getActivity()).getSharedPreferences(
+                ChangeAllergensFragment.prefName, Context.MODE_PRIVATE);
         for (AllergenForecast forecast : database) {
             String name = forecast.getName();
             name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
@@ -94,7 +96,7 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         int region = regionPicker.getIndex();
@@ -110,7 +112,7 @@ public class ForecastFragment extends Fragment {
         forecastAdapter = null;
         updateForecast();
 
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
         int region = sharedPref.getInt("RegionIndex", 0);
         regionPicker.setIndex(region);
     }

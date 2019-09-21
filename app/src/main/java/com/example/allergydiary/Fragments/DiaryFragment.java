@@ -23,6 +23,7 @@ import com.ramotion.fluidslider.FluidSlider;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 import kotlin.Unit;
 
@@ -45,7 +46,7 @@ public class DiaryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        symptomViewModel = ViewModelProviders.of(getActivity()).get(AllergicSymptomViewModel.class);
+        symptomViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AllergicSymptomViewModel.class);
 
         calendarView = view.findViewById(R.id.calendarView);
 
@@ -87,7 +88,7 @@ public class DiaryFragment extends Fragment {
             return Unit.INSTANCE;
         });
 
-        symptomViewModel = ViewModelProviders.of(getActivity()).get(AllergicSymptomViewModel.class);
+        symptomViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AllergicSymptomViewModel.class);
     }
 
     private void getCurrDate() {
@@ -105,7 +106,7 @@ public class DiaryFragment extends Fragment {
         simpleSwitch.setChecked(b);
         simpleSwitch.jumpDrawablesToCurrentState();
 
-        View view = getActivity().findViewById(R.id.switchLayout);
+        View view = Objects.requireNonNull(getActivity()).findViewById(R.id.switchLayout);
         GradientDrawable shape = new GradientDrawable();
         shape.setCornerRadius(cornerRadius);
         int color = b ? ContextCompat.getColor(getActivity(), R.color.bright_green) :

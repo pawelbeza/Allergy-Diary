@@ -18,6 +18,8 @@ import com.example.allergydiary.R;
 import com.github.mzule.fantasyslide.SideBar;
 import com.github.mzule.fantasyslide.SimpleFantasyListener;
 
+import java.util.Objects;
+
 public class MainFragment extends Fragment {
     private DrawerLayout drawer;
 
@@ -27,6 +29,7 @@ public class MainFragment extends Fragment {
     }
 
     //TODO set daily notification by default
+    //TODO closing nav drawer
 
     private boolean isSameFragment(Fragment fragment, int id) {
         return id == R.id.toDiary && fragment instanceof DiaryFragment
@@ -45,9 +48,9 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        Toolbar toolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         drawer = getActivity().findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(getActivity(), drawer, toolbar,
@@ -64,7 +67,7 @@ public class MainFragment extends Fragment {
 
             @Override
             public boolean onSelect(View view, int index) {
-                Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                Fragment fragment = Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 if (isSameFragment(fragment, view.getId())) return false;
                 switch (view.getId()) {
                     case R.id.toDiary:

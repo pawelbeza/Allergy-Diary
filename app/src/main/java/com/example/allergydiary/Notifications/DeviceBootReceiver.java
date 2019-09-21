@@ -32,7 +32,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
             for (int i = 0; i < 3; i++) {
                 final SharedPreferences sharedPref = context.getSharedPreferences(MainFragment.class.getSimpleName(), Context.MODE_PRIVATE);
 
-                Boolean isChecked = sharedPref.getBoolean("PopUpScheduleChecked" + i, false);
+                boolean isChecked = sharedPref.getBoolean("PopUpScheduleChecked" + i, false);
                 if (!isChecked) {
                     continue;
                 }

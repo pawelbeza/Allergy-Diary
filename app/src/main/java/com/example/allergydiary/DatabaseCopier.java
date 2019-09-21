@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
 public class DatabaseCopier {
     private static final String TAG = DatabaseCopier.class.getSimpleName();
@@ -22,7 +23,7 @@ public class DatabaseCopier {
 
     private DatabaseCopier() {
         //call method that check if database not exists and copy prepopulated file from assets
-        copyAttachedDatabase(appContext, DATABASE_NAME);
+        copyAttachedDatabase(appContext);
     }
 
     public static DatabaseCopier getInstance(Context context) {
@@ -30,20 +31,16 @@ public class DatabaseCopier {
         return Holder.INSTANCE;
     }
 
-    private void copyAttachedDatabase(Context context, String databaseName) {
-        final File dbPath = context.getDatabasePath(databaseName);
+    private void copyAttachedDatabase(Context context) {
+        final File dbPath = context.getDatabasePath(DatabaseCopier.DATABASE_NAME);
 
-        // If the database already exists, return
-        if (dbPath.exists()) {
+        // If the database already exists and we have a path to the file, return
+        if (dbPath.exists() && !Objects.requireNonNull(dbPath.getParentFile()).mkdirs())
             return;
-        }
-
-        // Make sure we have a path to the file
-        dbPath.getParentFile().mkdirs();
 
         // Try to copy database file
         try {
-            final InputStream inputStream = context.getAssets().open("databases/" + databaseName);
+            final InputStream inputStream = context.getAssets().open("databases/" + DatabaseCopier.DATABASE_NAME);
             final OutputStream output = new FileOutputStream(dbPath);
 
             byte[] buffer = new byte[8192];

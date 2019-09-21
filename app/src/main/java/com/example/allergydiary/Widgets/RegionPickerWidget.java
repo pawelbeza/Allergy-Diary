@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 
@@ -15,6 +13,8 @@ import com.billy.android.swipe.SwipeConsumer;
 import com.billy.android.swipe.consumer.StayConsumer;
 import com.billy.android.swipe.listener.SimpleSwipeListener;
 import com.example.allergydiary.R;
+
+import java.util.Objects;
 
 public class RegionPickerWidget extends PickerWidget {
     final int[] imageResources = {R.drawable.ic_contour1, R.drawable.ic_contour2,
@@ -81,7 +81,7 @@ public class RegionPickerWidget extends PickerWidget {
 
     protected void initControl(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.region_picker, this);
+        Objects.requireNonNull(inflater).inflate(R.layout.region_picker, this);
 
         assignUiElements(context);
         assignClickHandlers();

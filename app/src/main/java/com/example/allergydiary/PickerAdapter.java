@@ -65,7 +65,7 @@ public class PickerAdapter extends RecyclerView.Adapter {
         }
 
         void bindData(int position, String name) {
-            Boolean isCheck = isChecked[position];
+            boolean isCheck = isChecked[position];
             bindImageSwitcher(isCheck);
 
             TextView allergen = itemView.findViewById(R.id.allergen_name);

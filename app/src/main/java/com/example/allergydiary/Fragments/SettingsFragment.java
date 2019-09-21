@@ -27,12 +27,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.allergydiary.Notifications.AlarmReceiver;
 import com.example.allergydiary.Notifications.DeviceBootReceiver;
-import com.example.allergydiary.Notifications.Notification;
 import com.example.allergydiary.R;
 import com.example.allergydiary.TimeHelper;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
     private final int cornerRadius = 40;
@@ -50,7 +50,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void assignClickHandler(int tvID, int swID, int toBeColored) {
-        final TextView textView = getActivity().findViewById(tvID);
+        final TextView textView = Objects.requireNonNull(getActivity()).findViewById(tvID);
         final Switch sw = getActivity().findViewById(swID);
         textView.setOnClickListener(v -> {
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), (view, hourOfDay, minute) -> {
@@ -60,11 +60,11 @@ public class SettingsFragment extends Fragment {
             timePickerDialog.show();
         });
 
-        assignSwitchOnClickListener(getActivity().findViewById(swID), getActivity().findViewById(toBeColored));
+        assignSwitchOnClickListener(Objects.requireNonNull(getActivity()).findViewById(swID), getActivity().findViewById(toBeColored));
     }
 
     private void assignSwitchOnClickListener(Switch simpleSwitch, final View view) {
-        int colorFrom = ContextCompat.getColor(getActivity(), R.color.bright_red);
+        int colorFrom = ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.bright_red);
         int colorTo = ContextCompat.getColor(getActivity(), R.color.bright_green);
         final ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250);
@@ -83,7 +83,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setSwitchBackground(boolean b, int toBeColoredID, int switchID) {
-        Switch simpleSwitch = getActivity().findViewById(switchID);
+        Switch simpleSwitch = Objects.requireNonNull(getActivity()).findViewById(switchID);
         simpleSwitch.setChecked(b);
         simpleSwitch.jumpDrawablesToCurrentState();
 
@@ -103,7 +103,7 @@ public class SettingsFragment extends Fragment {
         int[] switchIDs = {R.id.switch1, R.id.switch2, R.id.switch3};
         int[] tvIDs = {R.id.everyDay, R.id.morning, R.id.evening};
 
-        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         for (int i = 0; i < switchIDs.length; i++) {
@@ -113,7 +113,11 @@ public class SettingsFragment extends Fragment {
             TextView tv = getActivity().findViewById(tvIDs[i]);
             editor.putString("PopUpSchedule" + i, tv.getText().toString());
 
-            setAlarm(sw.isChecked(), tv, i, Notification.getNotificationContents(i));
+            String[] notificationContent = i == 0 ? getActivity().getResources().getStringArray(
+                    R.array.questionnaireNotification) :
+                    getActivity().getResources().getStringArray(R.array.medicineNotification);
+
+            setAlarm(sw.isChecked(), tv, i, notificationContent);
         }
 
         setDeviceBootReceiver();
@@ -128,7 +132,7 @@ public class SettingsFragment extends Fragment {
         alarmIntent.putExtra("id", notificationId);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), notificationId, alarmIntent, 0);
 
-        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager manager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(Context.ALARM_SERVICE);
 
         if (dailyNotify) {
             //enable daily notifications
@@ -152,7 +156,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setDeviceBootReceiver() {
-        PackageManager pm = getActivity().getPackageManager();
+        PackageManager pm = Objects.requireNonNull(getActivity()).getPackageManager();
         ComponentName receiver = new ComponentName(getActivity(), DeviceBootReceiver.class);
 
         int[] switchIDs = {R.id.switch1, R.id.switch2, R.id.switch3};
@@ -184,7 +188,7 @@ public class SettingsFragment extends Fragment {
 
         SharedPreferences sharedPref;
         try {
-            sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            sharedPref = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
         } catch (NullPointerException e) {
             for (int i = 0; i < switchIDs.length; i++)
                 setSwitchBackground(false, toBeColoredIDs[i], switchIDs[i]);
@@ -192,7 +196,7 @@ public class SettingsFragment extends Fragment {
         }
 
         for (int i = 0; i < 3; i++) {
-            Boolean isChecked = sharedPref.getBoolean("PopUpScheduleChecked" + i, false);
+            boolean isChecked = sharedPref.getBoolean("PopUpScheduleChecked" + i, false);
             View view = getActivity().findViewById(toBeColoredIDs[i]);
 
             if (isChecked)

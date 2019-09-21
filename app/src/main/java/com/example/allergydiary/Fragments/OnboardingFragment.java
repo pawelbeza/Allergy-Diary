@@ -17,6 +17,7 @@ import com.ramotion.paperonboarding.PaperOnboardingFragment;
 import com.ramotion.paperonboarding.PaperOnboardingPage;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class OnboardingFragment extends Fragment {
 
@@ -29,7 +30,7 @@ public class OnboardingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
 
         final PaperOnboardingFragment onBoardingFragment = PaperOnboardingFragment.newInstance(getDataForOnboarding());
 
@@ -37,11 +38,10 @@ public class OnboardingFragment extends Fragment {
         fragmentTransaction.add(R.id.main_container, onBoardingFragment);
         fragmentTransaction.commit();
 
-        onBoardingFragment.setOnRightOutListener(() -> {
-            getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
-                    R.anim.fast_fade_in, R.anim.fast_fade_out).replace(R.id.main_container,
-                    new MainFragment()).commit();
-        });
+        onBoardingFragment.setOnRightOutListener(() ->
+                getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                R.anim.fast_fade_in, R.anim.fast_fade_out).replace(R.id.main_container,
+                new MainFragment()).commit());
     }
 
     private ArrayList<PaperOnboardingPage> getDataForOnboarding() {
