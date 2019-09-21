@@ -21,7 +21,7 @@ import com.github.mzule.fantasyslide.SimpleFantasyListener;
 import java.util.Objects;
 
 public class MainFragment extends Fragment {
-    private DrawerLayout drawer;
+    private static DrawerLayout drawer;
 
     @Override
     public void onResume() {
@@ -114,11 +114,13 @@ public class MainFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if(drawer.isDrawerOpen((GravityCompat.START)))
-//            drawer.closeDrawer(GravityCompat.START);
-//        else
-//            super.onBackPressed();
-//    }
+    public static boolean onBackPressed() {
+        if(drawer.isDrawerOpen((GravityCompat.START))) {
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

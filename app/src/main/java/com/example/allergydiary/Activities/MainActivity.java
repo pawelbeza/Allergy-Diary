@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.allergydiary.Fragments.MainFragment;
 import com.example.allergydiary.Fragments.SplashScreenFragment;
 import com.example.allergydiary.R;
 
@@ -16,5 +17,12 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container,
                 new SplashScreenFragment()).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!MainFragment.onBackPressed() ) {
+            super.onBackPressed();
+        }
     }
 }
