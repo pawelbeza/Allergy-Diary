@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.allergydiary.Notifications.AlarmReceiver;
 import com.example.allergydiary.Notifications.DeviceBootReceiver;
+import com.example.allergydiary.Notifications.Notifications;
 import com.example.allergydiary.R;
 import com.example.allergydiary.TimeHelper;
 
@@ -113,46 +114,16 @@ public class SettingsFragment extends Fragment {
             TextView tv = getActivity().findViewById(tvIDs[i]);
             editor.putString("PopUpSchedule" + i, tv.getText().toString());
 
-            String[] notificationContent = i == 0 ? getActivity().getResources().getStringArray(
+            String[] notificationContent = (i == 0) ? getActivity().getResources().getStringArray(
                     R.array.questionnaireNotification) :
                     getActivity().getResources().getStringArray(R.array.medicineNotification);
 
-            setAlarm(sw.isChecked(), tv, i, notificationContent);
+            Notifications.setAlarm(getActivity(), sw.isChecked(), tv.getText().toString(), i, notificationContent);
         }
 
         setDeviceBootReceiver();
 
         editor.apply();
-    }
-
-
-    private void setAlarm(Boolean dailyNotify, TextView tv, int notificationId, String[] notificationContent) {
-        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
-        alarmIntent.putExtra("notificationContent", notificationContent);
-        alarmIntent.putExtra("id", notificationId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), notificationId, alarmIntent, 0);
-
-        AlarmManager manager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(Context.ALARM_SERVICE);
-
-        if (dailyNotify) {
-            //enable daily notifications
-            Calendar calendar = TimeHelper.stringToCalendar(tv.getText().toString());
-            // if notification time is before selected time, send notification the next day
-            if (calendar.before(Calendar.getInstance())) {
-                calendar.add(Calendar.DATE, 1);
-            }
-            if (manager != null) {
-                manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY, pendingIntent);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
-            }
-        } else { //disable Daily Notification
-            if (PendingIntent.getBroadcast(getActivity(), notificationId, alarmIntent, 0) != null && manager != null) {
-                manager.cancel(pendingIntent);
-            }
-        }
     }
 
     private void setDeviceBootReceiver() {

@@ -7,11 +7,13 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.allergydiary.Notifications.Notifications;
 import com.example.allergydiary.R;
 import com.jaredrummler.android.widget.AnimatedSvgView;
 
@@ -40,7 +42,19 @@ public class SplashScreenFragment extends Fragment {
                         new MainFragment()).commit();
             } else {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+
                 editor.putBoolean(prefName, true);
+
+                //setting default reminder to fill questionnaire
+                String defaultReminder = "19:38";
+                String[] notificationContent = getActivity().getResources().getStringArray(
+                        R.array.questionnaireNotification);
+
+                editor.putBoolean("PopUpScheduleChecked0", true);
+                editor.putString("PopUpSchedule0", defaultReminder);
+
+                Notifications.setAlarm(getActivity(), true, defaultReminder, 0, notificationContent);
+
                 editor.apply();
 
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container,

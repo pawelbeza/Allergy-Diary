@@ -28,7 +28,6 @@ public class MainFragment extends Fragment {
         super.onResume();
     }
 
-    //TODO set daily notification by default
     //TODO closing nav drawer
 
     private boolean isSameFragment(Fragment fragment, int id) {
