@@ -53,6 +53,7 @@ dependencies {
     implementation 'com.applandeo:material-calendar-view:1.6.0'
     implementation 'com.billy.android:smart-swipe:1.0.7'
     implementation 'com.billy.android:smart-swipe-support:1.0.0'
+    implementation 'com.ramotion.paperonboarding:paper-onboarding:1.1.3'
 
 
     testImplementation 'junit:junit:4.12'

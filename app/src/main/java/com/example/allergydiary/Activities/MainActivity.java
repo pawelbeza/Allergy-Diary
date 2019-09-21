@@ -11,10 +11,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.example.allergydiary.Fragments.StatisticsFragment;
 import com.example.allergydiary.Fragments.DiaryFragment;
 import com.example.allergydiary.Fragments.ForecastFragment;
 import com.example.allergydiary.Fragments.SettingsFragment;
+import com.example.allergydiary.Fragments.StatisticsFragment;
 import com.example.allergydiary.R;
 import com.github.mzule.fantasyslide.SideBar;
 import com.github.mzule.fantasyslide.SimpleFantasyListener;
@@ -27,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    //TODO Read about Onboarding https://material.io/design/communication/onboarding.html#
-    //TODO Add language choice
+    //TODO Change architecture app to single activity
+    //TODO Fix deprecation
+    //TODO Make polish translation of notifications and set daily notification by default
+    //TODO Animations activity
 
     private boolean isSameFragment(Fragment fragment, int id) {
         return id == R.id.toDiary && fragment instanceof DiaryFragment

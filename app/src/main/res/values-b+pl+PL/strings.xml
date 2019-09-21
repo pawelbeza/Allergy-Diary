@@ -23,6 +23,11 @@
     <string name="saveBtn">Zapisz</string>
     <string name="generateReportBtn">Wygeneruj raport</string>
     <string name="pickAllergens">Wybierz alergeny:</string>
+    <string name="diaryDescription">Wypełniaj codzienne ankiety o swoim alergicznym samopoczuciu</string>
+    <string name="statisticsDescription">Monitoruj swoje zdrowie, działanie leków oraz udostępniaj
+        raporty swojemu lekarzowi </string>
+    <string name="forecastDescription">Wybierz alergeny i bądź na bieżąco z prognozą pylenia
+        w twojej okolicy</string>
     <string-array
         name="statistic_names">
         <item>Ilość danych</item>

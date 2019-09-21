@@ -22,6 +22,11 @@
     <string name="saveBtn">Save</string>
     <string name="generateReportBtn">Generate report</string>
     <string name="pickAllergens">Pick allergens:</string>
+    <string name="diaryDescription">Fill your daily questionnaires about allergy symptoms</string>
+    <string name="statisticsDescription">Monitor your health, drugs effect and share your health
+        report with your doctor</string>
+    <string name="forecastDescription">Choose allergens and track pollen forecast in your
+        region</string>
     <string-array
         name="statistic_names">
         <item>Number of records</item>
