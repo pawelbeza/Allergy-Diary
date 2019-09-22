@@ -28,14 +28,14 @@ public class MainFragment extends Fragment {
         super.onResume();
     }
 
-    //TODO manifest
-    //TODO links to authors of icons
+    //TODO manifest (allow users to enter app from search results)
 
     private boolean isSameFragment(Fragment fragment, int id) {
         return id == R.id.toDiary && fragment instanceof DiaryFragment
                 || id == R.id.toForecast && fragment instanceof ForecastFragment
                 || id == R.id.toStatistics && fragment instanceof StatisticsFragment
-                || id == R.id.toSettings && fragment instanceof SettingsFragment;
+                || id == R.id.toSettings && fragment instanceof SettingsFragment
+                || id == R.id.toAbout && fragment instanceof AboutFragment;
     }
 
     @Nullable
@@ -98,6 +98,12 @@ public class MainFragment extends Fragment {
                                 .replace(R.id.fragment_container,
                                         new SettingsFragment()).addToBackStack("Settings").commit();
                         break;
+                    case R.id.toAbout:
+                        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                                R.anim.slide_in_left, R.anim.slide_out_left,
+                                R.anim.slide_in_right, R.anim.slide_out_right)
+                                .replace(R.id.fragment_container,
+                                        new AboutFragment()).addToBackStack("About").commit();
                 }
                 drawer.closeDrawer(GravityCompat.START);
                 return true;

@@ -78,6 +78,12 @@
             android:drawableStart="@drawable/ic_round_settings_24px"
             android:text="@string/settings" />
 
+        <TextView
+            android:id="@+id/toAbout"
+            style="@style/MenuText"
+            android:drawableStart="@drawable/ic_white_info"
+            android:text="@string/about" />
+
     </com.github.mzule.fantasyslide.SideBar>
 
 

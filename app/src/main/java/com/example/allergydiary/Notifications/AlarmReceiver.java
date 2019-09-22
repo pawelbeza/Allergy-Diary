@@ -8,9 +8,8 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.allergydiary.Activities.MainActivity;
+import com.example.allergydiary.MainActivity;
 import com.example.allergydiary.AllergyDiary;
-import com.example.allergydiary.Fragments.MainFragment;
 import com.example.allergydiary.R;
 
 public class AlarmReceiver extends BroadcastReceiver {

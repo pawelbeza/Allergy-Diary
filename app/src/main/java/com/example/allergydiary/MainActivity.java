@@ -1,4 +1,4 @@
-package com.example.allergydiary.Activities;
+package com.example.allergydiary;
 
 import android.os.Bundle;
 
@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.allergydiary.Fragments.MainFragment;
 import com.example.allergydiary.Fragments.SplashScreenFragment;
-import com.example.allergydiary.R;
 
 public class MainActivity extends AppCompatActivity {
     @Override

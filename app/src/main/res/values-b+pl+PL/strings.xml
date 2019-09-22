@@ -10,6 +10,7 @@
     <string name="forecast">Pylenie</string>
     <string name="settings">Opcje</string>
     <string name="notifications">Powiadomienia</string>
+    <string name="about">O aplikacj</string>
     <string name="everyday_survey">Codzienna ankieta</string>
     <string name="medication">Leki</string>
     <string name="medicine">Wzięte leki</string>
@@ -28,6 +29,9 @@
         raporty swojemu lekarzowi </string>
     <string name="forecastDescription">Wybierz alergeny i bądź na bieżąco z prognozą pylenia
         w twojej okolicy</string>
+    <string name="description">Miejsce na reklame produktu</string>
+    <string name="attribution">Atrybucja</string>
+    <string name="madeBy">Ikona stworzona przez %1$s z www.flaticon.com</string>
     <string-array name="questionnaireNotification">
         <item>Dziennik Alergika</item>
         <item>Czas wypełnić codzienną ankiete</item>
