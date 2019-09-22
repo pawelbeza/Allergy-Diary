@@ -28,7 +28,8 @@ public class MainFragment extends Fragment {
         super.onResume();
     }
 
-    //TODO closing nav drawer
+    //TODO manifest
+    //TODO links to authors of icons
 
     private boolean isSameFragment(Fragment fragment, int id) {
         return id == R.id.toDiary && fragment instanceof DiaryFragment

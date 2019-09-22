@@ -46,7 +46,7 @@ public class SplashScreenFragment extends Fragment {
                 editor.putBoolean(prefName, true);
 
                 //setting default reminder to fill questionnaire
-                String defaultReminder = "19:38";
+                String defaultReminder = "20:00";
                 String[] notificationContent = getActivity().getResources().getStringArray(
                         R.array.questionnaireNotification);
 
