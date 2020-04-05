@@ -17,6 +17,8 @@ import com.example.allergydiary.PickerAdapter;
 import com.example.allergydiary.R;
 import com.stone.vega.library.VegaLayoutManager;
 
+import java.util.Objects;
+
 public class ChangeAllergensFragment extends Fragment {
     public static String prefName = "pickedAllergens";
     private String[] names;
@@ -32,7 +34,7 @@ public class ChangeAllergensFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         names = getResources().getStringArray(R.array.allergen_picker);
 
-        RecyclerView recyclerView = getActivity().findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new VegaLayoutManager());
         PickerAdapter pickerAdapter = new PickerAdapter(getActivity());

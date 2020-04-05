@@ -2,16 +2,12 @@ package com.example.allergydiary.Fragments;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -25,13 +21,10 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.allergydiary.Notifications.AlarmReceiver;
 import com.example.allergydiary.Notifications.DeviceBootReceiver;
 import com.example.allergydiary.Notifications.Notifications;
 import com.example.allergydiary.R;
-import com.example.allergydiary.TimeHelper;
 
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.Objects;
 

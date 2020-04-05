@@ -3,6 +3,8 @@ package com.example.allergydiary.Fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
@@ -219,7 +221,16 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
                     .putExtra(Intent.EXTRA_SUBJECT, "Allergy Symptoms report")
                     .putExtra(Intent.EXTRA_TEXT, "Allergy Symptoms report");
 
-            startActivity(intentShareFile);
+            List<ResolveInfo> resInfoList = Objects.requireNonNull(getContext()).getPackageManager().queryIntentActivities(intentShareFile, PackageManager.MATCH_DEFAULT_ONLY);
+
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                getContext().grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
+
+            startActivity(Intent.createChooser(intentShareFile, "Share File"));
+//            startActivity(intentShareFile);
         }
     }
 

@@ -1,6 +1,5 @@
 package com.example.allergydiary.StatisticsRecycleView;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +14,7 @@ class StatisticsViewHolder extends RecyclerView.ViewHolder {
     private TextView name;
     private TextView result;
 
-    StatisticsViewHolder(@NonNull View itemView, Context context) {
+    StatisticsViewHolder(@NonNull View itemView) {
         super(itemView);
         this.name = itemView.findViewById(R.id.name);
         this.result = itemView.findViewById(R.id.result);

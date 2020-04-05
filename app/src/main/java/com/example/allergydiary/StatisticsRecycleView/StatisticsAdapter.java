@@ -13,10 +13,8 @@ import com.example.allergydiary.R;
 public class StatisticsAdapter extends RecyclerView.Adapter {
     private String[] names;
     private double[] results;
-    private Context context;
 
     public StatisticsAdapter(Context context, double[] results) {
-        this.context = context;
         this.results = results;
         this.names = context.getResources().getStringArray(R.array.statistic_names);
     }
@@ -25,7 +23,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.statistics_item, parent, false);
-        return new StatisticsViewHolder(view, context);
+        return new StatisticsViewHolder(view);
     }
 
     @Override
