@@ -77,7 +77,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        symptomViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AllergicSymptomViewModel.class);
+        symptomViewModel = ViewModelProviders.of(requireActivity()).get(AllergicSymptomViewModel.class);
 
         barChart = view.findViewById(R.id.BarChart);
 
@@ -101,13 +101,13 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
             updateStatistics(false, symptoms);
         });
 
-        recyclerView = getActivity().findViewById(R.id.recycler_view);
+        recyclerView = requireActivity().findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
 
         initializeGraph();
 
-        Button button = getActivity().findViewById(R.id.generateReport);
+        Button button = requireActivity().findViewById(R.id.generateReport);
         button.setOnClickListener(view1 -> openRangePicker());
     }
 
@@ -135,8 +135,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
     }
 
     private void createPdfPage(PdfDocument document, long fromDate, long toDate) {
-        LayoutInflater inflater = (LayoutInflater) Objects
-                .requireNonNull(getActivity()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") ViewGroup contentPdf = (ViewGroup) Objects.requireNonNull(inflater).inflate(R.layout.pdf_layout, null, false);
 
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(1400, 2250, 1).create();
@@ -166,7 +165,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
     }
 
     private void inflateStatistics(ViewGroup contentPdf, double[] statistics) {
-        String[] names = Objects.requireNonNull(getActivity()).getResources().getStringArray(R.array.statistic_names);
+        String[] names = requireActivity().getResources().getStringArray(R.array.statistic_names);
 
         for (int i = 0; i < statistics.length; i++) {
             View row = LayoutInflater.from(getActivity()).inflate(R.layout.statistics_item, contentPdf.findViewById(R.id.statistics_layout), false);
@@ -200,7 +199,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
             toDate.add(Calendar.MONTH, -1);
         }
 
-        String targetPdf = Objects.requireNonNull(Objects.requireNonNull(getActivity())
+        String targetPdf = Objects.requireNonNull(requireActivity()
                 .getExternalFilesDir(null)).getPath() + File.separator + "allergy_report.pdf";
         try {
             File f = new File(targetPdf);
@@ -212,7 +211,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
         File fileWithinMyDir = new File(targetPdf);
 
         if(fileWithinMyDir.exists()) {
-            Uri uri = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider", fileWithinMyDir);
+            Uri uri = FileProvider.getUriForFile(requireActivity(), BuildConfig.APPLICATION_ID + ".provider", fileWithinMyDir);
             Intent intentShareFile = new Intent(Intent.ACTION_SEND);
             intentShareFile
                     .putExtra(Intent.EXTRA_STREAM, uri)
@@ -221,11 +220,11 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
                     .putExtra(Intent.EXTRA_SUBJECT, "Allergy Symptoms report")
                     .putExtra(Intent.EXTRA_TEXT, "Allergy Symptoms report");
 
-            List<ResolveInfo> resInfoList = Objects.requireNonNull(getContext()).getPackageManager().queryIntentActivities(intentShareFile, PackageManager.MATCH_DEFAULT_ONLY);
+            List<ResolveInfo> resInfoList = requireContext().getPackageManager().queryIntentActivities(intentShareFile, PackageManager.MATCH_DEFAULT_ONLY);
 
             for (ResolveInfo resolveInfo : resInfoList) {
                 String packageName = resolveInfo.activityInfo.packageName;
-                getContext().grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                requireContext().grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
 
 
@@ -299,8 +298,8 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
         rightAxis.setAxisMaximum(10f);
 
         BarDataSet barDataSet = new BarDataSet(Values, "AllergicSymptom");
-        int startColor = ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.bright_green);
-        int endColor = ContextCompat.getColor(getActivity(), R.color.bright_blue);
+        int startColor = ContextCompat.getColor(requireActivity(), R.color.bright_green);
+        int endColor = ContextCompat.getColor(requireActivity(), R.color.bright_blue);
         barDataSet.setGradientColor(startColor, endColor);
 
         BarData barData = new BarData(barDataSet);
@@ -323,7 +322,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
                 if (android.os.Build.VERSION.SDK_INT >= 21)
                     icon = getResources().getDrawable(R.drawable.ic_pill, null);
                 else
-                    icon = ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.ic_pill);
+                    icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_pill);
                 Values.add(new BarEntry(date, feeling, icon));
             }
             else
@@ -365,7 +364,7 @@ public class StatisticsFragment extends Fragment implements OnSelectDateListener
             if (statisticsAdapter == null) {
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                statisticsAdapter = new StatisticsAdapter(Objects.requireNonNull(getActivity()), statistics);
+                statisticsAdapter = new StatisticsAdapter(requireActivity(), statistics);
                 recyclerView.setAdapter(statisticsAdapter);
             } else {
                 statisticsAdapter.swapDataSet(statistics);

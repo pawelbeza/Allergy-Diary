@@ -16,8 +16,6 @@ import com.example.allergydiary.Notifications.Notifications;
 import com.example.allergydiary.R;
 import com.jaredrummler.android.widget.AnimatedSvgView;
 
-import java.util.Objects;
-
 public class SplashScreenFragment extends Fragment {
     private String prefName = "onboarding";
 
@@ -29,16 +27,16 @@ public class SplashScreenFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        AnimatedSvgView svgView = Objects.requireNonNull(getActivity()).findViewById(R.id.animated_svg_view);
+        AnimatedSvgView svgView = requireActivity().findViewById(R.id.animated_svg_view);
         svgView.start();
 
         new Handler().postDelayed(() -> {
-            SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
             boolean showedOnboarding = sharedPreferences.getBoolean(prefName, false);
 
             if (showedOnboarding) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container,
-                        new MainFragment()).commit();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container,
+                        new MainFragment()).commitAllowingStateLoss();
             } else {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -46,7 +44,7 @@ public class SplashScreenFragment extends Fragment {
 
                 //setting default reminder to fill questionnaire
                 String defaultReminder = "20:00";
-                String[] notificationContent = getActivity().getResources().getStringArray(
+                String[] notificationContent = requireActivity().getResources().getStringArray(
                         R.array.questionnaireNotification);
 
                 editor.putBoolean("PopUpScheduleChecked0", true);
@@ -56,8 +54,8 @@ public class SplashScreenFragment extends Fragment {
 
                 editor.apply();
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container,
-                        new OnboardingFragment()).commit();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_container,
+                        new OnboardingFragment()).commitAllowingStateLoss();
             }
         }, 1200);
     }

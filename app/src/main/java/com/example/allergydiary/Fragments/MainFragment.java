@@ -28,8 +28,6 @@ public class MainFragment extends Fragment {
         super.onResume();
     }
 
-    //TODO manifest (allow users to enter app from search results)
-
     private boolean isSameFragment(Fragment fragment, int id) {
         return id == R.id.toDiary && fragment instanceof DiaryFragment
                 || id == R.id.toForecast && fragment instanceof ForecastFragment
@@ -48,17 +46,17 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        drawer = getActivity().findViewById(R.id.drawer_layout);
+        drawer = requireActivity().findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(getActivity(), drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        SideBar leftSideBar = getActivity().findViewById(R.id.leftSideBar);
+        SideBar leftSideBar = requireActivity().findViewById(R.id.leftSideBar);
         leftSideBar.setFantasyListener(new SimpleFantasyListener() {
             @Override
             public boolean onHover(@Nullable View view, int index) {
@@ -67,39 +65,39 @@ public class MainFragment extends Fragment {
 
             @Override
             public boolean onSelect(View view, int index) {
-                Fragment fragment = Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                Fragment fragment = requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 if (isSameFragment(fragment, view.getId())) return false;
                 switch (view.getId()) {
                     case R.id.toDiary:
-                        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                        requireActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
                                 R.anim.slide_in_left, R.anim.slide_out_left,
                                 R.anim.slide_in_right, R.anim.slide_out_right)
                                 .replace(R.id.fragment_container,
                                         new DiaryFragment()).addToBackStack("Diary").commit();
                         break;
                     case R.id.toForecast:
-                        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                        requireActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
                                 R.anim.slide_in_left, R.anim.slide_out_left,
                                 R.anim.slide_in_right, R.anim.slide_out_right)
                                 .replace(R.id.fragment_container,
                                         new ForecastFragment()).addToBackStack("Forecast").commit();
                         break;
                     case R.id.toStatistics:
-                        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                        requireActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
                                 R.anim.slide_in_left, R.anim.slide_out_left,
                                 R.anim.slide_in_right, R.anim.slide_out_right)
                                 .replace(R.id.fragment_container,
                                         new StatisticsFragment()).addToBackStack("Charts").commit();
                         break;
                     case R.id.toSettings:
-                        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                        requireActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
                                 R.anim.slide_in_left, R.anim.slide_out_left,
                                 R.anim.slide_in_right, R.anim.slide_out_right)
                                 .replace(R.id.fragment_container,
                                         new SettingsFragment()).addToBackStack("Settings").commit();
                         break;
                     case R.id.toAbout:
-                        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                        requireActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(
                                 R.anim.slide_in_left, R.anim.slide_out_left,
                                 R.anim.slide_in_right, R.anim.slide_out_right)
                                 .replace(R.id.fragment_container,
@@ -116,8 +114,8 @@ public class MainFragment extends Fragment {
         });
 
         if (savedInstanceState == null) {
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new DiaryFragment()).commit();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new DiaryFragment()).commitAllowingStateLoss();
         }
     }
 

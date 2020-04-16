@@ -23,7 +23,6 @@ import com.ramotion.fluidslider.FluidSlider;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Objects;
 
 import kotlin.Unit;
 
@@ -46,23 +45,23 @@ public class DiaryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        symptomViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AllergicSymptomViewModel.class);
+        symptomViewModel = ViewModelProviders.of(requireActivity()).get(AllergicSymptomViewModel.class);
 
         calendarView = view.findViewById(R.id.calendarView);
 
         calendarView();
 
         simpleSwitch = view.findViewById(R.id.Switch);
-        slider = getActivity().findViewById(R.id.fluidSlider);
+        slider = requireActivity().findViewById(R.id.fluidSlider);
         getCurrDate();
 
-        int colorFrom = ContextCompat.getColor(getActivity(), R.color.bright_red);
-        int colorTo = ContextCompat.getColor(getActivity(), R.color.bright_green);
+        int colorFrom = ContextCompat.getColor(requireActivity(), R.color.bright_red);
+        int colorTo = ContextCompat.getColor(requireActivity(), R.color.bright_green);
         final ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250);
 
         colorAnimation.addUpdateListener(animation -> {
-            View view1 = getActivity().findViewById(R.id.switchLayout);
+            View view1 = requireActivity().findViewById(R.id.switchLayout);
             GradientDrawable shape = new GradientDrawable();
             shape.setColor((int) animation.getAnimatedValue());
             shape.setCornerRadius(cornerRadius);
@@ -88,7 +87,7 @@ public class DiaryFragment extends Fragment {
             return Unit.INSTANCE;
         });
 
-        symptomViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AllergicSymptomViewModel.class);
+        symptomViewModel = ViewModelProviders.of(requireActivity()).get(AllergicSymptomViewModel.class);
     }
 
     private void getCurrDate() {
@@ -106,11 +105,11 @@ public class DiaryFragment extends Fragment {
         simpleSwitch.setChecked(b);
         simpleSwitch.jumpDrawablesToCurrentState();
 
-        View view = Objects.requireNonNull(getActivity()).findViewById(R.id.switchLayout);
+        View view = requireActivity().findViewById(R.id.switchLayout);
         GradientDrawable shape = new GradientDrawable();
         shape.setCornerRadius(cornerRadius);
-        int color = b ? ContextCompat.getColor(getActivity(), R.color.bright_green) :
-                ContextCompat.getColor(getActivity(), R.color.bright_red);
+        int color = b ? ContextCompat.getColor(requireActivity(), R.color.bright_green) :
+                ContextCompat.getColor(requireActivity(), R.color.bright_red);
         shape.setColor(color);
         view.setBackground(shape);
     }

@@ -66,7 +66,8 @@
                     <TextView
                         android:id="@+id/everyDay"
                         style="@style/NumericalText"
-                        android:layout_width="65dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
                         android:layout_marginEnd="25dp"
                         android:layout_toStartOf="@+id/switch1"
                         android:text="20:00" />
@@ -120,10 +121,11 @@
                     <TextView
                         android:id="@+id/morning"
                         style="@style/NumericalText"
-                        android:layout_width="65dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
                         android:layout_marginEnd="25dp"
                         android:layout_toStartOf="@+id/switch2"
-                        android:text="8:00" />
+                        android:text="08:00" />
 
                     <Switch
                         android:id="@+id/switch2"
@@ -154,7 +156,8 @@
                         android:id="@+id/evening"
                         style="@style/NumericalText"
                         android:layout_marginEnd="25dp"
-                        android:layout_width="65dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
                         android:layout_toStartOf="@+id/switch3"
                         android:text="20:00" />
 

@@ -14,8 +14,6 @@ import com.example.allergydiary.AboutRecycleView.AboutAdapter;
 import com.example.allergydiary.R;
 import com.stone.vega.library.VegaLayoutManager;
 
-import java.util.Objects;
-
 public class AboutFragment extends Fragment {
     @Nullable
     @Override
@@ -33,7 +31,7 @@ public class AboutFragment extends Fragment {
                 R.drawable.ic_pill, R.drawable.ic_planning_attr, R.drawable.ic_scrapbook_attr, R.drawable.ic_settings_4,
                 R.drawable.ic_sunset_attr};
 
-        RecyclerView recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.recycler_credits);
+        RecyclerView recyclerView = requireActivity().findViewById(R.id.recycler_credits);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new VegaLayoutManager());
         AboutAdapter pickerAdapter = new AboutAdapter(getActivity(), ids, authors);

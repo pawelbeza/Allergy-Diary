@@ -26,7 +26,6 @@ import com.example.allergydiary.Notifications.Notifications;
 import com.example.allergydiary.R;
 
 import java.util.Locale;
-import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
     private final int cornerRadius = 40;
@@ -44,8 +43,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void assignClickHandler(int tvID, int swID, int toBeColored) {
-        final TextView textView = Objects.requireNonNull(getActivity()).findViewById(tvID);
-        final Switch sw = getActivity().findViewById(swID);
+        final TextView textView = requireActivity().findViewById(tvID);
+        final Switch sw = requireActivity().findViewById(swID);
         textView.setOnClickListener(v -> {
             TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), (view, hourOfDay, minute) -> {
                 textView.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
@@ -54,12 +53,12 @@ public class SettingsFragment extends Fragment {
             timePickerDialog.show();
         });
 
-        assignSwitchOnClickListener(Objects.requireNonNull(getActivity()).findViewById(swID), getActivity().findViewById(toBeColored));
+        assignSwitchOnClickListener(requireActivity().findViewById(swID), requireActivity().findViewById(toBeColored));
     }
 
     private void assignSwitchOnClickListener(Switch simpleSwitch, final View view) {
-        int colorFrom = ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.bright_red);
-        int colorTo = ContextCompat.getColor(getActivity(), R.color.bright_green);
+        int colorFrom = ContextCompat.getColor(requireActivity(), R.color.bright_red);
+        int colorTo = ContextCompat.getColor(requireActivity(), R.color.bright_green);
         final ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250);
 
@@ -77,15 +76,15 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setSwitchBackground(boolean b, int toBeColoredID, int switchID) {
-        Switch simpleSwitch = Objects.requireNonNull(getActivity()).findViewById(switchID);
+        Switch simpleSwitch = requireActivity().findViewById(switchID);
         simpleSwitch.setChecked(b);
         simpleSwitch.jumpDrawablesToCurrentState();
 
-        View view = getActivity().findViewById(toBeColoredID);
+        View view = requireActivity().findViewById(toBeColoredID);
         GradientDrawable shape = new GradientDrawable();
         shape.setCornerRadius(cornerRadius);
-        int color = b ? ContextCompat.getColor(getActivity(), R.color.bright_green) :
-                ContextCompat.getColor(getActivity(), R.color.bright_red);
+        int color = b ? ContextCompat.getColor(requireActivity(), R.color.bright_green) :
+                ContextCompat.getColor(requireActivity(), R.color.bright_red);
         shape.setColor(color);
         view.setBackground(shape);
     }
@@ -97,19 +96,19 @@ public class SettingsFragment extends Fragment {
         int[] switchIDs = {R.id.switch1, R.id.switch2, R.id.switch3};
         int[] tvIDs = {R.id.everyDay, R.id.morning, R.id.evening};
 
-        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         for (int i = 0; i < switchIDs.length; i++) {
-            Switch sw = getActivity().findViewById(switchIDs[i]);
+            Switch sw = requireActivity().findViewById(switchIDs[i]);
             editor.putBoolean("PopUpScheduleChecked" + i, sw.isChecked());
 
-            TextView tv = getActivity().findViewById(tvIDs[i]);
+            TextView tv = requireActivity().findViewById(tvIDs[i]);
             editor.putString("PopUpSchedule" + i, tv.getText().toString());
 
-            String[] notificationContent = (i == 0) ? getActivity().getResources().getStringArray(
+            String[] notificationContent = (i == 0) ? requireActivity().getResources().getStringArray(
                     R.array.questionnaireNotification) :
-                    getActivity().getResources().getStringArray(R.array.medicineNotification);
+                    requireActivity().getResources().getStringArray(R.array.medicineNotification);
 
             Notifications.setAlarm(getActivity(), sw.isChecked(), tv.getText().toString(), i, notificationContent);
         }
@@ -120,13 +119,13 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setDeviceBootReceiver() {
-        PackageManager pm = Objects.requireNonNull(getActivity()).getPackageManager();
-        ComponentName receiver = new ComponentName(getActivity(), DeviceBootReceiver.class);
+        PackageManager pm = requireActivity().getPackageManager();
+        ComponentName receiver = new ComponentName(requireActivity(), DeviceBootReceiver.class);
 
         int[] switchIDs = {R.id.switch1, R.id.switch2, R.id.switch3};
 
         for (int id : switchIDs) {
-            Switch sw = getActivity().findViewById(id);
+            Switch sw = requireActivity().findViewById(id);
             if (sw.isChecked()) {
                 //To enable Boot Receiver class
                 pm.setComponentEnabledSetting(receiver,
@@ -152,7 +151,7 @@ public class SettingsFragment extends Fragment {
 
         SharedPreferences sharedPref;
         try {
-            sharedPref = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
+            sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
         } catch (NullPointerException e) {
             for (int i = 0; i < switchIDs.length; i++)
                 setSwitchBackground(false, toBeColoredIDs[i], switchIDs[i]);
@@ -161,7 +160,7 @@ public class SettingsFragment extends Fragment {
 
         for (int i = 0; i < 3; i++) {
             boolean isChecked = sharedPref.getBoolean("PopUpScheduleChecked" + i, false);
-            View view = getActivity().findViewById(toBeColoredIDs[i]);
+            View view = requireActivity().findViewById(toBeColoredIDs[i]);
 
             if (isChecked)
                 setSwitchBackground(true, toBeColoredIDs[i], switchIDs[i]);

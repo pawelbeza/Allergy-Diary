@@ -25,7 +25,6 @@ import com.stone.vega.library.VegaLayoutManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
 public class ForecastFragment extends Fragment {
     private RegionPickerWidget regionPicker;
@@ -43,16 +42,17 @@ public class ForecastFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         DatabaseCopier.getInstance(getActivity());
-        forecastViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AllergenForecastViewModel.class);
+        forecastViewModel = ViewModelProviders.of(requireActivity()).get(AllergenForecastViewModel.class);
 
-        regionPicker = getActivity().findViewById(R.id.region);
+        regionPicker = requireActivity().findViewById(R.id.region);
         regionPicker.setListener(this::updateForecast);
 
-        recyclerView = getActivity().findViewById(R.id.recycler_view);
+        recyclerView = requireActivity().findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setOnFlingListener(null);
 
-        Button btn = getActivity().findViewById(R.id.changeBtn);
-        btn.setOnClickListener(view1 -> getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
+        Button btn = requireActivity().findViewById(R.id.changeBtn);
+        btn.setOnClickListener(view1 -> requireActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
                 R.anim.slide_in_right, R.anim.slide_out_right).replace(R.id.fragment_container,
                 new ChangeAllergensFragment()).addToBackStack("ChangeAllergens").commit());
     }
@@ -74,7 +74,7 @@ public class ForecastFragment extends Fragment {
 
         List<AllergenForecast> database = forecastViewModel.getDataBaseContents(region, month, decade);
         List<AllergenForecast> pickedAllergens = new ArrayList<>();
-        SharedPreferences sharedPref = Objects.requireNonNull(getActivity()).getSharedPreferences(
+        SharedPreferences sharedPref = requireActivity().getSharedPreferences(
                 ChangeAllergensFragment.prefName, Context.MODE_PRIVATE);
         for (AllergenForecast forecast : database) {
             String name = forecast.getName();
@@ -85,6 +85,7 @@ public class ForecastFragment extends Fragment {
 
         if (forecastAdapter == null) {
             recyclerView.setLayoutManager(new VegaLayoutManager());
+            recyclerView.setOnFlingListener(null);
             forecastAdapter = new ForecastAdapter(getActivity(), pickedAllergens);
             recyclerView.setAdapter(forecastAdapter);
         } else {
@@ -96,7 +97,7 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         int region = regionPicker.getIndex();
@@ -112,7 +113,7 @@ public class ForecastFragment extends Fragment {
         forecastAdapter = null;
         updateForecast();
 
-        SharedPreferences sharedPref = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
         int region = sharedPref.getInt("RegionIndex", 0);
         regionPicker.setIndex(region);
     }

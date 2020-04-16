@@ -17,8 +17,6 @@ import com.example.allergydiary.PickerAdapter;
 import com.example.allergydiary.R;
 import com.stone.vega.library.VegaLayoutManager;
 
-import java.util.Objects;
-
 public class ChangeAllergensFragment extends Fragment {
     public static String prefName = "pickedAllergens";
     private String[] names;
@@ -34,15 +32,15 @@ public class ChangeAllergensFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         names = getResources().getStringArray(R.array.allergen_picker);
 
-        RecyclerView recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = requireActivity().findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new VegaLayoutManager());
-        PickerAdapter pickerAdapter = new PickerAdapter(getActivity());
+        PickerAdapter pickerAdapter = new PickerAdapter(requireActivity());
         recyclerView.setAdapter(pickerAdapter);
 
-        Button btn = getActivity().findViewById(R.id.saveBtn);
+        Button btn = requireActivity().findViewById(R.id.saveBtn);
         btn.setOnClickListener(view1 -> {
-            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(prefName, Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(prefName, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
             boolean[] isChecked = pickerAdapter.getIsChecked();
@@ -50,7 +48,7 @@ public class ChangeAllergensFragment extends Fragment {
                 editor.putBoolean(names[i], isChecked[i]);
 
             editor.apply();
-            getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
+            requireActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
                     R.anim.slide_in_right, R.anim.slide_out_right).replace(R.id.fragment_container,
                     new ForecastFragment()).addToBackStack("Forecast").commit();
         });
