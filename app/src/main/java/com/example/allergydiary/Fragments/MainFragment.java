@@ -120,7 +120,7 @@ public class MainFragment extends Fragment {
     }
 
     public static boolean onBackPressed() {
-        if(drawer.isDrawerOpen((GravityCompat.START))) {
+        if (drawer != null && drawer.isDrawerOpen((GravityCompat.START))) {
             drawer.closeDrawer(GravityCompat.START);
             return true;
         }

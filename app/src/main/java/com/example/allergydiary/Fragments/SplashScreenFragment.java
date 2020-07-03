@@ -31,6 +31,8 @@ public class SplashScreenFragment extends Fragment {
         svgView.start();
 
         new Handler().postDelayed(() -> {
+            if (getActivity() == null)
+                return;
             SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
             boolean showedOnboarding = sharedPreferences.getBoolean(prefName, false);
 
